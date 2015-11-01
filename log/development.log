@@ -3073,3 +3073,73 @@ Started GET "/assets/users.js?body=1" for 127.0.0.1 at 2015-11-02 04:34:03 +0530
 
 
 Started GET "/assets/application.js?body=1" for 127.0.0.1 at 2015-11-02 04:34:03 +0530
+  [1m[36mUser Load (27.2ms)[0m  [1mSELECT "users".* FROM "users"[0m
+  [1m[35mSQL (206.4ms)[0m  DELETE FROM "users"
+  [1m[36mUser Load (0.0ms)[0m  [1mSELECT "users".* FROM "users"[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.0ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  [1m[35m (0.0ms)[0m  begin transaction
+  [1m[36mUser Exists (0.0ms)[0m  [1mSELECT  1 AS one FROM "users"  WHERE "users"."email" = 'kapil@who.com' LIMIT 1[0m
+Binary data inserted for `string` type on column `encrypted_password`
+  [1m[35mSQL (1.0ms)[0m  INSERT INTO "users" ("created_at", "email", "encrypted_password", "name", "updated_at") VALUES (?, ?, ?, ?, ?)  [["created_at", "2015-11-01 23:43:20.909452"], ["email", "kapil@who.com"], ["encrypted_password", "$2a$10$m3twrkR1XI1..CY/eX6QO.jhuc8qGMT.pkkwjoF3PtDpEUWbCoY.y"], ["name", "kapil"], ["updated_at", "2015-11-01 23:43:20.909452"]]
+  [1m[36mConversation Exists (1.0ms)[0m  [1mSELECT  1 AS one FROM "conversations"  WHERE ("conversations"."sender_id" = 1 AND "conversations"."recipient_id" = 7) LIMIT 1[0m
+  [1m[35mSQL (0.0ms)[0m  INSERT INTO "conversations" ("created_at", "recipient_id", "sender_id", "updated_at") VALUES (?, ?, ?, ?)  [["created_at", "2015-11-01 23:43:20.940471"], ["recipient_id", 7], ["sender_id", 1], ["updated_at", "2015-11-01 23:43:20.940471"]]
+  [1m[36m (116.2ms)[0m  [1mcommit transaction[0m
+  [1m[36mUser Load (3.0ms)[0m  [1mSELECT "users".* FROM "users"[0m
+
+
+Started GET "/" for 127.0.0.1 at 2015-11-02 05:15:09 +0530
+  [1m[36mActiveRecord::SchemaMigration Load (1.0ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  [1m[35mUser Load (0.5ms)[0m  SELECT  "users".* FROM "users"  WHERE "users"."id" = 5  ORDER BY "users"."id" ASC LIMIT 1
+Processing by Devise::SessionsController#new as HTML
+  Rendered devise/shared/_links.erb (2.0ms)
+  Rendered devise/sessions/new.html.erb within layouts/application (264.4ms)
+  Rendered layouts/_nav.html.erb (2.0ms)
+Completed 200 OK in 3968ms (Views: 3931.9ms | ActiveRecord: 0.5ms)
+
+
+Started GET "/assets/chat.css?body=1" for 127.0.0.1 at 2015-11-02 05:15:13 +0530
+
+
+Started GET "/assets/conversations.css?body=1" for 127.0.0.1 at 2015-11-02 05:15:13 +0530
+
+
+Started GET "/assets/messages.css?body=1" for 127.0.0.1 at 2015-11-02 05:15:13 +0530
+
+
+Started GET "/assets/users.css?body=1" for 127.0.0.1 at 2015-11-02 05:15:13 +0530
+
+
+Started GET "/assets/bootstrap.css?body=1" for 127.0.0.1 at 2015-11-02 05:15:13 +0530
+
+
+Started GET "/assets/application.css?body=1" for 127.0.0.1 at 2015-11-02 05:15:13 +0530
+
+
+Started GET "/assets/jquery.js?body=1" for 127.0.0.1 at 2015-11-02 05:15:13 +0530
+
+
+Started GET "/assets/jquery_ujs.js?body=1" for 127.0.0.1 at 2015-11-02 05:15:13 +0530
+
+
+Started GET "/assets/bootstrap.min.js?body=1" for 127.0.0.1 at 2015-11-02 05:15:13 +0530
+
+
+Started GET "/assets/private_pub.js?body=1" for 127.0.0.1 at 2015-11-02 05:15:13 +0530
+
+
+Started GET "/assets/chat.js?body=1" for 127.0.0.1 at 2015-11-02 05:15:13 +0530
+
+
+Started GET "/assets/turbolinks.js?body=1" for 127.0.0.1 at 2015-11-02 05:15:14 +0530
+
+
+Started GET "/assets/conversations.js?body=1" for 127.0.0.1 at 2015-11-02 05:15:14 +0530
+
+
+Started GET "/assets/messages.js?body=1" for 127.0.0.1 at 2015-11-02 05:15:14 +0530
+
+
+Started GET "/assets/users.js?body=1" for 127.0.0.1 at 2015-11-02 05:15:14 +0530
+
+
+Started GET "/assets/application.js?body=1" for 127.0.0.1 at 2015-11-02 05:15:14 +0530
