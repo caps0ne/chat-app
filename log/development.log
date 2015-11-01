@@ -1,0 +1,3075 @@
+  [1m[36m (162.1ms)[0m  [1mCREATE TABLE "schema_migrations" ("version" varchar(255) NOT NULL) [0m
+  [1m[35m (0.0ms)[0m  select sqlite_version(*)
+  [1m[36m (89.3ms)[0m  [1mCREATE UNIQUE INDEX "unique_schema_migrations" ON "schema_migrations" ("version")[0m
+  [1m[35mActiveRecord::SchemaMigration Load (1.0ms)[0m  SELECT "schema_migrations".* FROM "schema_migrations"
+Migrating to DeviseCreateUsers (20140730145303)
+  [1m[36m (0.0ms)[0m  [1mbegin transaction[0m
+  [1m[35m (2.0ms)[0m  CREATE TABLE "users" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "email" varchar(255) DEFAULT '' NOT NULL, "encrypted_password" varchar(255) DEFAULT '' NOT NULL, "reset_password_token" varchar(255), "reset_password_sent_at" datetime, "remember_created_at" datetime, "sign_in_count" integer DEFAULT 0 NOT NULL, "current_sign_in_at" datetime, "last_sign_in_at" datetime, "current_sign_in_ip" varchar(255), "last_sign_in_ip" varchar(255), "created_at" datetime, "updated_at" datetime) 
+  [1m[36m (17.2ms)[0m  [1mCREATE UNIQUE INDEX "index_users_on_email" ON "users" ("email")[0m
+  [1m[35m (1.0ms)[0m              SELECT sql
+            FROM sqlite_master
+            WHERE name='index_users_on_email' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_users_on_email' AND type='index'
+
+  [1m[36m (0.5ms)[0m  [1mCREATE UNIQUE INDEX "index_users_on_reset_password_token" ON "users" ("reset_password_token")[0m
+  [1m[35mSQL (0.5ms)[0m  INSERT INTO "schema_migrations" ("version") VALUES (?)  [["version", "20140730145303"]]
+  [1m[36m (105.6ms)[0m  [1mcommit transaction[0m
+Migrating to AddNameToUsers (20140730145345)
+  [1m[35m (0.0ms)[0m  begin transaction
+  [1m[36m (4.5ms)[0m  [1mALTER TABLE "users" ADD "name" varchar(255)[0m
+  [1m[35mSQL (1.5ms)[0m  INSERT INTO "schema_migrations" ("version") VALUES (?)  [["version", "20140730145345"]]
+  [1m[36m (123.6ms)[0m  [1mcommit transaction[0m
+Migrating to CreateConversations (20140730173347)
+  [1m[35m (0.0ms)[0m  begin transaction
+  [1m[36m (3.5ms)[0m  [1mCREATE TABLE "conversations" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "sender_id" integer, "recipient_id" integer, "created_at" datetime, "updated_at" datetime) [0m
+  [1m[35m (0.5ms)[0m  CREATE  INDEX "index_conversations_on_sender_id" ON "conversations" ("sender_id")
+  [1m[36m (0.5ms)[0m  [1m            SELECT sql
+            FROM sqlite_master
+            WHERE name='index_conversations_on_sender_id' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_conversations_on_sender_id' AND type='index'
+[0m
+  [1m[35m (1.5ms)[0m  CREATE  INDEX "index_conversations_on_recipient_id" ON "conversations" ("recipient_id")
+  [1m[36mSQL (1.0ms)[0m  [1mINSERT INTO "schema_migrations" ("version") VALUES (?)[0m  [["version", "20140730173347"]]
+  [1m[35m (150.6ms)[0m  commit transaction
+Migrating to CreateMessages (20140730185251)
+  [1m[36m (0.0ms)[0m  [1mbegin transaction[0m
+  [1m[35m (3.5ms)[0m  CREATE TABLE "messages" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "body" text, "conversation_id" integer, "user_id" integer, "created_at" datetime, "updated_at" datetime) 
+  [1m[36m (0.5ms)[0m  [1mCREATE  INDEX "index_messages_on_conversation_id" ON "messages" ("conversation_id")[0m
+  [1m[35m (0.5ms)[0m              SELECT sql
+            FROM sqlite_master
+            WHERE name='index_messages_on_conversation_id' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_messages_on_conversation_id' AND type='index'
+
+  [1m[36m (0.5ms)[0m  [1mCREATE  INDEX "index_messages_on_user_id" ON "messages" ("user_id")[0m
+  [1m[35mSQL (1.0ms)[0m  INSERT INTO "schema_migrations" ("version") VALUES (?)  [["version", "20140730185251"]]
+  [1m[36m (95.2ms)[0m  [1mcommit transaction[0m
+  [1m[35mActiveRecord::SchemaMigration Load (1.0ms)[0m  SELECT "schema_migrations".* FROM "schema_migrations"
+  [1m[36m (0.5ms)[0m  [1m            SELECT sql
+            FROM sqlite_master
+            WHERE name='index_conversations_on_recipient_id' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_conversations_on_recipient_id' AND type='index'
+[0m
+  [1m[35m (0.5ms)[0m              SELECT sql
+            FROM sqlite_master
+            WHERE name='index_conversations_on_sender_id' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_conversations_on_sender_id' AND type='index'
+
+  [1m[36m (0.0ms)[0m  [1m            SELECT sql
+            FROM sqlite_master
+            WHERE name='index_messages_on_user_id' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_messages_on_user_id' AND type='index'
+[0m
+  [1m[35m (0.0ms)[0m              SELECT sql
+            FROM sqlite_master
+            WHERE name='index_messages_on_conversation_id' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_messages_on_conversation_id' AND type='index'
+
+  [1m[36m (0.0ms)[0m  [1m            SELECT sql
+            FROM sqlite_master
+            WHERE name='index_users_on_reset_password_token' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_users_on_reset_password_token' AND type='index'
+[0m
+  [1m[35m (0.5ms)[0m              SELECT sql
+            FROM sqlite_master
+            WHERE name='index_users_on_email' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_users_on_email' AND type='index'
+
+
+
+Started GET "/" for 127.0.0.1 at 2015-10-23 05:10:10 +0530
+  [1m[36mActiveRecord::SchemaMigration Load (0.0ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+Processing by Devise::SessionsController#new as HTML
+  Rendered devise/shared/_links.erb (1.0ms)
+  Rendered devise/sessions/new.html.erb within layouts/application (45.0ms)
+Completed 500 Internal Server Error in 7947ms
+
+ActionView::Template::Error (
+  (in C:/RailsInstaller/Ruby2.1.0/lib/ruby/gems/2.1.0/gems/turbolinks-2.2.2/lib/assets/javascripts/turbolinks.js.coffee)):
+    11:   <title>Chatty</title>
+    12:   <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
+    13:   <%= stylesheet_link_tag '//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css' %>
+    14:   <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
+    15:   <%= csrf_meta_tags %>
+    16: 
+    17:   <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+  app/views/layouts/application.html.erb:14:in `_app_views_layouts_application_html_erb__651137583_51708612'
+
+
+  Rendered C:/RailsInstaller/Ruby2.1.0/lib/ruby/gems/2.1.0/gems/actionpack-4.1.1/lib/action_dispatch/middleware/templates/rescues/_trace.html.erb (1.0ms)
+  Rendered C:/RailsInstaller/Ruby2.1.0/lib/ruby/gems/2.1.0/gems/actionpack-4.1.1/lib/action_dispatch/middleware/templates/rescues/_request_and_response.html.erb (1.0ms)
+  Rendered C:/RailsInstaller/Ruby2.1.0/lib/ruby/gems/2.1.0/gems/actionpack-4.1.1/lib/action_dispatch/middleware/templates/rescues/template_error.html.erb within rescues/layout (25.0ms)
+
+
+Started GET "/" for 127.0.0.1 at 2015-10-23 05:11:11 +0530
+Processing by Devise::SessionsController#new as HTML
+  Rendered devise/shared/_links.erb (0.0ms)
+  Rendered devise/sessions/new.html.erb within layouts/application (6.0ms)
+Completed 500 Internal Server Error in 6214ms
+
+ActionView::Template::Error (
+  (in C:/RailsInstaller/Ruby2.1.0/lib/ruby/gems/2.1.0/gems/turbolinks-2.2.2/lib/assets/javascripts/turbolinks.js.coffee)):
+    11:   <title>Chatty</title>
+    12:   <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
+    13:   <%= stylesheet_link_tag '//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css' %>
+    14:   <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
+    15:   <%= csrf_meta_tags %>
+    16: 
+    17:   <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+  app/views/layouts/application.html.erb:14:in `_app_views_layouts_application_html_erb__651137583_51708612'
+
+
+  Rendered C:/RailsInstaller/Ruby2.1.0/lib/ruby/gems/2.1.0/gems/actionpack-4.1.1/lib/action_dispatch/middleware/templates/rescues/_trace.html.erb (2.0ms)
+  Rendered C:/RailsInstaller/Ruby2.1.0/lib/ruby/gems/2.1.0/gems/actionpack-4.1.1/lib/action_dispatch/middleware/templates/rescues/_request_and_response.html.erb (1.0ms)
+  Rendered C:/RailsInstaller/Ruby2.1.0/lib/ruby/gems/2.1.0/gems/actionpack-4.1.1/lib/action_dispatch/middleware/templates/rescues/template_error.html.erb within rescues/layout (24.5ms)
+
+
+Started GET "/" for 127.0.0.1 at 2015-10-23 05:37:46 +0530
+Processing by Devise::SessionsController#new as HTML
+  Rendered devise/shared/_links.erb (0.0ms)
+  Rendered devise/sessions/new.html.erb within layouts/application (8.0ms)
+Completed 500 Internal Server Error in 7172ms
+
+ActionView::Template::Error (
+  (in C:/RailsInstaller/Ruby2.1.0/lib/ruby/gems/2.1.0/gems/turbolinks-2.2.2/lib/assets/javascripts/turbolinks.js.coffee)):
+    11:   <title>Chatty</title>
+    12:   <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
+    13:   <%= stylesheet_link_tag '//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css' %>
+    14:   <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
+    15:   <%= csrf_meta_tags %>
+    16: 
+    17:   <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+  app/views/layouts/application.html.erb:14:in `_app_views_layouts_application_html_erb__651137583_51708612'
+
+
+  Rendered C:/RailsInstaller/Ruby2.1.0/lib/ruby/gems/2.1.0/gems/actionpack-4.1.1/lib/action_dispatch/middleware/templates/rescues/_trace.html.erb (2.0ms)
+  Rendered C:/RailsInstaller/Ruby2.1.0/lib/ruby/gems/2.1.0/gems/actionpack-4.1.1/lib/action_dispatch/middleware/templates/rescues/_request_and_response.html.erb (1.0ms)
+  Rendered C:/RailsInstaller/Ruby2.1.0/lib/ruby/gems/2.1.0/gems/actionpack-4.1.1/lib/action_dispatch/middleware/templates/rescues/template_error.html.erb within rescues/layout (26.0ms)
+  [1m[36mActiveRecord::SchemaMigration Load (0.0ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  [1m[35mActiveRecord::SchemaMigration Load (0.0ms)[0m  SELECT "schema_migrations".* FROM "schema_migrations"
+  [1m[36m (0.0ms)[0m  [1m            SELECT sql
+            FROM sqlite_master
+            WHERE name='index_conversations_on_recipient_id' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_conversations_on_recipient_id' AND type='index'
+[0m
+  [1m[35m (0.0ms)[0m              SELECT sql
+            FROM sqlite_master
+            WHERE name='index_conversations_on_sender_id' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_conversations_on_sender_id' AND type='index'
+
+  [1m[36m (0.0ms)[0m  [1m            SELECT sql
+            FROM sqlite_master
+            WHERE name='index_messages_on_user_id' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_messages_on_user_id' AND type='index'
+[0m
+  [1m[35m (0.0ms)[0m              SELECT sql
+            FROM sqlite_master
+            WHERE name='index_messages_on_conversation_id' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_messages_on_conversation_id' AND type='index'
+
+  [1m[36m (0.0ms)[0m  [1m            SELECT sql
+            FROM sqlite_master
+            WHERE name='index_users_on_reset_password_token' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_users_on_reset_password_token' AND type='index'
+[0m
+  [1m[35m (0.0ms)[0m              SELECT sql
+            FROM sqlite_master
+            WHERE name='index_users_on_email' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_users_on_email' AND type='index'
+
+
+
+Started GET "/" for 127.0.0.1 at 2015-10-23 14:06:21 +0530
+  [1m[36mActiveRecord::SchemaMigration Load (0.0ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+Processing by Devise::SessionsController#new as HTML
+  Rendered devise/shared/_links.erb (1.0ms)
+  Rendered devise/sessions/new.html.erb within layouts/application (150.3ms)
+  Rendered layouts/_nav.html.erb (1.0ms)
+Completed 200 OK in 12902ms (Views: 12888.5ms | ActiveRecord: 1.0ms)
+
+
+Started GET "/assets/chat.css?body=1" for 127.0.0.1 at 2015-10-23 14:06:35 +0530
+
+
+Started GET "/assets/conversations.css?body=1" for 127.0.0.1 at 2015-10-23 14:06:35 +0530
+
+
+Started GET "/assets/messages.css?body=1" for 127.0.0.1 at 2015-10-23 14:06:35 +0530
+
+
+Started GET "/assets/users.css?body=1" for 127.0.0.1 at 2015-10-23 14:06:35 +0530
+
+
+Started GET "/assets/bootstrap.css?body=1" for 127.0.0.1 at 2015-10-23 14:06:35 +0530
+
+
+Started GET "/assets/application.css?body=1" for 127.0.0.1 at 2015-10-23 14:06:35 +0530
+
+
+Started GET "/assets/jquery.js?body=1" for 127.0.0.1 at 2015-10-23 14:06:35 +0530
+
+
+Started GET "/assets/jquery_ujs.js?body=1" for 127.0.0.1 at 2015-10-23 14:06:35 +0530
+
+
+Started GET "/assets/bootstrap.min.js?body=1" for 127.0.0.1 at 2015-10-23 14:06:35 +0530
+
+
+Started GET "/assets/private_pub.js?body=1" for 127.0.0.1 at 2015-10-23 14:06:35 +0530
+
+
+Started GET "/assets/chat.js?body=1" for 127.0.0.1 at 2015-10-23 14:06:35 +0530
+
+
+Started GET "/assets/turbolinks.js?body=1" for 127.0.0.1 at 2015-10-23 14:06:35 +0530
+
+
+Started GET "/assets/conversations.js?body=1" for 127.0.0.1 at 2015-10-23 14:06:35 +0530
+
+
+Started GET "/assets/messages.js?body=1" for 127.0.0.1 at 2015-10-23 14:06:35 +0530
+
+
+Started GET "/assets/users.js?body=1" for 127.0.0.1 at 2015-10-23 14:06:35 +0530
+
+
+Started GET "/assets/application.js?body=1" for 127.0.0.1 at 2015-10-23 14:06:35 +0530
+
+
+Started GET "/users/sign_up" for 127.0.0.1 at 2015-10-23 14:07:02 +0530
+Processing by Devise::RegistrationsController#new as HTML
+  Rendered devise/shared/_links.erb (0.0ms)
+  Rendered devise/registrations/new.html.erb within layouts/application (15.6ms)
+  Rendered layouts/_nav.html.erb (0.0ms)
+Completed 200 OK in 4029ms (Views: 4026.3ms | ActiveRecord: 0.0ms)
+
+
+Started POST "/users" for 127.0.0.1 at 2015-10-23 14:07:45 +0530
+Processing by Devise::RegistrationsController#create as HTML
+  Parameters: {"utf8"=>"✓", "authenticity_token"=>"wzktHoVHScNV94BeBH1jt8pomOuvXaPbF5YVt9TW5bA=", "user"=>{"name"=>"kevin", "email"=>"kevin@kevinmail.com", "password"=>"[FILTERED]", "password_confirmation"=>"[FILTERED]"}, "commit"=>"Sign up"}
+  [1m[35m (0.0ms)[0m  begin transaction
+  [1m[36mUser Exists (0.0ms)[0m  [1mSELECT  1 AS one FROM "users"  WHERE "users"."email" = 'kevin@kevinmail.com' LIMIT 1[0m
+Binary data inserted for `string` type on column `encrypted_password`
+  [1m[35mSQL (3.0ms)[0m  INSERT INTO "users" ("created_at", "email", "encrypted_password", "name", "updated_at") VALUES (?, ?, ?, ?, ?)  [["created_at", "2015-10-23 08:37:46.181774"], ["email", "kevin@kevinmail.com"], ["encrypted_password", "$2a$10$LrABMEwKjMNcJSLT6xl5CuG4ISOWqPTp4ixsFPxhJ3/X0VLgH87Ja"], ["name", "kevin"], ["updated_at", "2015-10-23 08:37:46.181774"]]
+  [1m[36m (197.4ms)[0m  [1mcommit transaction[0m
+  [1m[35m (0.0ms)[0m  begin transaction
+Binary data inserted for `string` type on column `current_sign_in_ip`
+Binary data inserted for `string` type on column `last_sign_in_ip`
+  [1m[36mSQL (4.0ms)[0m  [1mUPDATE "users" SET "current_sign_in_at" = ?, "current_sign_in_ip" = ?, "last_sign_in_at" = ?, "last_sign_in_ip" = ?, "sign_in_count" = ?, "updated_at" = ? WHERE "users"."id" = 1[0m  [["current_sign_in_at", "2015-10-23 08:37:46.397222"], ["current_sign_in_ip", "127.0.0.1"], ["last_sign_in_at", "2015-10-23 08:37:46.397222"], ["last_sign_in_ip", "127.0.0.1"], ["sign_in_count", 1], ["updated_at", "2015-10-23 08:37:46.403227"]]
+  [1m[35m (105.6ms)[0m  commit transaction
+Redirected to http://localhost:3000/
+Completed 302 Found in 566ms (ActiveRecord: 310.0ms)
+
+
+Started GET "/" for 127.0.0.1 at 2015-10-23 14:07:46 +0530
+  [1m[36mUser Load (0.0ms)[0m  [1mSELECT  "users".* FROM "users"  WHERE "users"."id" = 1  ORDER BY "users"."id" ASC LIMIT 1[0m
+Processing by UsersController#index as HTML
+  [1m[35mUser Load (1.0ms)[0m  SELECT "users".* FROM "users"  WHERE (NOT (id = 1))  ORDER BY created_at DESC
+  [1m[36m (0.0ms)[0m  [1mSELECT COUNT(*) FROM "conversations"  WHERE (conversations.sender_id =1 OR conversations.recipient_id =1)[0m
+  Rendered users/index.html.erb within layouts/application (9.1ms)
+  Rendered layouts/_nav.html.erb (1.0ms)
+Completed 200 OK in 4448ms (Views: 4397.5ms | ActiveRecord: 3.0ms)
+
+
+Started GET "/" for 127.0.0.1 at 2015-10-23 14:08:25 +0530
+Processing by Devise::SessionsController#new as HTML
+  Rendered devise/shared/_links.erb (0.0ms)
+  Rendered devise/sessions/new.html.erb within layouts/application (0.0ms)
+  Rendered layouts/_nav.html.erb (0.0ms)
+Completed 200 OK in 5505ms (Views: 5504.6ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/assets/chat.css?body=1" for 127.0.0.1 at 2015-10-23 14:08:30 +0530
+
+
+Started GET "/assets/conversations.css?body=1" for 127.0.0.1 at 2015-10-23 14:08:30 +0530
+
+
+Started GET "/assets/messages.css?body=1" for 127.0.0.1 at 2015-10-23 14:08:30 +0530
+
+
+Started GET "/assets/users.css?body=1" for 127.0.0.1 at 2015-10-23 14:08:30 +0530
+
+
+Started GET "/assets/bootstrap.css?body=1" for 127.0.0.1 at 2015-10-23 14:08:30 +0530
+
+
+Started GET "/assets/application.css?body=1" for 127.0.0.1 at 2015-10-23 14:08:30 +0530
+
+
+Started GET "/assets/jquery.js?body=1" for 127.0.0.1 at 2015-10-23 14:08:30 +0530
+
+
+Started GET "/assets/jquery_ujs.js?body=1" for 127.0.0.1 at 2015-10-23 14:08:30 +0530
+
+
+Started GET "/assets/bootstrap.min.js?body=1" for 127.0.0.1 at 2015-10-23 14:08:30 +0530
+
+
+Started GET "/assets/private_pub.js?body=1" for 127.0.0.1 at 2015-10-23 14:08:30 +0530
+
+
+Started GET "/assets/chat.js?body=1" for 127.0.0.1 at 2015-10-23 14:08:30 +0530
+
+
+Started GET "/assets/messages.js?body=1" for 127.0.0.1 at 2015-10-23 14:08:30 +0530
+
+
+Started GET "/assets/users.js?body=1" for 127.0.0.1 at 2015-10-23 14:08:30 +0530
+
+
+Started GET "/assets/turbolinks.js?body=1" for 127.0.0.1 at 2015-10-23 14:08:30 +0530
+
+
+Started GET "/assets/conversations.js?body=1" for 127.0.0.1 at 2015-10-23 14:08:30 +0530
+
+
+Started GET "/assets/application.js?body=1" for 127.0.0.1 at 2015-10-23 14:08:30 +0530
+
+
+Started GET "/users/sign_up" for 127.0.0.1 at 2015-10-23 14:08:40 +0530
+Processing by Devise::RegistrationsController#new as HTML
+  Rendered devise/shared/_links.erb (0.0ms)
+  Rendered devise/registrations/new.html.erb within layouts/application (5.0ms)
+  Rendered layouts/_nav.html.erb (0.5ms)
+Completed 200 OK in 105ms (Views: 103.1ms | ActiveRecord: 0.0ms)
+
+
+Started POST "/users" for 127.0.0.1 at 2015-10-23 14:09:08 +0530
+Processing by Devise::RegistrationsController#create as HTML
+  Parameters: {"utf8"=>"✓", "authenticity_token"=>"d5sADpBvnJiucw1StENW667gRJR2BJtU3blAq+B25JI=", "user"=>{"name"=>"peter", "email"=>"peter@petermail.com", "password"=>"[FILTERED]", "password_confirmation"=>"[FILTERED]"}, "commit"=>"Sign up"}
+  [1m[35m (0.0ms)[0m  begin transaction
+  [1m[36mUser Exists (0.0ms)[0m  [1mSELECT  1 AS one FROM "users"  WHERE "users"."email" = 'peter@petermail.com' LIMIT 1[0m
+Binary data inserted for `string` type on column `encrypted_password`
+  [1m[35mSQL (0.0ms)[0m  INSERT INTO "users" ("created_at", "email", "encrypted_password", "name", "updated_at") VALUES (?, ?, ?, ?, ?)  [["created_at", "2015-10-23 08:39:08.604139"], ["email", "peter@petermail.com"], ["encrypted_password", "$2a$10$tWF/TqCf2GHw.pgRKPrhr.f59GTW8UuidTKq7BH.uz/c20pjqV7ZG"], ["name", "peter"], ["updated_at", "2015-10-23 08:39:08.604139"]]
+  [1m[36mConversation Exists (0.0ms)[0m  [1mSELECT  1 AS one FROM "conversations"  WHERE ("conversations"."sender_id" = 1 AND "conversations"."recipient_id" = 2) LIMIT 1[0m
+  [1m[35mSQL (0.0ms)[0m  INSERT INTO "conversations" ("created_at", "recipient_id", "sender_id", "updated_at") VALUES (?, ?, ?, ?)  [["created_at", "2015-10-23 08:39:08.619781"], ["recipient_id", 2], ["sender_id", 1], ["updated_at", "2015-10-23 08:39:08.619781"]]
+  [1m[36m (274.5ms)[0m  [1mcommit transaction[0m
+  [1m[35m (15.6ms)[0m  begin transaction
+Binary data inserted for `string` type on column `current_sign_in_ip`
+Binary data inserted for `string` type on column `last_sign_in_ip`
+  [1m[36mSQL (15.6ms)[0m  [1mUPDATE "users" SET "current_sign_in_at" = ?, "current_sign_in_ip" = ?, "last_sign_in_at" = ?, "last_sign_in_ip" = ?, "sign_in_count" = ?, "updated_at" = ? WHERE "users"."id" = 2[0m  [["current_sign_in_at", "2015-10-23 08:39:08.909855"], ["current_sign_in_ip", "127.0.0.1"], ["last_sign_in_at", "2015-10-23 08:39:08.909855"], ["last_sign_in_ip", "127.0.0.1"], ["sign_in_count", 1], ["updated_at", "2015-10-23 08:39:08.925476"]]
+  [1m[35m (187.5ms)[0m  commit transaction
+Redirected to http://localhost:3000/
+Completed 302 Found in 618ms (ActiveRecord: 493.2ms)
+
+
+Started GET "/" for 127.0.0.1 at 2015-10-23 14:09:09 +0530
+  [1m[36mUser Load (0.0ms)[0m  [1mSELECT  "users".* FROM "users"  WHERE "users"."id" = 2  ORDER BY "users"."id" ASC LIMIT 1[0m
+Processing by UsersController#index as HTML
+  [1m[35mUser Load (0.0ms)[0m  SELECT "users".* FROM "users"  WHERE (NOT (id = 2))  ORDER BY created_at DESC
+  [1m[36m (0.0ms)[0m  [1mSELECT COUNT(*) FROM "conversations"  WHERE (conversations.sender_id =2 OR conversations.recipient_id =2)[0m
+  [1m[35mConversation Load (15.6ms)[0m  SELECT "conversations".* FROM "conversations"  WHERE (conversations.sender_id =2 OR conversations.recipient_id =2)  ORDER BY created_at DESC
+  [1m[36mUser Load (0.0ms)[0m  [1mSELECT  "users".* FROM "users"  WHERE "users"."id" = ? LIMIT 1[0m  [["id", 2]]
+  [1m[35mUser Load (0.0ms)[0m  SELECT  "users".* FROM "users"  WHERE "users"."id" = ? LIMIT 1  [["id", 1]]
+  [1m[36mMessage Load (0.0ms)[0m  [1mSELECT  "messages".* FROM "messages"  WHERE "messages"."conversation_id" = ?  ORDER BY "messages"."id" DESC LIMIT 1[0m  [["conversation_id", 1]]
+  Rendered users/index.html.erb within layouts/application (62.5ms)
+  Rendered layouts/_nav.html.erb (0.0ms)
+Completed 200 OK in 4680ms (Views: 4664.5ms | ActiveRecord: 15.6ms)
+
+
+Started POST "/conversations" for 127.0.0.1 at 2015-10-23 14:09:19 +0530
+Processing by ConversationsController#create as */*
+  Parameters: {"sender_id"=>"2", "recipient_id"=>"1"}
+  [1m[35mUser Load (12.4ms)[0m  SELECT  "users".* FROM "users"  WHERE "users"."id" = 2  ORDER BY "users"."id" ASC LIMIT 1
+  [1m[36mConversation Load (1.5ms)[0m  [1mSELECT "conversations".* FROM "conversations"  WHERE ((conversations.sender_id = '2' AND conversations.recipient_id ='1') OR (conversations.sender_id = '1' AND conversations.recipient_id ='2'))[0m
+  [1m[35mConversation Load (2.0ms)[0m  SELECT  "conversations".* FROM "conversations"  WHERE ((conversations.sender_id = '2' AND conversations.recipient_id ='1') OR (conversations.sender_id = '1' AND conversations.recipient_id ='2'))  ORDER BY "conversations"."id" ASC LIMIT 1
+Completed 200 OK in 32ms (Views: 0.5ms | ActiveRecord: 15.9ms)
+
+
+Started GET "/conversations/1" for 127.0.0.1 at 2015-10-23 14:09:19 +0530
+Processing by ConversationsController#show as HTML
+  Parameters: {"id"=>"1"}
+  [1m[36mUser Load (1.0ms)[0m  [1mSELECT  "users".* FROM "users"  WHERE "users"."id" = 2  ORDER BY "users"."id" ASC LIMIT 1[0m
+  [1m[35mConversation Load (1.0ms)[0m  SELECT  "conversations".* FROM "conversations"  WHERE "conversations"."id" = ? LIMIT 1  [["id", 1]]
+  [1m[36mUser Load (2.0ms)[0m  [1mSELECT  "users".* FROM "users"  WHERE "users"."id" = ? LIMIT 1[0m  [["id", 2]]
+  [1m[35mUser Load (1.0ms)[0m  SELECT  "users".* FROM "users"  WHERE "users"."id" = ? LIMIT 1  [["id", 1]]
+  [1m[36mMessage Exists (0.0ms)[0m  [1mSELECT  1 AS one FROM "messages"  WHERE "messages"."conversation_id" = ? LIMIT 1[0m  [["conversation_id", 1]]
+  Rendered conversations/show.html.erb (18.5ms)
+Completed 200 OK in 70ms (Views: 48.9ms | ActiveRecord: 5.0ms)
+
+
+Started GET "/" for 127.0.0.1 at 2015-10-23 14:09:37 +0530
+  [1m[35mUser Load (1.0ms)[0m  SELECT  "users".* FROM "users"  WHERE "users"."id" = 1  ORDER BY "users"."id" ASC LIMIT 1
+Processing by UsersController#index as HTML
+  [1m[36mUser Load (0.0ms)[0m  [1mSELECT "users".* FROM "users"  WHERE (NOT (id = 1))  ORDER BY created_at DESC[0m
+  [1m[35m (2.0ms)[0m  SELECT COUNT(*) FROM "conversations"  WHERE (conversations.sender_id =1 OR conversations.recipient_id =1)
+  [1m[36mConversation Load (1.0ms)[0m  [1mSELECT "conversations".* FROM "conversations"  WHERE (conversations.sender_id =1 OR conversations.recipient_id =1)  ORDER BY created_at DESC[0m
+  [1m[35mUser Load (1.0ms)[0m  SELECT  "users".* FROM "users"  WHERE "users"."id" = ? LIMIT 1  [["id", 2]]
+  [1m[36mMessage Load (1.0ms)[0m  [1mSELECT  "messages".* FROM "messages"  WHERE "messages"."conversation_id" = ?  ORDER BY "messages"."id" DESC LIMIT 1[0m  [["conversation_id", 1]]
+  Rendered users/index.html.erb within layouts/application (20.0ms)
+  Rendered layouts/_nav.html.erb (0.0ms)
+Completed 200 OK in 136ms (Views: 127.1ms | ActiveRecord: 5.0ms)
+
+
+Started GET "/assets/chat.css?body=1" for 127.0.0.1 at 2015-10-23 14:09:37 +0530
+
+
+Started GET "/assets/conversations.css?body=1" for 127.0.0.1 at 2015-10-23 14:09:37 +0530
+
+
+Started GET "/assets/messages.css?body=1" for 127.0.0.1 at 2015-10-23 14:09:37 +0530
+
+
+Started GET "/assets/users.css?body=1" for 127.0.0.1 at 2015-10-23 14:09:37 +0530
+
+
+Started GET "/assets/bootstrap.css?body=1" for 127.0.0.1 at 2015-10-23 14:09:37 +0530
+
+
+Started GET "/assets/application.css?body=1" for 127.0.0.1 at 2015-10-23 14:09:38 +0530
+
+
+Started GET "/assets/jquery.js?body=1" for 127.0.0.1 at 2015-10-23 14:09:38 +0530
+
+
+Started GET "/assets/jquery_ujs.js?body=1" for 127.0.0.1 at 2015-10-23 14:09:38 +0530
+
+
+Started GET "/assets/bootstrap.min.js?body=1" for 127.0.0.1 at 2015-10-23 14:09:38 +0530
+
+
+Started GET "/assets/private_pub.js?body=1" for 127.0.0.1 at 2015-10-23 14:09:38 +0530
+
+
+Started GET "/assets/chat.js?body=1" for 127.0.0.1 at 2015-10-23 14:09:38 +0530
+
+
+Started GET "/assets/turbolinks.js?body=1" for 127.0.0.1 at 2015-10-23 14:09:38 +0530
+
+
+Started GET "/assets/conversations.js?body=1" for 127.0.0.1 at 2015-10-23 14:09:38 +0530
+
+
+Started GET "/assets/messages.js?body=1" for 127.0.0.1 at 2015-10-23 14:09:38 +0530
+
+
+Started GET "/assets/users.js?body=1" for 127.0.0.1 at 2015-10-23 14:09:38 +0530
+
+
+Started GET "/assets/application.js?body=1" for 127.0.0.1 at 2015-10-23 14:09:38 +0530
+
+
+Started POST "/conversations/1/messages" for 127.0.0.1 at 2015-10-23 14:09:46 +0530
+Processing by MessagesController#create as JS
+  Parameters: {"utf8"=>"✓", "message"=>{"body"=>"yo, my man"}, "conversation_id"=>"1"}
+  [1m[35mUser Load (0.0ms)[0m  SELECT  "users".* FROM "users"  WHERE "users"."id" = 2  ORDER BY "users"."id" ASC LIMIT 1
+  [1m[36mConversation Load (0.0ms)[0m  [1mSELECT  "conversations".* FROM "conversations"  WHERE "conversations"."id" = ? LIMIT 1[0m  [["id", 1]]
+  [1m[35m (0.0ms)[0m  begin transaction
+  [1m[36mSQL (16.6ms)[0m  [1mINSERT INTO "messages" ("body", "conversation_id", "created_at", "updated_at", "user_id") VALUES (?, ?, ?, ?, ?)[0m  [["body", "yo, my man"], ["conversation_id", 1], ["created_at", "2015-10-23 08:39:46.197018"], ["updated_at", "2015-10-23 08:39:46.197018"], ["user_id", 2]]
+  [1m[35m (139.4ms)[0m  commit transaction
+  [1m[36mUser Load (0.0ms)[0m  [1mSELECT  "users".* FROM "users"  WHERE "users"."id" = ? LIMIT 1[0m  [["id", 2]]
+  [1m[35mUser Load (0.0ms)[0m  SELECT  "users".* FROM "users"  WHERE "users"."id" = ? LIMIT 1  [["id", 1]]
+  [1m[36mCACHE (0.0ms)[0m  [1mSELECT  "users".* FROM "users"  WHERE "users"."id" = ? LIMIT 1[0m  [["id", 2]]
+  Rendered messages/_message.html.erb (15.7ms)
+  Rendered messages/create.js.erb (2095.3ms)
+Completed 500 Internal Server Error in 2315ms
+
+ActionView::Template::Error (No connection could be made because the target machine actively refused it. - connect(2) for "localhost" port 9292):
+    1: <% publish_to @path do %>
+    2:     var id = "<%= @conversation.id %>";
+    3:     var chatbox = $("#chatbox_" + id + " .chatboxcontent");
+    4:     var sender_id = "<%= @message.user.id %>";
+  app/views/messages/create.js.erb:1:in `_app_views_messages_create_js_erb___929323245_46551084'
+
+
+  Rendered C:/RailsInstaller/Ruby2.1.0/lib/ruby/gems/2.1.0/gems/actionpack-4.1.1/lib/action_dispatch/middleware/templates/rescues/_trace.text.erb (0.0ms)
+  Rendered C:/RailsInstaller/Ruby2.1.0/lib/ruby/gems/2.1.0/gems/actionpack-4.1.1/lib/action_dispatch/middleware/templates/rescues/_request_and_response.text.erb (0.0ms)
+  Rendered C:/RailsInstaller/Ruby2.1.0/lib/ruby/gems/2.1.0/gems/actionpack-4.1.1/lib/action_dispatch/middleware/templates/rescues/template_error.text.erb (46.9ms)
+
+
+Started POST "/conversations/1/messages" for 127.0.0.1 at 2015-10-23 14:10:15 +0530
+Processing by MessagesController#create as JS
+  Parameters: {"utf8"=>"✓", "message"=>{"body"=>"yo"}, "conversation_id"=>"1"}
+  [1m[35mUser Load (0.0ms)[0m  SELECT  "users".* FROM "users"  WHERE "users"."id" = 2  ORDER BY "users"."id" ASC LIMIT 1
+  [1m[36mConversation Load (0.0ms)[0m  [1mSELECT  "conversations".* FROM "conversations"  WHERE "conversations"."id" = ? LIMIT 1[0m  [["id", 1]]
+  [1m[35m (0.0ms)[0m  begin transaction
+  [1m[36mSQL (0.0ms)[0m  [1mINSERT INTO "messages" ("body", "conversation_id", "created_at", "updated_at", "user_id") VALUES (?, ?, ?, ?, ?)[0m  [["body", "yo"], ["conversation_id", 1], ["created_at", "2015-10-23 08:40:15.328122"], ["updated_at", "2015-10-23 08:40:15.328122"], ["user_id", 2]]
+  [1m[35m (171.9ms)[0m  commit transaction
+  [1m[36mUser Load (0.0ms)[0m  [1mSELECT  "users".* FROM "users"  WHERE "users"."id" = ? LIMIT 1[0m  [["id", 2]]
+  [1m[35mUser Load (0.0ms)[0m  SELECT  "users".* FROM "users"  WHERE "users"."id" = ? LIMIT 1  [["id", 1]]
+  [1m[36mCACHE (0.0ms)[0m  [1mSELECT  "users".* FROM "users"  WHERE "users"."id" = ? LIMIT 1[0m  [["id", 2]]
+  Rendered messages/_message.html.erb (15.6ms)
+  Rendered messages/create.js.erb (2081.6ms)
+Completed 500 Internal Server Error in 2317ms
+
+ActionView::Template::Error (No connection could be made because the target machine actively refused it. - connect(2) for "localhost" port 9292):
+    1: <% publish_to @path do %>
+    2:     var id = "<%= @conversation.id %>";
+    3:     var chatbox = $("#chatbox_" + id + " .chatboxcontent");
+    4:     var sender_id = "<%= @message.user.id %>";
+  app/views/messages/create.js.erb:1:in `_app_views_messages_create_js_erb___929323245_46551084'
+
+
+  Rendered C:/RailsInstaller/Ruby2.1.0/lib/ruby/gems/2.1.0/gems/actionpack-4.1.1/lib/action_dispatch/middleware/templates/rescues/_trace.text.erb (1.0ms)
+  Rendered C:/RailsInstaller/Ruby2.1.0/lib/ruby/gems/2.1.0/gems/actionpack-4.1.1/lib/action_dispatch/middleware/templates/rescues/_request_and_response.text.erb (1.0ms)
+  Rendered C:/RailsInstaller/Ruby2.1.0/lib/ruby/gems/2.1.0/gems/actionpack-4.1.1/lib/action_dispatch/middleware/templates/rescues/template_error.text.erb (23.3ms)
+
+
+Started GET "/conversations/1" for 127.0.0.1 at 2015-10-23 14:10:19 +0530
+Processing by ConversationsController#show as HTML
+  Parameters: {"id"=>"1"}
+  [1m[35mUser Load (0.0ms)[0m  SELECT  "users".* FROM "users"  WHERE "users"."id" = 1  ORDER BY "users"."id" ASC LIMIT 1
+  [1m[36mConversation Load (0.5ms)[0m  [1mSELECT  "conversations".* FROM "conversations"  WHERE "conversations"."id" = ? LIMIT 1[0m  [["id", 1]]
+  [1m[35mUser Load (1.0ms)[0m  SELECT  "users".* FROM "users"  WHERE "users"."id" = ? LIMIT 1  [["id", 2]]
+  [1m[36mMessage Exists (0.0ms)[0m  [1mSELECT  1 AS one FROM "messages"  WHERE "messages"."conversation_id" = ? LIMIT 1[0m  [["conversation_id", 1]]
+  [1m[35mMessage Load (0.5ms)[0m  SELECT "messages".* FROM "messages"  WHERE "messages"."conversation_id" = ?  [["conversation_id", 1]]
+  [1m[36mCACHE (0.0ms)[0m  [1mSELECT  "users".* FROM "users"  WHERE "users"."id" = ? LIMIT 1[0m  [["id", 2]]
+  [1m[35mUser Load (0.5ms)[0m  SELECT  "users".* FROM "users"  WHERE "users"."id" = ? LIMIT 1  [["id", 1]]
+  [1m[36mCACHE (0.0ms)[0m  [1mSELECT  "users".* FROM "users"  WHERE "users"."id" = ? LIMIT 1[0m  [["id", 2]]
+  Rendered messages/_message.html.erb (13.2ms)
+  Rendered conversations/show.html.erb (34.6ms)
+Completed 200 OK in 64ms (Views: 43.1ms | ActiveRecord: 2.5ms)
+
+
+Started POST "/conversations/1/messages" for 127.0.0.1 at 2015-10-23 14:11:18 +0530
+Processing by MessagesController#create as JS
+  Parameters: {"utf8"=>"✓", "message"=>{"body"=>"yo"}, "conversation_id"=>"1"}
+  [1m[35mUser Load (0.0ms)[0m  SELECT  "users".* FROM "users"  WHERE "users"."id" = 1  ORDER BY "users"."id" ASC LIMIT 1
+  [1m[36mConversation Load (0.0ms)[0m  [1mSELECT  "conversations".* FROM "conversations"  WHERE "conversations"."id" = ? LIMIT 1[0m  [["id", 1]]
+  [1m[35m (0.0ms)[0m  begin transaction
+  [1m[36mSQL (0.0ms)[0m  [1mINSERT INTO "messages" ("body", "conversation_id", "created_at", "updated_at", "user_id") VALUES (?, ?, ?, ?, ?)[0m  [["body", "yo"], ["conversation_id", 1], ["created_at", "2015-10-23 08:41:18.073212"], ["updated_at", "2015-10-23 08:41:18.073212"], ["user_id", 1]]
+  [1m[35m (120.6ms)[0m  commit transaction
+  [1m[36mUser Load (0.0ms)[0m  [1mSELECT  "users".* FROM "users"  WHERE "users"."id" = ? LIMIT 1[0m  [["id", 1]]
+  [1m[35mCACHE (0.0ms)[0m  SELECT  "users".* FROM "users"  WHERE "users"."id" = ? LIMIT 1  [["id", 1]]
+  Rendered messages/_message.html.erb (0.0ms)
+  Rendered messages/create.js.erb (2074.4ms)
+Completed 500 Internal Server Error in 2242ms
+
+ActionView::Template::Error (No connection could be made because the target machine actively refused it. - connect(2) for "localhost" port 9292):
+    1: <% publish_to @path do %>
+    2:     var id = "<%= @conversation.id %>";
+    3:     var chatbox = $("#chatbox_" + id + " .chatboxcontent");
+    4:     var sender_id = "<%= @message.user.id %>";
+  app/views/messages/create.js.erb:1:in `_app_views_messages_create_js_erb___929323245_46551084'
+
+
+  Rendered C:/RailsInstaller/Ruby2.1.0/lib/ruby/gems/2.1.0/gems/actionpack-4.1.1/lib/action_dispatch/middleware/templates/rescues/_trace.text.erb (0.0ms)
+  Rendered C:/RailsInstaller/Ruby2.1.0/lib/ruby/gems/2.1.0/gems/actionpack-4.1.1/lib/action_dispatch/middleware/templates/rescues/_request_and_response.text.erb (0.0ms)
+  Rendered C:/RailsInstaller/Ruby2.1.0/lib/ruby/gems/2.1.0/gems/actionpack-4.1.1/lib/action_dispatch/middleware/templates/rescues/template_error.text.erb (31.2ms)
+
+
+Started POST "/conversations/1/messages" for 127.0.0.1 at 2015-10-23 14:11:28 +0530
+Processing by MessagesController#create as JS
+  Parameters: {"utf8"=>"✓", "message"=>{"body"=>"yo"}, "conversation_id"=>"1"}
+  [1m[36mUser Load (0.0ms)[0m  [1mSELECT  "users".* FROM "users"  WHERE "users"."id" = 1  ORDER BY "users"."id" ASC LIMIT 1[0m
+  [1m[35mConversation Load (0.0ms)[0m  SELECT  "conversations".* FROM "conversations"  WHERE "conversations"."id" = ? LIMIT 1  [["id", 1]]
+  [1m[36m (0.0ms)[0m  [1mbegin transaction[0m
+  [1m[35mSQL (0.0ms)[0m  INSERT INTO "messages" ("body", "conversation_id", "created_at", "updated_at", "user_id") VALUES (?, ?, ?, ?, ?)  [["body", "yo"], ["conversation_id", 1], ["created_at", "2015-10-23 08:41:28.871042"], ["updated_at", "2015-10-23 08:41:28.871042"], ["user_id", 1]]
+  [1m[36m (113.1ms)[0m  [1mcommit transaction[0m
+  [1m[35mUser Load (0.0ms)[0m  SELECT  "users".* FROM "users"  WHERE "users"."id" = ? LIMIT 1  [["id", 1]]
+  [1m[36mCACHE (0.0ms)[0m  [1mSELECT  "users".* FROM "users"  WHERE "users"."id" = ? LIMIT 1[0m  [["id", 1]]
+  Rendered messages/_message.html.erb (0.0ms)
+  Rendered messages/create.js.erb (2054.4ms)
+Completed 500 Internal Server Error in 2222ms
+
+ActionView::Template::Error (No connection could be made because the target machine actively refused it. - connect(2) for "localhost" port 9292):
+    1: <% publish_to @path do %>
+    2:     var id = "<%= @conversation.id %>";
+    3:     var chatbox = $("#chatbox_" + id + " .chatboxcontent");
+    4:     var sender_id = "<%= @message.user.id %>";
+  app/views/messages/create.js.erb:1:in `_app_views_messages_create_js_erb___929323245_46551084'
+
+
+  Rendered C:/RailsInstaller/Ruby2.1.0/lib/ruby/gems/2.1.0/gems/actionpack-4.1.1/lib/action_dispatch/middleware/templates/rescues/_trace.text.erb (0.0ms)
+  Rendered C:/RailsInstaller/Ruby2.1.0/lib/ruby/gems/2.1.0/gems/actionpack-4.1.1/lib/action_dispatch/middleware/templates/rescues/_request_and_response.text.erb (0.0ms)
+  Rendered C:/RailsInstaller/Ruby2.1.0/lib/ruby/gems/2.1.0/gems/actionpack-4.1.1/lib/action_dispatch/middleware/templates/rescues/template_error.text.erb (15.6ms)
+
+
+Started GET "/" for 127.0.0.1 at 2015-10-23 14:11:37 +0530
+  [1m[35mUser Load (0.0ms)[0m  SELECT  "users".* FROM "users"  WHERE "users"."id" = 2  ORDER BY "users"."id" ASC LIMIT 1
+Processing by UsersController#index as HTML
+  [1m[36mUser Load (0.0ms)[0m  [1mSELECT "users".* FROM "users"  WHERE (NOT (id = 2))  ORDER BY created_at DESC[0m
+  [1m[35m (0.0ms)[0m  SELECT COUNT(*) FROM "conversations"  WHERE (conversations.sender_id =2 OR conversations.recipient_id =2)
+  [1m[36mConversation Load (0.0ms)[0m  [1mSELECT "conversations".* FROM "conversations"  WHERE (conversations.sender_id =2 OR conversations.recipient_id =2)  ORDER BY created_at DESC[0m
+  [1m[35mUser Load (0.0ms)[0m  SELECT  "users".* FROM "users"  WHERE "users"."id" = ? LIMIT 1  [["id", 2]]
+  [1m[36mUser Load (0.0ms)[0m  [1mSELECT  "users".* FROM "users"  WHERE "users"."id" = ? LIMIT 1[0m  [["id", 1]]
+  [1m[35mMessage Load (0.0ms)[0m  SELECT  "messages".* FROM "messages"  WHERE "messages"."conversation_id" = ?  ORDER BY "messages"."id" DESC LIMIT 1  [["conversation_id", 1]]
+  [1m[36mCACHE (0.0ms)[0m  [1mSELECT  "messages".* FROM "messages"  WHERE "messages"."conversation_id" = ?  ORDER BY "messages"."id" DESC LIMIT 1[0m  [["conversation_id", 1]]
+  Rendered users/index.html.erb within layouts/application (0.0ms)
+  Rendered layouts/_nav.html.erb (1.0ms)
+Completed 200 OK in 4801ms (Views: 4800.8ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/" for 127.0.0.1 at 2015-10-23 14:11:42 +0530
+  [1m[35mUser Load (0.0ms)[0m  SELECT  "users".* FROM "users"  WHERE "users"."id" = 1  ORDER BY "users"."id" ASC LIMIT 1
+Processing by UsersController#index as HTML
+  [1m[36mUser Load (1.0ms)[0m  [1mSELECT "users".* FROM "users"  WHERE (NOT (id = 1))  ORDER BY created_at DESC[0m
+  [1m[35m (1.0ms)[0m  SELECT COUNT(*) FROM "conversations"  WHERE (conversations.sender_id =1 OR conversations.recipient_id =1)
+  [1m[36mConversation Load (0.0ms)[0m  [1mSELECT "conversations".* FROM "conversations"  WHERE (conversations.sender_id =1 OR conversations.recipient_id =1)  ORDER BY created_at DESC[0m
+  [1m[35mUser Load (1.0ms)[0m  SELECT  "users".* FROM "users"  WHERE "users"."id" = ? LIMIT 1  [["id", 2]]
+  [1m[36mMessage Load (0.0ms)[0m  [1mSELECT  "messages".* FROM "messages"  WHERE "messages"."conversation_id" = ?  ORDER BY "messages"."id" DESC LIMIT 1[0m  [["conversation_id", 1]]
+  [1m[35mCACHE (0.0ms)[0m  SELECT  "messages".* FROM "messages"  WHERE "messages"."conversation_id" = ?  ORDER BY "messages"."id" DESC LIMIT 1  [["conversation_id", 1]]
+  Rendered users/index.html.erb within layouts/application (10.0ms)
+  Rendered layouts/_nav.html.erb (0.5ms)
+Completed 200 OK in 109ms (Views: 104.7ms | ActiveRecord: 3.0ms)
+
+
+Started GET "/assets/chat.css?body=1" for 127.0.0.1 at 2015-10-23 14:11:42 +0530
+
+
+Started GET "/assets/conversations.css?body=1" for 127.0.0.1 at 2015-10-23 14:11:42 +0530
+
+
+Started GET "/assets/users.css?body=1" for 127.0.0.1 at 2015-10-23 14:11:42 +0530
+
+
+Started GET "/assets/bootstrap.css?body=1" for 127.0.0.1 at 2015-10-23 14:11:42 +0530
+
+
+Started GET "/assets/messages.css?body=1" for 127.0.0.1 at 2015-10-23 14:11:42 +0530
+
+
+Started GET "/assets/application.css?body=1" for 127.0.0.1 at 2015-10-23 14:11:42 +0530
+
+
+Started GET "/assets/jquery_ujs.js?body=1" for 127.0.0.1 at 2015-10-23 14:11:42 +0530
+
+
+Started GET "/assets/jquery.js?body=1" for 127.0.0.1 at 2015-10-23 14:11:42 +0530
+
+
+Started GET "/assets/bootstrap.min.js?body=1" for 127.0.0.1 at 2015-10-23 14:11:42 +0530
+
+
+Started GET "/assets/private_pub.js?body=1" for 127.0.0.1 at 2015-10-23 14:11:42 +0530
+
+
+Started GET "/assets/chat.js?body=1" for 127.0.0.1 at 2015-10-23 14:11:42 +0530
+
+
+Started GET "/assets/turbolinks.js?body=1" for 127.0.0.1 at 2015-10-23 14:11:42 +0530
+
+
+Started GET "/assets/conversations.js?body=1" for 127.0.0.1 at 2015-10-23 14:11:42 +0530
+
+
+Started GET "/assets/messages.js?body=1" for 127.0.0.1 at 2015-10-23 14:11:42 +0530
+
+
+Started GET "/assets/users.js?body=1" for 127.0.0.1 at 2015-10-23 14:11:42 +0530
+
+
+Started GET "/assets/application.js?body=1" for 127.0.0.1 at 2015-10-23 14:11:42 +0530
+
+
+Started GET "/assets/chat.css?body=1" for 127.0.0.1 at 2015-10-23 14:11:42 +0530
+
+
+Started GET "/assets/conversations.css?body=1" for 127.0.0.1 at 2015-10-23 14:11:42 +0530
+
+
+Started GET "/assets/messages.css?body=1" for 127.0.0.1 at 2015-10-23 14:11:42 +0530
+
+
+Started GET "/assets/users.css?body=1" for 127.0.0.1 at 2015-10-23 14:11:42 +0530
+
+
+Started GET "/assets/bootstrap.css?body=1" for 127.0.0.1 at 2015-10-23 14:11:42 +0530
+
+
+Started GET "/assets/application.css?body=1" for 127.0.0.1 at 2015-10-23 14:11:42 +0530
+
+
+Started GET "/assets/jquery.js?body=1" for 127.0.0.1 at 2015-10-23 14:11:42 +0530
+
+
+Started GET "/assets/jquery_ujs.js?body=1" for 127.0.0.1 at 2015-10-23 14:11:43 +0530
+
+
+Started GET "/assets/bootstrap.min.js?body=1" for 127.0.0.1 at 2015-10-23 14:11:43 +0530
+
+
+Started GET "/assets/private_pub.js?body=1" for 127.0.0.1 at 2015-10-23 14:11:43 +0530
+
+
+Started GET "/assets/chat.js?body=1" for 127.0.0.1 at 2015-10-23 14:11:43 +0530
+
+
+Started GET "/assets/turbolinks.js?body=1" for 127.0.0.1 at 2015-10-23 14:11:43 +0530
+
+
+Started GET "/assets/conversations.js?body=1" for 127.0.0.1 at 2015-10-23 14:11:43 +0530
+
+
+Started GET "/assets/messages.js?body=1" for 127.0.0.1 at 2015-10-23 14:11:43 +0530
+
+
+Started GET "/assets/users.js?body=1" for 127.0.0.1 at 2015-10-23 14:11:43 +0530
+
+
+Started GET "/assets/application.js?body=1" for 127.0.0.1 at 2015-10-23 14:11:43 +0530
+
+
+Started GET "/conversations/1" for 127.0.0.1 at 2015-10-23 14:11:46 +0530
+Processing by ConversationsController#show as HTML
+  Parameters: {"id"=>"1"}
+  [1m[36mUser Load (0.0ms)[0m  [1mSELECT  "users".* FROM "users"  WHERE "users"."id" = 1  ORDER BY "users"."id" ASC LIMIT 1[0m
+  [1m[35mConversation Load (0.0ms)[0m  SELECT  "conversations".* FROM "conversations"  WHERE "conversations"."id" = ? LIMIT 1  [["id", 1]]
+  [1m[36mUser Load (1.0ms)[0m  [1mSELECT  "users".* FROM "users"  WHERE "users"."id" = ? LIMIT 1[0m  [["id", 2]]
+  [1m[35mMessage Exists (0.0ms)[0m  SELECT  1 AS one FROM "messages"  WHERE "messages"."conversation_id" = ? LIMIT 1  [["conversation_id", 1]]
+  [1m[36mMessage Load (0.0ms)[0m  [1mSELECT "messages".* FROM "messages"  WHERE "messages"."conversation_id" = ?[0m  [["conversation_id", 1]]
+  [1m[35mCACHE (0.0ms)[0m  SELECT  "users".* FROM "users"  WHERE "users"."id" = ? LIMIT 1  [["id", 2]]
+  [1m[36mUser Load (1.0ms)[0m  [1mSELECT  "users".* FROM "users"  WHERE "users"."id" = ? LIMIT 1[0m  [["id", 1]]
+  [1m[35mCACHE (0.0ms)[0m  SELECT  "users".* FROM "users"  WHERE "users"."id" = ? LIMIT 1  [["id", 2]]
+  [1m[36mCACHE (0.0ms)[0m  [1mSELECT  "users".* FROM "users"  WHERE "users"."id" = ? LIMIT 1[0m  [["id", 1]]
+  [1m[35mCACHE (0.0ms)[0m  SELECT  "users".* FROM "users"  WHERE "users"."id" = ? LIMIT 1  [["id", 1]]
+  Rendered messages/_message.html.erb (5.2ms)
+  Rendered conversations/show.html.erb (15.1ms)
+Completed 200 OK in 28ms (Views: 21.1ms | ActiveRecord: 2.0ms)
+
+
+Started GET "/conversations/1" for 127.0.0.1 at 2015-10-23 14:11:48 +0530
+Processing by ConversationsController#show as HTML
+  Parameters: {"id"=>"1"}
+  [1m[36mUser Load (0.5ms)[0m  [1mSELECT  "users".* FROM "users"  WHERE "users"."id" = 2  ORDER BY "users"."id" ASC LIMIT 1[0m
+  [1m[35mConversation Load (0.5ms)[0m  SELECT  "conversations".* FROM "conversations"  WHERE "conversations"."id" = ? LIMIT 1  [["id", 1]]
+  [1m[36mUser Load (0.5ms)[0m  [1mSELECT  "users".* FROM "users"  WHERE "users"."id" = ? LIMIT 1[0m  [["id", 2]]
+  [1m[35mUser Load (0.0ms)[0m  SELECT  "users".* FROM "users"  WHERE "users"."id" = ? LIMIT 1  [["id", 1]]
+  [1m[36mMessage Exists (0.0ms)[0m  [1mSELECT  1 AS one FROM "messages"  WHERE "messages"."conversation_id" = ? LIMIT 1[0m  [["conversation_id", 1]]
+  [1m[35mMessage Load (0.0ms)[0m  SELECT "messages".* FROM "messages"  WHERE "messages"."conversation_id" = ?  [["conversation_id", 1]]
+  [1m[36mCACHE (0.0ms)[0m  [1mSELECT  "users".* FROM "users"  WHERE "users"."id" = ? LIMIT 1[0m  [["id", 2]]
+  [1m[35mCACHE (0.0ms)[0m  SELECT  "users".* FROM "users"  WHERE "users"."id" = ? LIMIT 1  [["id", 2]]
+  [1m[36mCACHE (0.0ms)[0m  [1mSELECT  "users".* FROM "users"  WHERE "users"."id" = ? LIMIT 1[0m  [["id", 1]]
+  [1m[35mCACHE (0.0ms)[0m  SELECT  "users".* FROM "users"  WHERE "users"."id" = ? LIMIT 1  [["id", 1]]
+  Rendered messages/_message.html.erb (6.2ms)
+  Rendered conversations/show.html.erb (17.8ms)
+Completed 200 OK in 33ms (Views: 25.3ms | ActiveRecord: 1.5ms)
+
+
+Started POST "/conversations/1/messages" for 127.0.0.1 at 2015-10-23 14:11:56 +0530
+Processing by MessagesController#create as JS
+  Parameters: {"utf8"=>"✓", "message"=>{"body"=>"u there"}, "conversation_id"=>"1"}
+  [1m[36mUser Load (0.0ms)[0m  [1mSELECT  "users".* FROM "users"  WHERE "users"."id" = 2  ORDER BY "users"."id" ASC LIMIT 1[0m
+  [1m[35mConversation Load (0.0ms)[0m  SELECT  "conversations".* FROM "conversations"  WHERE "conversations"."id" = ? LIMIT 1  [["id", 1]]
+  [1m[36m (1.0ms)[0m  [1mbegin transaction[0m
+  [1m[35mSQL (1.0ms)[0m  INSERT INTO "messages" ("body", "conversation_id", "created_at", "updated_at", "user_id") VALUES (?, ?, ?, ?, ?)  [["body", "u there"], ["conversation_id", 1], ["created_at", "2015-10-23 08:41:56.837113"], ["updated_at", "2015-10-23 08:41:56.837113"], ["user_id", 2]]
+  [1m[36m (120.3ms)[0m  [1mcommit transaction[0m
+  [1m[35mUser Load (0.0ms)[0m  SELECT  "users".* FROM "users"  WHERE "users"."id" = ? LIMIT 1  [["id", 2]]
+  [1m[36mUser Load (0.0ms)[0m  [1mSELECT  "users".* FROM "users"  WHERE "users"."id" = ? LIMIT 1[0m  [["id", 1]]
+  [1m[35mCACHE (0.0ms)[0m  SELECT  "users".* FROM "users"  WHERE "users"."id" = ? LIMIT 1  [["id", 2]]
+  Rendered messages/_message.html.erb (15.6ms)
+  Rendered messages/create.js.erb (2060.8ms)
+Completed 500 Internal Server Error in 2243ms
+
+ActionView::Template::Error (No connection could be made because the target machine actively refused it. - connect(2) for "localhost" port 9292):
+    1: <% publish_to @path do %>
+    2:     var id = "<%= @conversation.id %>";
+    3:     var chatbox = $("#chatbox_" + id + " .chatboxcontent");
+    4:     var sender_id = "<%= @message.user.id %>";
+  app/views/messages/create.js.erb:1:in `_app_views_messages_create_js_erb___929323245_46551084'
+
+
+  Rendered C:/RailsInstaller/Ruby2.1.0/lib/ruby/gems/2.1.0/gems/actionpack-4.1.1/lib/action_dispatch/middleware/templates/rescues/_trace.text.erb (0.0ms)
+  Rendered C:/RailsInstaller/Ruby2.1.0/lib/ruby/gems/2.1.0/gems/actionpack-4.1.1/lib/action_dispatch/middleware/templates/rescues/_request_and_response.text.erb (0.0ms)
+  Rendered C:/RailsInstaller/Ruby2.1.0/lib/ruby/gems/2.1.0/gems/actionpack-4.1.1/lib/action_dispatch/middleware/templates/rescues/template_error.text.erb (15.6ms)
+
+
+Started GET "/" for 127.0.0.1 at 2015-10-23 14:12:27 +0530
+  [1m[36mUser Load (0.0ms)[0m  [1mSELECT  "users".* FROM "users"  WHERE "users"."id" = 1  ORDER BY "users"."id" ASC LIMIT 1[0m
+Processing by UsersController#index as HTML
+  [1m[35mUser Load (0.0ms)[0m  SELECT "users".* FROM "users"  WHERE (NOT (id = 1))  ORDER BY created_at DESC
+  [1m[36m (0.0ms)[0m  [1mSELECT COUNT(*) FROM "conversations"  WHERE (conversations.sender_id =1 OR conversations.recipient_id =1)[0m
+  [1m[35mConversation Load (0.0ms)[0m  SELECT "conversations".* FROM "conversations"  WHERE (conversations.sender_id =1 OR conversations.recipient_id =1)  ORDER BY created_at DESC
+  [1m[36mUser Load (0.0ms)[0m  [1mSELECT  "users".* FROM "users"  WHERE "users"."id" = ? LIMIT 1[0m  [["id", 2]]
+  [1m[35mMessage Load (1.0ms)[0m  SELECT  "messages".* FROM "messages"  WHERE "messages"."conversation_id" = ?  ORDER BY "messages"."id" DESC LIMIT 1  [["conversation_id", 1]]
+  [1m[36mCACHE (0.0ms)[0m  [1mSELECT  "messages".* FROM "messages"  WHERE "messages"."conversation_id" = ?  ORDER BY "messages"."id" DESC LIMIT 1[0m  [["conversation_id", 1]]
+  Rendered users/index.html.erb within layouts/application (9.2ms)
+  Rendered layouts/_nav.html.erb (0.0ms)
+Completed 200 OK in 4797ms (Views: 4795.2ms | ActiveRecord: 1.0ms)
+
+
+Started GET "/assets/chat.css?body=1" for 127.0.0.1 at 2015-10-23 14:12:32 +0530
+
+
+Started GET "/assets/conversations.css?body=1" for 127.0.0.1 at 2015-10-23 14:12:32 +0530
+
+
+Started GET "/assets/messages.css?body=1" for 127.0.0.1 at 2015-10-23 14:12:32 +0530
+
+
+Started GET "/assets/users.css?body=1" for 127.0.0.1 at 2015-10-23 14:12:32 +0530
+
+
+Started GET "/assets/bootstrap.css?body=1" for 127.0.0.1 at 2015-10-23 14:12:32 +0530
+
+
+Started GET "/assets/application.css?body=1" for 127.0.0.1 at 2015-10-23 14:12:32 +0530
+
+
+Started GET "/assets/jquery.js?body=1" for 127.0.0.1 at 2015-10-23 14:12:32 +0530
+
+
+Started GET "/assets/jquery_ujs.js?body=1" for 127.0.0.1 at 2015-10-23 14:12:32 +0530
+
+
+Started GET "/assets/bootstrap.min.js?body=1" for 127.0.0.1 at 2015-10-23 14:12:32 +0530
+
+
+Started GET "/assets/private_pub.js?body=1" for 127.0.0.1 at 2015-10-23 14:12:32 +0530
+
+
+Started GET "/assets/chat.js?body=1" for 127.0.0.1 at 2015-10-23 14:12:32 +0530
+
+
+Started GET "/assets/turbolinks.js?body=1" for 127.0.0.1 at 2015-10-23 14:12:32 +0530
+
+
+Started GET "/assets/conversations.js?body=1" for 127.0.0.1 at 2015-10-23 14:12:32 +0530
+
+
+Started GET "/assets/messages.js?body=1" for 127.0.0.1 at 2015-10-23 14:12:33 +0530
+
+
+Started GET "/assets/users.js?body=1" for 127.0.0.1 at 2015-10-23 14:12:33 +0530
+
+
+Started GET "/assets/application.js?body=1" for 127.0.0.1 at 2015-10-23 14:12:33 +0530
+
+
+Started GET "/" for 127.0.0.1 at 2015-10-23 14:12:36 +0530
+  [1m[35mUser Load (0.0ms)[0m  SELECT  "users".* FROM "users"  WHERE "users"."id" = 2  ORDER BY "users"."id" ASC LIMIT 1
+Processing by UsersController#index as HTML
+  [1m[36mUser Load (0.0ms)[0m  [1mSELECT "users".* FROM "users"  WHERE (NOT (id = 2))  ORDER BY created_at DESC[0m
+  [1m[35m (0.0ms)[0m  SELECT COUNT(*) FROM "conversations"  WHERE (conversations.sender_id =2 OR conversations.recipient_id =2)
+  [1m[36mConversation Load (0.0ms)[0m  [1mSELECT "conversations".* FROM "conversations"  WHERE (conversations.sender_id =2 OR conversations.recipient_id =2)  ORDER BY created_at DESC[0m
+  [1m[35mUser Load (0.0ms)[0m  SELECT  "users".* FROM "users"  WHERE "users"."id" = ? LIMIT 1  [["id", 2]]
+  [1m[36mUser Load (0.0ms)[0m  [1mSELECT  "users".* FROM "users"  WHERE "users"."id" = ? LIMIT 1[0m  [["id", 1]]
+  [1m[35mMessage Load (0.0ms)[0m  SELECT  "messages".* FROM "messages"  WHERE "messages"."conversation_id" = ?  ORDER BY "messages"."id" DESC LIMIT 1  [["conversation_id", 1]]
+  [1m[36mCACHE (0.0ms)[0m  [1mSELECT  "messages".* FROM "messages"  WHERE "messages"."conversation_id" = ?  ORDER BY "messages"."id" DESC LIMIT 1[0m  [["conversation_id", 1]]
+  Rendered users/index.html.erb within layouts/application (0.0ms)
+  Rendered layouts/_nav.html.erb (0.0ms)
+Completed 200 OK in 109ms (Views: 109.4ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/assets/chat.css?body=1" for 127.0.0.1 at 2015-10-23 14:12:36 +0530
+
+
+Started GET "/assets/conversations.css?body=1" for 127.0.0.1 at 2015-10-23 14:12:36 +0530
+
+
+Started GET "/assets/messages.css?body=1" for 127.0.0.1 at 2015-10-23 14:12:36 +0530
+
+
+Started GET "/assets/users.css?body=1" for 127.0.0.1 at 2015-10-23 14:12:36 +0530
+
+
+Started GET "/assets/bootstrap.css?body=1" for 127.0.0.1 at 2015-10-23 14:12:36 +0530
+
+
+Started GET "/assets/application.css?body=1" for 127.0.0.1 at 2015-10-23 14:12:36 +0530
+
+
+Started GET "/assets/jquery.js?body=1" for 127.0.0.1 at 2015-10-23 14:12:36 +0530
+
+
+Started GET "/assets/jquery_ujs.js?body=1" for 127.0.0.1 at 2015-10-23 14:12:36 +0530
+
+
+Started GET "/assets/bootstrap.min.js?body=1" for 127.0.0.1 at 2015-10-23 14:12:36 +0530
+
+
+Started GET "/assets/private_pub.js?body=1" for 127.0.0.1 at 2015-10-23 14:12:36 +0530
+
+
+Started GET "/assets/chat.js?body=1" for 127.0.0.1 at 2015-10-23 14:12:36 +0530
+
+
+Started GET "/assets/turbolinks.js?body=1" for 127.0.0.1 at 2015-10-23 14:12:36 +0530
+
+
+Started GET "/assets/conversations.js?body=1" for 127.0.0.1 at 2015-10-23 14:12:36 +0530
+
+
+Started GET "/assets/messages.js?body=1" for 127.0.0.1 at 2015-10-23 14:12:36 +0530
+
+
+Started GET "/assets/users.js?body=1" for 127.0.0.1 at 2015-10-23 14:12:36 +0530
+
+
+Started GET "/assets/application.js?body=1" for 127.0.0.1 at 2015-10-23 14:12:36 +0530
+  [1m[36mUser Load (0.0ms)[0m  [1mSELECT "users".* FROM "users"[0m
+
+
+Started GET "/" for 127.0.0.1 at 2015-10-27 19:05:08 +0530
+  [1m[36mActiveRecord::SchemaMigration Load (0.0ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+Processing by Devise::SessionsController#new as HTML
+  Rendered devise/shared/_links.erb (2.0ms)
+  Rendered devise/sessions/new.html.erb within layouts/application (429.3ms)
+  Rendered layouts/_nav.html.erb (1.0ms)
+Completed 200 OK in 1507ms (Views: 1478.0ms | ActiveRecord: 1.0ms)
+
+
+Started GET "/assets/chat.css?body=1" for 127.0.0.1 at 2015-10-27 19:05:10 +0530
+
+
+Started GET "/assets/conversations.css?body=1" for 127.0.0.1 at 2015-10-27 19:05:10 +0530
+
+
+Started GET "/assets/messages.css?body=1" for 127.0.0.1 at 2015-10-27 19:05:10 +0530
+
+
+Started GET "/assets/users.css?body=1" for 127.0.0.1 at 2015-10-27 19:05:10 +0530
+
+
+Started GET "/assets/bootstrap.css?body=1" for 127.0.0.1 at 2015-10-27 19:05:10 +0530
+
+
+Started GET "/assets/application.css?body=1" for 127.0.0.1 at 2015-10-27 19:05:10 +0530
+
+
+Started GET "/assets/jquery.js?body=1" for 127.0.0.1 at 2015-10-27 19:05:10 +0530
+
+
+Started GET "/assets/jquery_ujs.js?body=1" for 127.0.0.1 at 2015-10-27 19:05:10 +0530
+
+
+Started GET "/assets/bootstrap.min.js?body=1" for 127.0.0.1 at 2015-10-27 19:05:10 +0530
+
+
+Started GET "/assets/private_pub.js?body=1" for 127.0.0.1 at 2015-10-27 19:05:10 +0530
+
+
+Started GET "/assets/chat.js?body=1" for 127.0.0.1 at 2015-10-27 19:05:10 +0530
+
+
+Started GET "/assets/turbolinks.js?body=1" for 127.0.0.1 at 2015-10-27 19:05:10 +0530
+
+
+Started GET "/assets/conversations.js?body=1" for 127.0.0.1 at 2015-10-27 19:05:10 +0530
+
+
+Started GET "/assets/messages.js?body=1" for 127.0.0.1 at 2015-10-27 19:05:10 +0530
+
+
+Started GET "/assets/users.js?body=1" for 127.0.0.1 at 2015-10-27 19:05:10 +0530
+
+
+Started GET "/assets/application.js?body=1" for 127.0.0.1 at 2015-10-27 19:05:10 +0530
+
+
+Started GET "/users/sign_up" for 127.0.0.1 at 2015-10-27 19:05:16 +0530
+Processing by Devise::RegistrationsController#new as HTML
+  Rendered devise/shared/_links.erb (0.0ms)
+  Rendered devise/registrations/new.html.erb within layouts/application (15.6ms)
+  Rendered layouts/_nav.html.erb (0.5ms)
+Completed 200 OK in 150ms (Views: 149.0ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/users/sign_up" for 127.0.0.1 at 2015-10-27 19:05:19 +0530
+Processing by Devise::RegistrationsController#new as HTML
+  Rendered devise/shared/_links.erb (0.0ms)
+  Rendered devise/registrations/new.html.erb within layouts/application (4.0ms)
+  Rendered layouts/_nav.html.erb (0.0ms)
+Completed 200 OK in 124ms (Views: 121.9ms | ActiveRecord: 0.0ms)
+
+
+Started POST "/users" for 127.0.0.1 at 2015-10-27 19:05:31 +0530
+Processing by Devise::RegistrationsController#create as HTML
+  Parameters: {"utf8"=>"✓", "authenticity_token"=>"vEOdRp+snxhqXDpLOBPb7YRkmTxGhOz2wusefXGkdH4=", "user"=>{"name"=>"kfdvbk", "email"=>"kffdkjfn@bfdjn.com", "password"=>"[FILTERED]", "password_confirmation"=>"[FILTERED]"}, "commit"=>"Sign up"}
+  [1m[35m (1.0ms)[0m  begin transaction
+  [1m[36mUser Exists (0.0ms)[0m  [1mSELECT  1 AS one FROM "users"  WHERE "users"."email" = 'kffdkjfn@bfdjn.com' LIMIT 1[0m
+Binary data inserted for `string` type on column `encrypted_password`
+  [1m[35mSQL (2.0ms)[0m  INSERT INTO "users" ("created_at", "email", "encrypted_password", "name", "updated_at") VALUES (?, ?, ?, ?, ?)  [["created_at", "2015-10-27 13:35:32.314153"], ["email", "kffdkjfn@bfdjn.com"], ["encrypted_password", "$2a$10$yCUtOWHc6oeaqqsfXEwDbuJBYSgO0bvgVPTKPASYqxbvv6/vctlxK"], ["name", "kfdvbk"], ["updated_at", "2015-10-27 13:35:32.314153"]]
+  [1m[36mConversation Exists (0.0ms)[0m  [1mSELECT  1 AS one FROM "conversations"  WHERE ("conversations"."sender_id" = 1 AND "conversations"."recipient_id" = 3) LIMIT 1[0m
+  [1m[35mSQL (0.0ms)[0m  INSERT INTO "conversations" ("created_at", "recipient_id", "sender_id", "updated_at") VALUES (?, ?, ?, ?)  [["created_at", "2015-10-27 13:35:32.398213"], ["recipient_id", 3], ["sender_id", 1], ["updated_at", "2015-10-27 13:35:32.398213"]]
+  [1m[36m (91.1ms)[0m  [1mcommit transaction[0m
+  [1m[35m (0.0ms)[0m  begin transaction
+Binary data inserted for `string` type on column `current_sign_in_ip`
+Binary data inserted for `string` type on column `last_sign_in_ip`
+  [1m[36mSQL (2.0ms)[0m  [1mUPDATE "users" SET "current_sign_in_at" = ?, "current_sign_in_ip" = ?, "last_sign_in_at" = ?, "last_sign_in_ip" = ?, "sign_in_count" = ?, "updated_at" = ? WHERE "users"."id" = 3[0m  [["current_sign_in_at", "2015-10-27 13:35:32.495301"], ["current_sign_in_ip", "127.0.0.1"], ["last_sign_in_at", "2015-10-27 13:35:32.495301"], ["last_sign_in_ip", "127.0.0.1"], ["sign_in_count", 1], ["updated_at", "2015-10-27 13:35:32.497278"]]
+  [1m[35m (110.1ms)[0m  commit transaction
+Redirected to http://localhost:3000/
+Completed 302 Found in 791ms (ActiveRecord: 206.1ms)
+
+
+Started GET "/" for 127.0.0.1 at 2015-10-27 19:05:32 +0530
+  [1m[36mUser Load (0.0ms)[0m  [1mSELECT  "users".* FROM "users"  WHERE "users"."id" = 3  ORDER BY "users"."id" ASC LIMIT 1[0m
+Processing by UsersController#index as HTML
+  [1m[35mUser Load (0.5ms)[0m  SELECT "users".* FROM "users"  WHERE (NOT (id = 3))  ORDER BY created_at DESC
+  [1m[36m (0.5ms)[0m  [1mSELECT COUNT(*) FROM "conversations"  WHERE (conversations.sender_id =3 OR conversations.recipient_id =3)[0m
+  [1m[35mConversation Load (0.5ms)[0m  SELECT "conversations".* FROM "conversations"  WHERE (conversations.sender_id =3 OR conversations.recipient_id =3)  ORDER BY created_at DESC
+  [1m[36mUser Load (0.5ms)[0m  [1mSELECT  "users".* FROM "users"  WHERE "users"."id" = ? LIMIT 1[0m  [["id", 3]]
+  [1m[35mUser Load (0.0ms)[0m  SELECT  "users".* FROM "users"  WHERE "users"."id" = ? LIMIT 1  [["id", 1]]
+  [1m[36mMessage Load (0.5ms)[0m  [1mSELECT  "messages".* FROM "messages"  WHERE "messages"."conversation_id" = ?  ORDER BY "messages"."id" DESC LIMIT 1[0m  [["conversation_id", 2]]
+  Rendered users/index.html.erb within layouts/application (157.6ms)
+  Rendered layouts/_nav.html.erb (2.0ms)
+Completed 200 OK in 310ms (Views: 305.9ms | ActiveRecord: 3.5ms)
+
+
+Started GET "/" for 127.0.0.1 at 2015-10-27 19:06:43 +0530
+Processing by Devise::SessionsController#new as HTML
+  Rendered devise/shared/_links.erb (0.0ms)
+  Rendered devise/sessions/new.html.erb within layouts/application (0.0ms)
+  Rendered layouts/_nav.html.erb (0.0ms)
+Completed 200 OK in 109ms (Views: 109.4ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/assets/chat.css?body=1" for 127.0.0.1 at 2015-10-27 19:06:43 +0530
+
+
+Started GET "/assets/conversations.css?body=1" for 127.0.0.1 at 2015-10-27 19:06:43 +0530
+
+
+Started GET "/assets/messages.css?body=1" for 127.0.0.1 at 2015-10-27 19:06:43 +0530
+
+
+Started GET "/assets/users.css?body=1" for 127.0.0.1 at 2015-10-27 19:06:43 +0530
+
+
+Started GET "/assets/bootstrap.css?body=1" for 127.0.0.1 at 2015-10-27 19:06:43 +0530
+
+
+Started GET "/assets/application.css?body=1" for 127.0.0.1 at 2015-10-27 19:06:43 +0530
+
+
+Started GET "/assets/jquery_ujs.js?body=1" for 127.0.0.1 at 2015-10-27 19:06:43 +0530
+
+
+Started GET "/assets/private_pub.js?body=1" for 127.0.0.1 at 2015-10-27 19:06:43 +0530
+
+
+Started GET "/assets/bootstrap.min.js?body=1" for 127.0.0.1 at 2015-10-27 19:06:43 +0530
+
+
+Started GET "/assets/jquery.js?body=1" for 127.0.0.1 at 2015-10-27 19:06:43 +0530
+
+
+Started GET "/assets/turbolinks.js?body=1" for 127.0.0.1 at 2015-10-27 19:06:43 +0530
+
+
+Started GET "/assets/chat.js?body=1" for 127.0.0.1 at 2015-10-27 19:06:43 +0530
+
+
+Started GET "/assets/conversations.js?body=1" for 127.0.0.1 at 2015-10-27 19:06:43 +0530
+
+
+Started GET "/assets/messages.js?body=1" for 127.0.0.1 at 2015-10-27 19:06:43 +0530
+
+
+Started GET "/assets/users.js?body=1" for 127.0.0.1 at 2015-10-27 19:06:43 +0530
+
+
+Started GET "/assets/application.js?body=1" for 127.0.0.1 at 2015-10-27 19:06:43 +0530
+
+
+Started GET "/users/sign_up" for 127.0.0.1 at 2015-10-27 19:06:46 +0530
+Processing by Devise::RegistrationsController#new as HTML
+  Rendered devise/shared/_links.erb (0.0ms)
+  Rendered devise/registrations/new.html.erb within layouts/application (0.0ms)
+  Rendered layouts/_nav.html.erb (0.0ms)
+Completed 200 OK in 141ms (Views: 125.0ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/users/sign_up" for 127.0.0.1 at 2015-10-27 19:06:56 +0530
+Processing by Devise::RegistrationsController#new as HTML
+  Rendered devise/shared/_links.erb (0.0ms)
+  Rendered devise/registrations/new.html.erb within layouts/application (0.0ms)
+  Rendered layouts/_nav.html.erb (0.0ms)
+Completed 200 OK in 141ms (Views: 140.6ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/assets/messages.css?body=1" for 127.0.0.1 at 2015-10-27 19:06:56 +0530
+
+
+Started GET "/assets/users.css?body=1" for 127.0.0.1 at 2015-10-27 19:06:56 +0530
+
+
+Started POST "/users" for 127.0.0.1 at 2015-10-27 19:07:16 +0530
+Processing by Devise::RegistrationsController#create as HTML
+  Parameters: {"utf8"=>"✓", "authenticity_token"=>"Wg3oR7RjrJGLgF9JpzCPgNw/oJt0RTZkhqIGQR0Nmv8=", "user"=>{"name"=>"kjenvj", "email"=>"jvnkdfjvn@kvnfj.com", "password"=>"[FILTERED]", "password_confirmation"=>"[FILTERED]"}, "commit"=>"Sign up"}
+  [1m[35m (0.0ms)[0m  begin transaction
+  [1m[36mUser Exists (0.5ms)[0m  [1mSELECT  1 AS one FROM "users"  WHERE "users"."email" = 'jvnkdfjvn@kvnfj.com' LIMIT 1[0m
+Binary data inserted for `string` type on column `encrypted_password`
+  [1m[35mSQL (1.5ms)[0m  INSERT INTO "users" ("created_at", "email", "encrypted_password", "name", "updated_at") VALUES (?, ?, ?, ?, ?)  [["created_at", "2015-10-27 13:37:16.276899"], ["email", "jvnkdfjvn@kvnfj.com"], ["encrypted_password", "$2a$10$eHGhn657uiOi2jPzSI0u1OKtlzlV.oC6gmImRFXa/XPWz5Q3cUisy"], ["name", "kjenvj"], ["updated_at", "2015-10-27 13:37:16.276899"]]
+  [1m[36mConversation Exists (0.5ms)[0m  [1mSELECT  1 AS one FROM "conversations"  WHERE ("conversations"."sender_id" = 1 AND "conversations"."recipient_id" = 4) LIMIT 1[0m
+  [1m[35mSQL (0.5ms)[0m  INSERT INTO "conversations" ("created_at", "recipient_id", "sender_id", "updated_at") VALUES (?, ?, ?, ?)  [["created_at", "2015-10-27 13:37:16.285907"], ["recipient_id", 4], ["sender_id", 1], ["updated_at", "2015-10-27 13:37:16.285907"]]
+  [1m[36m (124.6ms)[0m  [1mcommit transaction[0m
+  [1m[35m (0.5ms)[0m  begin transaction
+Binary data inserted for `string` type on column `current_sign_in_ip`
+Binary data inserted for `string` type on column `last_sign_in_ip`
+  [1m[36mSQL (3.0ms)[0m  [1mUPDATE "users" SET "current_sign_in_at" = ?, "current_sign_in_ip" = ?, "last_sign_in_at" = ?, "last_sign_in_ip" = ?, "sign_in_count" = ?, "updated_at" = ? WHERE "users"."id" = 4[0m  [["current_sign_in_at", "2015-10-27 13:37:16.415506"], ["current_sign_in_ip", "127.0.0.1"], ["last_sign_in_at", "2015-10-27 13:37:16.415506"], ["last_sign_in_ip", "127.0.0.1"], ["sign_in_count", 1], ["updated_at", "2015-10-27 13:37:16.416998"]]
+  [1m[35m (160.6ms)[0m  commit transaction
+Redirected to http://localhost:3000/
+Completed 302 Found in 413ms (ActiveRecord: 291.7ms)
+
+
+Started GET "/" for 127.0.0.1 at 2015-10-27 19:07:16 +0530
+  [1m[36mUser Load (0.5ms)[0m  [1mSELECT  "users".* FROM "users"  WHERE "users"."id" = 4  ORDER BY "users"."id" ASC LIMIT 1[0m
+Processing by UsersController#index as HTML
+  [1m[35mUser Load (0.5ms)[0m  SELECT "users".* FROM "users"  WHERE (NOT (id = 4))  ORDER BY created_at DESC
+  [1m[36m (0.5ms)[0m  [1mSELECT COUNT(*) FROM "conversations"  WHERE (conversations.sender_id =4 OR conversations.recipient_id =4)[0m
+  [1m[35mConversation Load (1.0ms)[0m  SELECT "conversations".* FROM "conversations"  WHERE (conversations.sender_id =4 OR conversations.recipient_id =4)  ORDER BY created_at DESC
+  [1m[36mUser Load (0.0ms)[0m  [1mSELECT  "users".* FROM "users"  WHERE "users"."id" = ? LIMIT 1[0m  [["id", 4]]
+  [1m[35mUser Load (1.0ms)[0m  SELECT  "users".* FROM "users"  WHERE "users"."id" = ? LIMIT 1  [["id", 1]]
+  [1m[36mMessage Load (0.0ms)[0m  [1mSELECT  "messages".* FROM "messages"  WHERE "messages"."conversation_id" = ?  ORDER BY "messages"."id" DESC LIMIT 1[0m  [["conversation_id", 3]]
+  Rendered users/index.html.erb within layouts/application (15.0ms)
+  Rendered layouts/_nav.html.erb (0.0ms)
+Completed 200 OK in 117ms (Views: 112.1ms | ActiveRecord: 3.0ms)
+
+
+Started POST "/conversations" for 127.0.0.1 at 2015-10-27 19:07:23 +0530
+Processing by ConversationsController#create as */*
+  Parameters: {"sender_id"=>"4", "recipient_id"=>"3"}
+  [1m[35mUser Load (0.0ms)[0m  SELECT  "users".* FROM "users"  WHERE "users"."id" = 4  ORDER BY "users"."id" ASC LIMIT 1
+  [1m[36mConversation Load (0.0ms)[0m  [1mSELECT "conversations".* FROM "conversations"  WHERE ((conversations.sender_id = '4' AND conversations.recipient_id ='3') OR (conversations.sender_id = '3' AND conversations.recipient_id ='4'))[0m
+  [1m[35m (0.0ms)[0m  begin transaction
+  [1m[36mConversation Exists (0.5ms)[0m  [1mSELECT  1 AS one FROM "conversations"  WHERE ("conversations"."sender_id" = 4 AND "conversations"."recipient_id" = 3) LIMIT 1[0m
+  [1m[35mSQL (0.5ms)[0m  INSERT INTO "conversations" ("created_at", "recipient_id", "sender_id", "updated_at") VALUES (?, ?, ?, ?)  [["created_at", "2015-10-27 13:37:23.981615"], ["recipient_id", 3], ["sender_id", 4], ["updated_at", "2015-10-27 13:37:23.981615"]]
+  [1m[36m (128.1ms)[0m  [1mcommit transaction[0m
+Completed 200 OK in 149ms (Views: 0.5ms | ActiveRecord: 129.1ms)
+
+
+Started GET "/conversations/4" for 127.0.0.1 at 2015-10-27 19:07:24 +0530
+Processing by ConversationsController#show as HTML
+  Parameters: {"id"=>"4"}
+  [1m[35mUser Load (0.0ms)[0m  SELECT  "users".* FROM "users"  WHERE "users"."id" = 4  ORDER BY "users"."id" ASC LIMIT 1
+  [1m[36mConversation Load (0.5ms)[0m  [1mSELECT  "conversations".* FROM "conversations"  WHERE "conversations"."id" = ? LIMIT 1[0m  [["id", 4]]
+  [1m[35mUser Load (0.5ms)[0m  SELECT  "users".* FROM "users"  WHERE "users"."id" = ? LIMIT 1  [["id", 3]]
+  [1m[36mMessage Exists (0.0ms)[0m  [1mSELECT  1 AS one FROM "messages"  WHERE "messages"."conversation_id" = ? LIMIT 1[0m  [["conversation_id", 4]]
+  Rendered conversations/show.html.erb (43.5ms)
+Completed 200 OK in 106ms (Views: 94.6ms | ActiveRecord: 1.0ms)
+
+
+Started POST "/conversations/4/messages" for 127.0.0.1 at 2015-10-27 19:07:32 +0530
+Processing by MessagesController#create as JS
+  Parameters: {"utf8"=>"✓", "message"=>{"body"=>"hey!"}, "conversation_id"=>"4"}
+  [1m[35mUser Load (0.0ms)[0m  SELECT  "users".* FROM "users"  WHERE "users"."id" = 4  ORDER BY "users"."id" ASC LIMIT 1
+  [1m[36mConversation Load (0.0ms)[0m  [1mSELECT  "conversations".* FROM "conversations"  WHERE "conversations"."id" = ? LIMIT 1[0m  [["id", 4]]
+  [1m[35m (0.0ms)[0m  begin transaction
+  [1m[36mSQL (0.0ms)[0m  [1mINSERT INTO "messages" ("body", "conversation_id", "created_at", "updated_at", "user_id") VALUES (?, ?, ?, ?, ?)[0m  [["body", "hey!"], ["conversation_id", 4], ["created_at", "2015-10-27 13:37:32.595412"], ["updated_at", "2015-10-27 13:37:32.595412"], ["user_id", 4]]
+  [1m[35m (187.5ms)[0m  commit transaction
+  [1m[36mUser Load (0.0ms)[0m  [1mSELECT  "users".* FROM "users"  WHERE "users"."id" = ? LIMIT 1[0m  [["id", 4]]
+  [1m[35mCACHE (0.0ms)[0m  SELECT  "users".* FROM "users"  WHERE "users"."id" = ? LIMIT 1  [["id", 4]]
+  Rendered messages/_message.html.erb (15.6ms)
+  Rendered messages/create.js.erb (2081.6ms)
+Completed 500 Internal Server Error in 2300ms
+
+ActionView::Template::Error (No connection could be made because the target machine actively refused it. - connect(2) for "localhost" port 9292):
+    1: <% publish_to @path do %>
+    2:     var id = "<%= @conversation.id %>";
+    3:     var chatbox = $("#chatbox_" + id + " .chatboxcontent");
+    4:     var sender_id = "<%= @message.user.id %>";
+  app/views/messages/create.js.erb:1:in `_app_views_messages_create_js_erb__145872351_37028472'
+
+
+  Rendered C:/RailsInstaller/Ruby2.1.0/lib/ruby/gems/2.1.0/gems/actionpack-4.1.1/lib/action_dispatch/middleware/templates/rescues/_trace.text.erb (0.0ms)
+  Rendered C:/RailsInstaller/Ruby2.1.0/lib/ruby/gems/2.1.0/gems/actionpack-4.1.1/lib/action_dispatch/middleware/templates/rescues/_request_and_response.text.erb (15.6ms)
+  Rendered C:/RailsInstaller/Ruby2.1.0/lib/ruby/gems/2.1.0/gems/actionpack-4.1.1/lib/action_dispatch/middleware/templates/rescues/template_error.text.erb (109.4ms)
+
+
+Started GET "/" for 127.0.0.1 at 2015-10-27 19:07:39 +0530
+  [1m[36mUser Load (0.0ms)[0m  [1mSELECT  "users".* FROM "users"  WHERE "users"."id" = 4  ORDER BY "users"."id" ASC LIMIT 1[0m
+Processing by UsersController#index as HTML
+  [1m[35mUser Load (0.0ms)[0m  SELECT "users".* FROM "users"  WHERE (NOT (id = 4))  ORDER BY created_at DESC
+  [1m[36m (0.0ms)[0m  [1mSELECT COUNT(*) FROM "conversations"  WHERE (conversations.sender_id =4 OR conversations.recipient_id =4)[0m
+  [1m[35mConversation Load (0.0ms)[0m  SELECT "conversations".* FROM "conversations"  WHERE (conversations.sender_id =4 OR conversations.recipient_id =4)  ORDER BY created_at DESC
+  [1m[36mUser Load (0.0ms)[0m  [1mSELECT  "users".* FROM "users"  WHERE "users"."id" = ? LIMIT 1[0m  [["id", 3]]
+  [1m[35mMessage Load (0.0ms)[0m  SELECT  "messages".* FROM "messages"  WHERE "messages"."conversation_id" = ?  ORDER BY "messages"."id" DESC LIMIT 1  [["conversation_id", 4]]
+  [1m[36mCACHE (0.0ms)[0m  [1mSELECT  "messages".* FROM "messages"  WHERE "messages"."conversation_id" = ?  ORDER BY "messages"."id" DESC LIMIT 1[0m  [["conversation_id", 4]]
+  [1m[35mUser Load (0.0ms)[0m  SELECT  "users".* FROM "users"  WHERE "users"."id" = ? LIMIT 1  [["id", 4]]
+  [1m[36mUser Load (0.0ms)[0m  [1mSELECT  "users".* FROM "users"  WHERE "users"."id" = ? LIMIT 1[0m  [["id", 1]]
+  [1m[35mMessage Load (0.0ms)[0m  SELECT  "messages".* FROM "messages"  WHERE "messages"."conversation_id" = ?  ORDER BY "messages"."id" DESC LIMIT 1  [["conversation_id", 3]]
+  Rendered users/index.html.erb within layouts/application (31.2ms)
+  Rendered layouts/_nav.html.erb (0.0ms)
+Completed 200 OK in 125ms (Views: 125.0ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/assets/users.css?body=1" for 127.0.0.1 at 2015-10-27 19:07:40 +0530
+
+
+Started GET "/assets/conversations.css?body=1" for 127.0.0.1 at 2015-10-27 19:07:40 +0530
+
+
+Started GET "/assets/messages.css?body=1" for 127.0.0.1 at 2015-10-27 19:07:40 +0530
+
+
+Started GET "/assets/bootstrap.css?body=1" for 127.0.0.1 at 2015-10-27 19:07:40 +0530
+
+
+Started GET "/assets/chat.css?body=1" for 127.0.0.1 at 2015-10-27 19:07:40 +0530
+
+
+Started GET "/assets/bootstrap.min.js?body=1" for 127.0.0.1 at 2015-10-27 19:07:40 +0530
+
+
+Started GET "/assets/private_pub.js?body=1" for 127.0.0.1 at 2015-10-27 19:07:40 +0530
+
+
+Started GET "/assets/chat.js?body=1" for 127.0.0.1 at 2015-10-27 19:07:40 +0530
+
+
+Started GET "/assets/turbolinks.js?body=1" for 127.0.0.1 at 2015-10-27 19:07:40 +0530
+
+
+Started GET "/assets/conversations.js?body=1" for 127.0.0.1 at 2015-10-27 19:07:40 +0530
+
+
+Started GET "/assets/messages.js?body=1" for 127.0.0.1 at 2015-10-27 19:07:40 +0530
+
+
+Started GET "/assets/users.js?body=1" for 127.0.0.1 at 2015-10-27 19:07:40 +0530
+
+
+Started GET "/assets/application.js?body=1" for 127.0.0.1 at 2015-10-27 19:07:40 +0530
+
+
+Started GET "/assets/application.css?body=1" for 127.0.0.1 at 2015-10-27 19:07:40 +0530
+
+
+Started GET "/assets/jquery.js?body=1" for 127.0.0.1 at 2015-10-27 19:07:40 +0530
+
+
+Started GET "/assets/jquery_ujs.js?body=1" for 127.0.0.1 at 2015-10-27 19:07:40 +0530
+
+
+Started POST "/conversations" for 127.0.0.1 at 2015-10-27 19:07:43 +0530
+Processing by ConversationsController#create as */*
+  Parameters: {"sender_id"=>"4", "recipient_id"=>"3"}
+  [1m[36mUser Load (0.0ms)[0m  [1mSELECT  "users".* FROM "users"  WHERE "users"."id" = 4  ORDER BY "users"."id" ASC LIMIT 1[0m
+  [1m[35mConversation Load (0.0ms)[0m  SELECT "conversations".* FROM "conversations"  WHERE ((conversations.sender_id = '4' AND conversations.recipient_id ='3') OR (conversations.sender_id = '3' AND conversations.recipient_id ='4'))
+  [1m[36mConversation Load (0.0ms)[0m  [1mSELECT  "conversations".* FROM "conversations"  WHERE ((conversations.sender_id = '4' AND conversations.recipient_id ='3') OR (conversations.sender_id = '3' AND conversations.recipient_id ='4'))  ORDER BY "conversations"."id" ASC LIMIT 1[0m
+Completed 200 OK in 0ms (Views: 0.0ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/conversations/4" for 127.0.0.1 at 2015-10-27 19:07:43 +0530
+Processing by ConversationsController#show as HTML
+  Parameters: {"id"=>"4"}
+  [1m[35mUser Load (0.0ms)[0m  SELECT  "users".* FROM "users"  WHERE "users"."id" = 4  ORDER BY "users"."id" ASC LIMIT 1
+  [1m[36mConversation Load (0.0ms)[0m  [1mSELECT  "conversations".* FROM "conversations"  WHERE "conversations"."id" = ? LIMIT 1[0m  [["id", 4]]
+  [1m[35mUser Load (0.0ms)[0m  SELECT  "users".* FROM "users"  WHERE "users"."id" = ? LIMIT 1  [["id", 3]]
+  [1m[36mMessage Exists (0.0ms)[0m  [1mSELECT  1 AS one FROM "messages"  WHERE "messages"."conversation_id" = ? LIMIT 1[0m  [["conversation_id", 4]]
+  [1m[35mMessage Load (0.0ms)[0m  SELECT "messages".* FROM "messages"  WHERE "messages"."conversation_id" = ?  [["conversation_id", 4]]
+  [1m[36mUser Load (0.0ms)[0m  [1mSELECT  "users".* FROM "users"  WHERE "users"."id" = ? LIMIT 1[0m  [["id", 4]]
+  [1m[35mCACHE (0.0ms)[0m  SELECT  "users".* FROM "users"  WHERE "users"."id" = ? LIMIT 1  [["id", 4]]
+  Rendered messages/_message.html.erb (15.6ms)
+  Rendered conversations/show.html.erb (15.6ms)
+Completed 200 OK in 47ms (Views: 31.2ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/" for 127.0.0.1 at 2015-10-27 19:07:49 +0530
+  [1m[36mUser Load (1.0ms)[0m  [1mSELECT  "users".* FROM "users"  WHERE "users"."id" = 3  ORDER BY "users"."id" ASC LIMIT 1[0m
+Processing by UsersController#index as HTML
+  [1m[35mUser Load (0.0ms)[0m  SELECT "users".* FROM "users"  WHERE (NOT (id = 3))  ORDER BY created_at DESC
+  [1m[36m (0.0ms)[0m  [1mSELECT COUNT(*) FROM "conversations"  WHERE (conversations.sender_id =3 OR conversations.recipient_id =3)[0m
+  [1m[35mConversation Load (1.0ms)[0m  SELECT "conversations".* FROM "conversations"  WHERE (conversations.sender_id =3 OR conversations.recipient_id =3)  ORDER BY created_at DESC
+  [1m[36mUser Load (2.0ms)[0m  [1mSELECT  "users".* FROM "users"  WHERE "users"."id" = ? LIMIT 1[0m  [["id", 3]]
+  [1m[35mUser Load (1.0ms)[0m  SELECT  "users".* FROM "users"  WHERE "users"."id" = ? LIMIT 1  [["id", 4]]
+  [1m[36mMessage Load (0.0ms)[0m  [1mSELECT  "messages".* FROM "messages"  WHERE "messages"."conversation_id" = ?  ORDER BY "messages"."id" DESC LIMIT 1[0m  [["conversation_id", 4]]
+  [1m[35mCACHE (0.0ms)[0m  SELECT  "messages".* FROM "messages"  WHERE "messages"."conversation_id" = ?  ORDER BY "messages"."id" DESC LIMIT 1  [["conversation_id", 4]]
+  [1m[36mCACHE (0.0ms)[0m  [1mSELECT  "users".* FROM "users"  WHERE "users"."id" = ? LIMIT 1[0m  [["id", 3]]
+  [1m[35mUser Load (0.0ms)[0m  SELECT  "users".* FROM "users"  WHERE "users"."id" = ? LIMIT 1  [["id", 1]]
+  [1m[36mMessage Load (0.0ms)[0m  [1mSELECT  "messages".* FROM "messages"  WHERE "messages"."conversation_id" = ?  ORDER BY "messages"."id" DESC LIMIT 1[0m  [["conversation_id", 2]]
+  Rendered users/index.html.erb within layouts/application (32.0ms)
+  Rendered layouts/_nav.html.erb (0.0ms)
+Completed 200 OK in 162ms (Views: 156.1ms | ActiveRecord: 4.0ms)
+
+
+Started GET "/assets/chat.css?body=1" for 127.0.0.1 at 2015-10-27 19:07:49 +0530
+
+
+Started GET "/assets/conversations.css?body=1" for 127.0.0.1 at 2015-10-27 19:07:49 +0530
+
+
+Started GET "/assets/messages.css?body=1" for 127.0.0.1 at 2015-10-27 19:07:49 +0530
+
+
+Started GET "/assets/users.css?body=1" for 127.0.0.1 at 2015-10-27 19:07:49 +0530
+
+
+Started GET "/assets/bootstrap.css?body=1" for 127.0.0.1 at 2015-10-27 19:07:49 +0530
+
+
+Started GET "/assets/application.css?body=1" for 127.0.0.1 at 2015-10-27 19:07:49 +0530
+
+
+Started GET "/assets/jquery.js?body=1" for 127.0.0.1 at 2015-10-27 19:07:49 +0530
+
+
+Started GET "/assets/jquery_ujs.js?body=1" for 127.0.0.1 at 2015-10-27 19:07:50 +0530
+
+
+Started GET "/assets/bootstrap.min.js?body=1" for 127.0.0.1 at 2015-10-27 19:07:50 +0530
+
+
+Started GET "/assets/private_pub.js?body=1" for 127.0.0.1 at 2015-10-27 19:07:50 +0530
+
+
+Started GET "/assets/chat.js?body=1" for 127.0.0.1 at 2015-10-27 19:07:50 +0530
+
+
+Started GET "/assets/turbolinks.js?body=1" for 127.0.0.1 at 2015-10-27 19:07:50 +0530
+
+
+Started GET "/assets/conversations.js?body=1" for 127.0.0.1 at 2015-10-27 19:07:50 +0530
+
+
+Started GET "/assets/messages.js?body=1" for 127.0.0.1 at 2015-10-27 19:07:50 +0530
+
+
+Started GET "/assets/users.js?body=1" for 127.0.0.1 at 2015-10-27 19:07:50 +0530
+
+
+Started GET "/assets/application.js?body=1" for 127.0.0.1 at 2015-10-27 19:07:50 +0530
+
+
+Started POST "/conversations" for 127.0.0.1 at 2015-10-27 19:07:53 +0530
+Processing by ConversationsController#create as */*
+  Parameters: {"sender_id"=>"3", "recipient_id"=>"4"}
+  [1m[35mUser Load (1.0ms)[0m  SELECT  "users".* FROM "users"  WHERE "users"."id" = 3  ORDER BY "users"."id" ASC LIMIT 1
+  [1m[36mConversation Load (1.0ms)[0m  [1mSELECT "conversations".* FROM "conversations"  WHERE ((conversations.sender_id = '3' AND conversations.recipient_id ='4') OR (conversations.sender_id = '4' AND conversations.recipient_id ='3'))[0m
+  [1m[35mConversation Load (0.0ms)[0m  SELECT  "conversations".* FROM "conversations"  WHERE ((conversations.sender_id = '3' AND conversations.recipient_id ='4') OR (conversations.sender_id = '4' AND conversations.recipient_id ='3'))  ORDER BY "conversations"."id" ASC LIMIT 1
+Completed 200 OK in 19ms (Views: 1.0ms | ActiveRecord: 2.0ms)
+
+
+Started GET "/conversations/4" for 127.0.0.1 at 2015-10-27 19:07:53 +0530
+Processing by ConversationsController#show as HTML
+  Parameters: {"id"=>"4"}
+  [1m[36mUser Load (1.0ms)[0m  [1mSELECT  "users".* FROM "users"  WHERE "users"."id" = 3  ORDER BY "users"."id" ASC LIMIT 1[0m
+  [1m[35mConversation Load (0.5ms)[0m  SELECT  "conversations".* FROM "conversations"  WHERE "conversations"."id" = ? LIMIT 1  [["id", 4]]
+  [1m[36mUser Load (1.0ms)[0m  [1mSELECT  "users".* FROM "users"  WHERE "users"."id" = ? LIMIT 1[0m  [["id", 3]]
+  [1m[35mUser Load (0.9ms)[0m  SELECT  "users".* FROM "users"  WHERE "users"."id" = ? LIMIT 1  [["id", 4]]
+  [1m[36mMessage Exists (0.0ms)[0m  [1mSELECT  1 AS one FROM "messages"  WHERE "messages"."conversation_id" = ? LIMIT 1[0m  [["conversation_id", 4]]
+  [1m[35mMessage Load (0.5ms)[0m  SELECT "messages".* FROM "messages"  WHERE "messages"."conversation_id" = ?  [["conversation_id", 4]]
+  [1m[36mCACHE (0.0ms)[0m  [1mSELECT  "users".* FROM "users"  WHERE "users"."id" = ? LIMIT 1[0m  [["id", 4]]
+  Rendered messages/_message.html.erb (2.5ms)
+  Rendered conversations/show.html.erb (18.0ms)
+Completed 200 OK in 39ms (Views: 26.0ms | ActiveRecord: 3.8ms)
+
+
+Started GET "/" for 127.0.0.1 at 2015-11-01 16:31:18 +0530
+  [1m[36mActiveRecord::SchemaMigration Load (1.0ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+Processing by Devise::SessionsController#new as HTML
+  Rendered devise/shared/_links.erb (2.0ms)
+  Rendered devise/sessions/new.html.erb within layouts/application (605.5ms)
+  Rendered layouts/_nav.html.erb (1.0ms)
+Completed 200 OK in 5817ms (Views: 5756.6ms | ActiveRecord: 3.0ms)
+
+
+Started GET "/assets/chat.css?body=1" for 127.0.0.1 at 2015-11-01 16:31:24 +0530
+
+
+Started GET "/assets/conversations.css?body=1" for 127.0.0.1 at 2015-11-01 16:31:24 +0530
+
+
+Started GET "/assets/messages.css?body=1" for 127.0.0.1 at 2015-11-01 16:31:24 +0530
+
+
+Started GET "/assets/users.css?body=1" for 127.0.0.1 at 2015-11-01 16:31:24 +0530
+
+
+Started GET "/assets/bootstrap.css?body=1" for 127.0.0.1 at 2015-11-01 16:31:24 +0530
+
+
+Started GET "/assets/application.css?body=1" for 127.0.0.1 at 2015-11-01 16:31:24 +0530
+
+
+Started GET "/assets/jquery.js?body=1" for 127.0.0.1 at 2015-11-01 16:31:24 +0530
+
+
+Started GET "/assets/jquery_ujs.js?body=1" for 127.0.0.1 at 2015-11-01 16:31:25 +0530
+
+
+Started GET "/assets/bootstrap.min.js?body=1" for 127.0.0.1 at 2015-11-01 16:31:25 +0530
+
+
+Started GET "/assets/private_pub.js?body=1" for 127.0.0.1 at 2015-11-01 16:31:25 +0530
+
+
+Started GET "/assets/chat.js?body=1" for 127.0.0.1 at 2015-11-01 16:31:25 +0530
+
+
+Started GET "/assets/turbolinks.js?body=1" for 127.0.0.1 at 2015-11-01 16:31:25 +0530
+
+
+Started GET "/assets/conversations.js?body=1" for 127.0.0.1 at 2015-11-01 16:31:25 +0530
+
+
+Started GET "/assets/messages.js?body=1" for 127.0.0.1 at 2015-11-01 16:31:25 +0530
+
+
+Started GET "/assets/users.js?body=1" for 127.0.0.1 at 2015-11-01 16:31:25 +0530
+
+
+Started GET "/assets/application.js?body=1" for 127.0.0.1 at 2015-11-01 16:31:25 +0530
+
+
+Started POST "/users/sign_in" for 127.0.0.1 at 2015-11-01 16:33:03 +0530
+Processing by Devise::SessionsController#create as HTML
+  Parameters: {"utf8"=>"✓", "authenticity_token"=>"UbGypPj43w4ogVIImieh0yPGNx474zRbbXTkM01fUqI=", "user"=>{"email"=>"chattybot@example.com", "password"=>"[FILTERED]", "remember_me"=>"0"}, "commit"=>"Sign in"}
+  [1m[35mUser Load (59.6ms)[0m  SELECT  "users".* FROM "users"  WHERE "users"."email" = 'chattybot@example.com'  ORDER BY "users"."id" ASC LIMIT 1
+Completed 401 Unauthorized in 548ms
+Processing by Devise::SessionsController#new as HTML
+  Parameters: {"utf8"=>"✓", "authenticity_token"=>"UbGypPj43w4ogVIImieh0yPGNx474zRbbXTkM01fUqI=", "user"=>{"email"=>"chattybot@example.com", "password"=>"[FILTERED]", "remember_me"=>"0"}, "commit"=>"Sign in"}
+  Rendered devise/shared/_links.erb (1.0ms)
+  Rendered devise/sessions/new.html.erb within layouts/application (4.5ms)
+  Rendered layouts/_nav.html.erb (1.0ms)
+Completed 200 OK in 4217ms (Views: 3519.2ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/assets/chat.css?body=1" for 127.0.0.1 at 2015-11-01 16:33:08 +0530
+
+
+Started GET "/assets/conversations.css?body=1" for 127.0.0.1 at 2015-11-01 16:33:09 +0530
+
+
+Started GET "/assets/messages.css?body=1" for 127.0.0.1 at 2015-11-01 16:33:09 +0530
+
+
+Started GET "/assets/users.css?body=1" for 127.0.0.1 at 2015-11-01 16:33:09 +0530
+
+
+Started GET "/assets/bootstrap.css?body=1" for 127.0.0.1 at 2015-11-01 16:33:09 +0530
+
+
+Started GET "/assets/application.css?body=1" for 127.0.0.1 at 2015-11-01 16:33:09 +0530
+
+
+Started GET "/assets/jquery.js?body=1" for 127.0.0.1 at 2015-11-01 16:33:09 +0530
+
+
+Started GET "/assets/jquery_ujs.js?body=1" for 127.0.0.1 at 2015-11-01 16:33:09 +0530
+
+
+Started GET "/assets/bootstrap.min.js?body=1" for 127.0.0.1 at 2015-11-01 16:33:09 +0530
+
+
+Started GET "/assets/private_pub.js?body=1" for 127.0.0.1 at 2015-11-01 16:33:09 +0530
+
+
+Started GET "/assets/chat.js?body=1" for 127.0.0.1 at 2015-11-01 16:33:09 +0530
+
+
+Started GET "/assets/turbolinks.js?body=1" for 127.0.0.1 at 2015-11-01 16:33:09 +0530
+
+
+Started GET "/assets/conversations.js?body=1" for 127.0.0.1 at 2015-11-01 16:33:09 +0530
+
+
+Started GET "/assets/messages.js?body=1" for 127.0.0.1 at 2015-11-01 16:33:09 +0530
+
+
+Started GET "/assets/users.js?body=1" for 127.0.0.1 at 2015-11-01 16:33:09 +0530
+
+
+Started GET "/assets/application.js?body=1" for 127.0.0.1 at 2015-11-01 16:33:09 +0530
+
+
+Started GET "/" for 127.0.0.1 at 2015-11-01 22:13:15 +0530
+  [1m[36mActiveRecord::SchemaMigration Load (0.0ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+Processing by Devise::SessionsController#new as HTML
+  Rendered devise/shared/_links.erb (2.0ms)
+  Rendered devise/sessions/new.html.erb within layouts/application (387.4ms)
+  Rendered layouts/_nav.html.erb (1.0ms)
+Completed 200 OK in 24173ms (Views: 24137.8ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/assets/chat.css?body=1" for 127.0.0.1 at 2015-11-01 22:13:40 +0530
+
+
+Started GET "/assets/conversations.css?body=1" for 127.0.0.1 at 2015-11-01 22:13:40 +0530
+
+
+Started GET "/assets/messages.css?body=1" for 127.0.0.1 at 2015-11-01 22:13:40 +0530
+
+
+Started GET "/assets/rohwn/css/style.css?body=1" for 127.0.0.1 at 2015-11-01 22:13:40 +0530
+
+
+Started GET "/assets/users.css?body=1" for 127.0.0.1 at 2015-11-01 22:13:40 +0530
+
+
+Started GET "/assets/jquery_ujs.js?body=1" for 127.0.0.1 at 2015-11-01 22:13:40 +0530
+
+
+Started GET "/assets/application.css?body=1" for 127.0.0.1 at 2015-11-01 22:13:40 +0530
+
+
+Started GET "/assets/jquery.js?body=1" for 127.0.0.1 at 2015-11-01 22:13:40 +0530
+
+
+Started GET "/assets/bootstrap.css?body=1" for 127.0.0.1 at 2015-11-01 22:13:40 +0530
+
+
+Started GET "/assets/bootstrap.min.js?body=1" for 127.0.0.1 at 2015-11-01 22:13:40 +0530
+
+
+Started GET "/assets/private_pub.js?body=1" for 127.0.0.1 at 2015-11-01 22:13:40 +0530
+
+
+Started GET "/assets/chat.js?body=1" for 127.0.0.1 at 2015-11-01 22:13:40 +0530
+
+
+Started GET "/assets/turbolinks.js?body=1" for 127.0.0.1 at 2015-11-01 22:13:40 +0530
+
+
+Started GET "/assets/conversations.js?body=1" for 127.0.0.1 at 2015-11-01 22:13:40 +0530
+
+
+Started GET "/assets/messages.js?body=1" for 127.0.0.1 at 2015-11-01 22:13:40 +0530
+
+
+Started GET "/assets/users.js?body=1" for 127.0.0.1 at 2015-11-01 22:13:40 +0530
+
+
+Started GET "/assets/application.js?body=1" for 127.0.0.1 at 2015-11-01 22:13:40 +0530
+
+
+Started GET "/" for 127.0.0.1 at 2015-11-02 03:34:33 +0530
+Processing by Devise::SessionsController#new as HTML
+  Rendered devise/shared/_links.erb (2.0ms)
+  Rendered devise/sessions/new.html.erb within layouts/application (60.4ms)
+  Rendered layouts/_nav.html.erb (1.0ms)
+Completed 200 OK in 3662ms (Views: 3652.5ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/assets/chat.css?body=1" for 127.0.0.1 at 2015-11-02 03:34:37 +0530
+
+
+Started GET "/assets/conversations.css?body=1" for 127.0.0.1 at 2015-11-02 03:34:37 +0530
+
+
+Started GET "/assets/messages.css?body=1" for 127.0.0.1 at 2015-11-02 03:34:37 +0530
+
+
+Started GET "/assets/rohwn/css/style.css?body=1" for 127.0.0.1 at 2015-11-02 03:34:37 +0530
+
+
+Started GET "/assets/users.css?body=1" for 127.0.0.1 at 2015-11-02 03:34:37 +0530
+
+
+Started GET "/assets/bootstrap.css?body=1" for 127.0.0.1 at 2015-11-02 03:34:37 +0530
+
+
+Started GET "/assets/application.css?body=1" for 127.0.0.1 at 2015-11-02 03:34:37 +0530
+
+
+Started GET "/assets/jquery.js?body=1" for 127.0.0.1 at 2015-11-02 03:34:37 +0530
+
+
+Started GET "/assets/jquery_ujs.js?body=1" for 127.0.0.1 at 2015-11-02 03:34:37 +0530
+
+
+Started GET "/assets/bootstrap.min.js?body=1" for 127.0.0.1 at 2015-11-02 03:34:37 +0530
+
+
+Started GET "/assets/private_pub.js?body=1" for 127.0.0.1 at 2015-11-02 03:34:37 +0530
+
+
+Started GET "/assets/chat.js?body=1" for 127.0.0.1 at 2015-11-02 03:34:37 +0530
+
+
+Started GET "/assets/turbolinks.js?body=1" for 127.0.0.1 at 2015-11-02 03:34:37 +0530
+
+
+Started GET "/assets/conversations.js?body=1" for 127.0.0.1 at 2015-11-02 03:34:37 +0530
+
+
+Started GET "/assets/messages.js?body=1" for 127.0.0.1 at 2015-11-02 03:34:37 +0530
+
+
+Started GET "/assets/users.js?body=1" for 127.0.0.1 at 2015-11-02 03:34:37 +0530
+
+
+Started GET "/assets/application.js?body=1" for 127.0.0.1 at 2015-11-02 03:34:37 +0530
+
+
+Started GET "/" for 127.0.0.1 at 2015-11-02 03:45:10 +0530
+Processing by Devise::SessionsController#new as HTML
+  Rendered devise/shared/_links.erb (1.0ms)
+  Rendered devise/sessions/new.html.erb within layouts/application (14.0ms)
+  Rendered layouts/_nav.html.erb (3.0ms)
+Completed 200 OK in 3270ms (Views: 3263.7ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/assets/chat.css?body=1" for 127.0.0.1 at 2015-11-02 03:45:14 +0530
+
+
+Started GET "/assets/conversations.css?body=1" for 127.0.0.1 at 2015-11-02 03:45:14 +0530
+
+
+Started GET "/assets/messages.css?body=1" for 127.0.0.1 at 2015-11-02 03:45:14 +0530
+
+
+Started GET "/assets/rohwn/css/style.css?body=1" for 127.0.0.1 at 2015-11-02 03:45:14 +0530
+
+
+Started GET "/assets/users.css?body=1" for 127.0.0.1 at 2015-11-02 03:45:14 +0530
+
+
+Started GET "/assets/bootstrap.css?body=1" for 127.0.0.1 at 2015-11-02 03:45:14 +0530
+
+
+Started GET "/assets/application.css?body=1" for 127.0.0.1 at 2015-11-02 03:45:14 +0530
+
+
+Started GET "/assets/jquery.js?body=1" for 127.0.0.1 at 2015-11-02 03:45:14 +0530
+
+
+Started GET "/assets/jquery_ujs.js?body=1" for 127.0.0.1 at 2015-11-02 03:45:14 +0530
+
+
+Started GET "/assets/bootstrap.min.js?body=1" for 127.0.0.1 at 2015-11-02 03:45:14 +0530
+
+
+Started GET "/assets/private_pub.js?body=1" for 127.0.0.1 at 2015-11-02 03:45:14 +0530
+
+
+Started GET "/assets/chat.js?body=1" for 127.0.0.1 at 2015-11-02 03:45:14 +0530
+
+
+Started GET "/assets/turbolinks.js?body=1" for 127.0.0.1 at 2015-11-02 03:45:14 +0530
+
+
+Started GET "/assets/conversations.js?body=1" for 127.0.0.1 at 2015-11-02 03:45:14 +0530
+
+
+Started GET "/assets/messages.js?body=1" for 127.0.0.1 at 2015-11-02 03:45:14 +0530
+
+
+Started GET "/assets/users.js?body=1" for 127.0.0.1 at 2015-11-02 03:45:14 +0530
+
+
+Started GET "/assets/application.js?body=1" for 127.0.0.1 at 2015-11-02 03:45:14 +0530
+
+
+Started GET "/" for 127.0.0.1 at 2015-11-02 03:53:11 +0530
+Processing by Devise::SessionsController#new as HTML
+  Rendered devise/shared/_links.erb (1.0ms)
+  Rendered devise/sessions/new.html.erb within layouts/application (4.0ms)
+  Rendered layouts/_nav.html.erb (0.0ms)
+Completed 200 OK in 3750ms (Views: 3748.7ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/assets/chat.css?body=1" for 127.0.0.1 at 2015-11-02 03:53:15 +0530
+
+
+Started GET "/assets/conversations.css?body=1" for 127.0.0.1 at 2015-11-02 03:53:15 +0530
+
+
+Started GET "/assets/messages.css?body=1" for 127.0.0.1 at 2015-11-02 03:53:15 +0530
+
+
+Started GET "/assets/rohwn/css/style.css?body=1" for 127.0.0.1 at 2015-11-02 03:53:15 +0530
+
+
+Started GET "/assets/users.css?body=1" for 127.0.0.1 at 2015-11-02 03:53:15 +0530
+
+
+Started GET "/assets/bootstrap.css?body=1" for 127.0.0.1 at 2015-11-02 03:53:15 +0530
+
+
+Started GET "/assets/application.css?body=1" for 127.0.0.1 at 2015-11-02 03:53:15 +0530
+
+
+Started GET "/assets/jquery.js?body=1" for 127.0.0.1 at 2015-11-02 03:53:15 +0530
+
+
+Started GET "/assets/jquery_ujs.js?body=1" for 127.0.0.1 at 2015-11-02 03:53:15 +0530
+
+
+Started GET "/assets/bootstrap.min.js?body=1" for 127.0.0.1 at 2015-11-02 03:53:15 +0530
+
+
+Started GET "/assets/private_pub.js?body=1" for 127.0.0.1 at 2015-11-02 03:53:15 +0530
+
+
+Started GET "/assets/chat.js?body=1" for 127.0.0.1 at 2015-11-02 03:53:15 +0530
+
+
+Started GET "/assets/turbolinks.js?body=1" for 127.0.0.1 at 2015-11-02 03:53:15 +0530
+
+
+Started GET "/assets/conversations.js?body=1" for 127.0.0.1 at 2015-11-02 03:53:15 +0530
+
+
+Started GET "/assets/messages.js?body=1" for 127.0.0.1 at 2015-11-02 03:53:15 +0530
+
+
+Started GET "/assets/users.js?body=1" for 127.0.0.1 at 2015-11-02 03:53:15 +0530
+
+
+Started GET "/assets/application.js?body=1" for 127.0.0.1 at 2015-11-02 03:53:15 +0530
+
+
+Started GET "/" for 127.0.0.1 at 2015-11-02 03:53:18 +0530
+Processing by Devise::SessionsController#new as HTML
+  Rendered devise/shared/_links.erb (1.0ms)
+  Rendered devise/sessions/new.html.erb within layouts/application (6.0ms)
+  Rendered layouts/_nav.html.erb (0.0ms)
+Completed 200 OK in 120ms (Views: 117.0ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/assets/chat.css?body=1" for 127.0.0.1 at 2015-11-02 03:53:19 +0530
+
+
+Started GET "/assets/conversations.css?body=1" for 127.0.0.1 at 2015-11-02 03:53:19 +0530
+
+
+Started GET "/assets/messages.css?body=1" for 127.0.0.1 at 2015-11-02 03:53:19 +0530
+
+
+Started GET "/assets/rohwn/css/style.css?body=1" for 127.0.0.1 at 2015-11-02 03:53:19 +0530
+
+
+Started GET "/assets/users.css?body=1" for 127.0.0.1 at 2015-11-02 03:53:19 +0530
+
+
+Started GET "/assets/bootstrap.css?body=1" for 127.0.0.1 at 2015-11-02 03:53:19 +0530
+
+
+Started GET "/assets/application.css?body=1" for 127.0.0.1 at 2015-11-02 03:53:19 +0530
+
+
+Started GET "/assets/jquery.js?body=1" for 127.0.0.1 at 2015-11-02 03:53:19 +0530
+
+
+Started GET "/assets/jquery_ujs.js?body=1" for 127.0.0.1 at 2015-11-02 03:53:19 +0530
+
+
+Started GET "/assets/bootstrap.min.js?body=1" for 127.0.0.1 at 2015-11-02 03:53:19 +0530
+
+
+Started GET "/assets/private_pub.js?body=1" for 127.0.0.1 at 2015-11-02 03:53:19 +0530
+
+
+Started GET "/assets/chat.js?body=1" for 127.0.0.1 at 2015-11-02 03:53:19 +0530
+
+
+Started GET "/assets/turbolinks.js?body=1" for 127.0.0.1 at 2015-11-02 03:53:19 +0530
+
+
+Started GET "/assets/conversations.js?body=1" for 127.0.0.1 at 2015-11-02 03:53:19 +0530
+
+
+Started GET "/assets/messages.js?body=1" for 127.0.0.1 at 2015-11-02 03:53:19 +0530
+
+
+Started GET "/assets/users.js?body=1" for 127.0.0.1 at 2015-11-02 03:53:19 +0530
+
+
+Started GET "/assets/application.js?body=1" for 127.0.0.1 at 2015-11-02 03:53:19 +0530
+
+
+Started GET "/" for 127.0.0.1 at 2015-11-02 03:54:40 +0530
+Processing by Devise::SessionsController#new as HTML
+  Rendered devise/shared/_links.erb (1.0ms)
+  Rendered devise/sessions/new.html.erb within layouts/application (4.0ms)
+  Rendered layouts/_nav.html.erb (0.0ms)
+Completed 200 OK in 3496ms (Views: 3494.3ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/assets/chat.css?body=1" for 127.0.0.1 at 2015-11-02 03:54:43 +0530
+
+
+Started GET "/assets/conversations.css?body=1" for 127.0.0.1 at 2015-11-02 03:54:43 +0530
+
+
+Started GET "/assets/messages.css?body=1" for 127.0.0.1 at 2015-11-02 03:54:43 +0530
+
+
+Started GET "/assets/rohwn/css/style.css?body=1" for 127.0.0.1 at 2015-11-02 03:54:43 +0530
+
+
+Started GET "/assets/users.css?body=1" for 127.0.0.1 at 2015-11-02 03:54:43 +0530
+
+
+Started GET "/assets/bootstrap.css?body=1" for 127.0.0.1 at 2015-11-02 03:54:43 +0530
+
+
+Started GET "/assets/application.css?body=1" for 127.0.0.1 at 2015-11-02 03:54:43 +0530
+
+
+Started GET "/assets/jquery.js?body=1" for 127.0.0.1 at 2015-11-02 03:54:43 +0530
+
+
+Started GET "/assets/jquery_ujs.js?body=1" for 127.0.0.1 at 2015-11-02 03:54:43 +0530
+
+
+Started GET "/assets/bootstrap.min.js?body=1" for 127.0.0.1 at 2015-11-02 03:54:43 +0530
+
+
+Started GET "/assets/private_pub.js?body=1" for 127.0.0.1 at 2015-11-02 03:54:43 +0530
+
+
+Started GET "/assets/chat.js?body=1" for 127.0.0.1 at 2015-11-02 03:54:43 +0530
+
+
+Started GET "/assets/turbolinks.js?body=1" for 127.0.0.1 at 2015-11-02 03:54:43 +0530
+
+
+Started GET "/assets/conversations.js?body=1" for 127.0.0.1 at 2015-11-02 03:54:43 +0530
+
+
+Started GET "/assets/messages.js?body=1" for 127.0.0.1 at 2015-11-02 03:54:43 +0530
+
+
+Started GET "/assets/users.js?body=1" for 127.0.0.1 at 2015-11-02 03:54:43 +0530
+
+
+Started GET "/assets/application.js?body=1" for 127.0.0.1 at 2015-11-02 03:54:44 +0530
+
+
+Started GET "/" for 127.0.0.1 at 2015-11-02 03:54:46 +0530
+Processing by Devise::SessionsController#new as HTML
+  Rendered devise/shared/_links.erb (0.0ms)
+  Rendered devise/sessions/new.html.erb within layouts/application (4.0ms)
+  Rendered layouts/_nav.html.erb (0.0ms)
+Completed 200 OK in 109ms (Views: 105.7ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/assets/chat.css?body=1" for 127.0.0.1 at 2015-11-02 03:54:46 +0530
+
+
+Started GET "/assets/conversations.css?body=1" for 127.0.0.1 at 2015-11-02 03:54:46 +0530
+
+
+Started GET "/assets/messages.css?body=1" for 127.0.0.1 at 2015-11-02 03:54:46 +0530
+
+
+Started GET "/assets/rohwn/css/style.css?body=1" for 127.0.0.1 at 2015-11-02 03:54:46 +0530
+
+
+Started GET "/assets/users.css?body=1" for 127.0.0.1 at 2015-11-02 03:54:46 +0530
+
+
+Started GET "/assets/bootstrap.css?body=1" for 127.0.0.1 at 2015-11-02 03:54:46 +0530
+
+
+Started GET "/assets/application.css?body=1" for 127.0.0.1 at 2015-11-02 03:54:46 +0530
+
+
+Started GET "/assets/jquery.js?body=1" for 127.0.0.1 at 2015-11-02 03:54:46 +0530
+
+
+Started GET "/assets/jquery_ujs.js?body=1" for 127.0.0.1 at 2015-11-02 03:54:46 +0530
+
+
+Started GET "/assets/bootstrap.min.js?body=1" for 127.0.0.1 at 2015-11-02 03:54:46 +0530
+
+
+Started GET "/assets/private_pub.js?body=1" for 127.0.0.1 at 2015-11-02 03:54:46 +0530
+
+
+Started GET "/assets/chat.js?body=1" for 127.0.0.1 at 2015-11-02 03:54:46 +0530
+
+
+Started GET "/assets/turbolinks.js?body=1" for 127.0.0.1 at 2015-11-02 03:54:46 +0530
+
+
+Started GET "/assets/conversations.js?body=1" for 127.0.0.1 at 2015-11-02 03:54:46 +0530
+
+
+Started GET "/assets/messages.js?body=1" for 127.0.0.1 at 2015-11-02 03:54:46 +0530
+
+
+Started GET "/assets/users.js?body=1" for 127.0.0.1 at 2015-11-02 03:54:46 +0530
+
+
+Started GET "/assets/application.js?body=1" for 127.0.0.1 at 2015-11-02 03:54:46 +0530
+
+
+Started GET "/" for 127.0.0.1 at 2015-11-02 03:57:23 +0530
+Processing by Devise::SessionsController#new as HTML
+  Rendered devise/shared/_links.erb (0.5ms)
+  Rendered devise/sessions/new.html.erb within layouts/application (5.7ms)
+  Rendered layouts/_nav.html.erb (1.0ms)
+Completed 200 OK in 3292ms (Views: 3291.0ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/assets/chat.css?body=1" for 127.0.0.1 at 2015-11-02 03:57:27 +0530
+
+
+Started GET "/assets/conversations.css?body=1" for 127.0.0.1 at 2015-11-02 03:57:27 +0530
+
+
+Started GET "/assets/messages.css?body=1" for 127.0.0.1 at 2015-11-02 03:57:27 +0530
+
+
+Started GET "/assets/rohwn/css/style.css?body=1" for 127.0.0.1 at 2015-11-02 03:57:27 +0530
+
+
+Started GET "/assets/users.css?body=1" for 127.0.0.1 at 2015-11-02 03:57:27 +0530
+
+
+Started GET "/assets/bootstrap.css?body=1" for 127.0.0.1 at 2015-11-02 03:57:27 +0530
+
+
+Started GET "/assets/application.css?body=1" for 127.0.0.1 at 2015-11-02 03:57:27 +0530
+
+
+Started GET "/assets/jquery.js?body=1" for 127.0.0.1 at 2015-11-02 03:57:27 +0530
+
+
+Started GET "/assets/jquery_ujs.js?body=1" for 127.0.0.1 at 2015-11-02 03:57:27 +0530
+
+
+Started GET "/assets/bootstrap.min.js?body=1" for 127.0.0.1 at 2015-11-02 03:57:27 +0530
+
+
+Started GET "/assets/private_pub.js?body=1" for 127.0.0.1 at 2015-11-02 03:57:27 +0530
+
+
+Started GET "/assets/chat.js?body=1" for 127.0.0.1 at 2015-11-02 03:57:27 +0530
+
+
+Started GET "/assets/turbolinks.js?body=1" for 127.0.0.1 at 2015-11-02 03:57:27 +0530
+
+
+Started GET "/assets/conversations.js?body=1" for 127.0.0.1 at 2015-11-02 03:57:27 +0530
+
+
+Started GET "/assets/messages.js?body=1" for 127.0.0.1 at 2015-11-02 03:57:27 +0530
+
+
+Started GET "/assets/users.js?body=1" for 127.0.0.1 at 2015-11-02 03:57:27 +0530
+
+
+Started GET "/assets/application.js?body=1" for 127.0.0.1 at 2015-11-02 03:57:27 +0530
+
+
+Started GET "/" for 127.0.0.1 at 2015-11-02 04:03:16 +0530
+Processing by Devise::SessionsController#new as HTML
+  Rendered devise/shared/_links.erb (1.0ms)
+  Rendered devise/sessions/new.html.erb within layouts/application (4.0ms)
+  Rendered layouts/_nav.html.erb (0.0ms)
+Completed 200 OK in 3626ms (Views: 3624.3ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/assets/chat.css?body=1" for 127.0.0.1 at 2015-11-02 04:03:20 +0530
+
+
+Started GET "/assets/conversations.css?body=1" for 127.0.0.1 at 2015-11-02 04:03:20 +0530
+
+
+Started GET "/assets/messages.css?body=1" for 127.0.0.1 at 2015-11-02 04:03:20 +0530
+
+
+Started GET "/assets/rohwn/css/style.css?body=1" for 127.0.0.1 at 2015-11-02 04:03:20 +0530
+
+
+Started GET "/assets/users.css?body=1" for 127.0.0.1 at 2015-11-02 04:03:20 +0530
+
+
+Started GET "/assets/bootstrap.css?body=1" for 127.0.0.1 at 2015-11-02 04:03:20 +0530
+
+
+Started GET "/assets/application.css?body=1" for 127.0.0.1 at 2015-11-02 04:03:20 +0530
+
+
+Started GET "/assets/jquery.js?body=1" for 127.0.0.1 at 2015-11-02 04:03:20 +0530
+
+
+Started GET "/assets/jquery_ujs.js?body=1" for 127.0.0.1 at 2015-11-02 04:03:20 +0530
+
+
+Started GET "/assets/bootstrap.min.js?body=1" for 127.0.0.1 at 2015-11-02 04:03:20 +0530
+
+
+Started GET "/assets/private_pub.js?body=1" for 127.0.0.1 at 2015-11-02 04:03:20 +0530
+
+
+Started GET "/assets/chat.js?body=1" for 127.0.0.1 at 2015-11-02 04:03:20 +0530
+
+
+Started GET "/assets/turbolinks.js?body=1" for 127.0.0.1 at 2015-11-02 04:03:20 +0530
+
+
+Started GET "/assets/conversations.js?body=1" for 127.0.0.1 at 2015-11-02 04:03:20 +0530
+
+
+Started GET "/assets/messages.js?body=1" for 127.0.0.1 at 2015-11-02 04:03:20 +0530
+
+
+Started GET "/assets/users.js?body=1" for 127.0.0.1 at 2015-11-02 04:03:20 +0530
+
+
+Started GET "/assets/application.js?body=1" for 127.0.0.1 at 2015-11-02 04:03:20 +0530
+
+
+Started GET "/" for 127.0.0.1 at 2015-11-02 04:04:11 +0530
+Processing by Devise::SessionsController#new as HTML
+  Rendered devise/shared/_links.erb (0.0ms)
+  Rendered devise/sessions/new.html.erb within layouts/application (6.0ms)
+  Rendered layouts/_nav.html.erb (0.0ms)
+Completed 200 OK in 3162ms (Views: 3159.2ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/assets/chat.css?body=1" for 127.0.0.1 at 2015-11-02 04:04:15 +0530
+
+
+Started GET "/assets/conversations.css?body=1" for 127.0.0.1 at 2015-11-02 04:04:15 +0530
+
+
+Started GET "/assets/messages.css?body=1" for 127.0.0.1 at 2015-11-02 04:04:15 +0530
+
+
+Started GET "/assets/rohwn/css/style.css?body=1" for 127.0.0.1 at 2015-11-02 04:04:15 +0530
+
+
+Started GET "/assets/users.css?body=1" for 127.0.0.1 at 2015-11-02 04:04:15 +0530
+
+
+Started GET "/assets/bootstrap.css?body=1" for 127.0.0.1 at 2015-11-02 04:04:15 +0530
+
+
+Started GET "/assets/application.css?body=1" for 127.0.0.1 at 2015-11-02 04:04:15 +0530
+
+
+Started GET "/assets/jquery.js?body=1" for 127.0.0.1 at 2015-11-02 04:04:15 +0530
+
+
+Started GET "/assets/jquery_ujs.js?body=1" for 127.0.0.1 at 2015-11-02 04:04:15 +0530
+
+
+Started GET "/assets/bootstrap.min.js?body=1" for 127.0.0.1 at 2015-11-02 04:04:15 +0530
+
+
+Started GET "/assets/private_pub.js?body=1" for 127.0.0.1 at 2015-11-02 04:04:15 +0530
+
+
+Started GET "/assets/chat.js?body=1" for 127.0.0.1 at 2015-11-02 04:04:15 +0530
+
+
+Started GET "/assets/turbolinks.js?body=1" for 127.0.0.1 at 2015-11-02 04:04:15 +0530
+
+
+Started GET "/assets/conversations.js?body=1" for 127.0.0.1 at 2015-11-02 04:04:15 +0530
+
+
+Started GET "/assets/messages.js?body=1" for 127.0.0.1 at 2015-11-02 04:04:15 +0530
+
+
+Started GET "/assets/users.js?body=1" for 127.0.0.1 at 2015-11-02 04:04:15 +0530
+
+
+Started GET "/assets/application.js?body=1" for 127.0.0.1 at 2015-11-02 04:04:15 +0530
+
+
+Started GET "/" for 127.0.0.1 at 2015-11-02 04:05:21 +0530
+Processing by Devise::SessionsController#new as HTML
+  Rendered devise/shared/_links.erb (0.0ms)
+  Rendered devise/sessions/new.html.erb within layouts/application (6.0ms)
+  Rendered layouts/_nav.html.erb (1.0ms)
+Completed 200 OK in 2990ms (Views: 2988.3ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/assets/chat.css?body=1" for 127.0.0.1 at 2015-11-02 04:05:24 +0530
+
+
+Started GET "/assets/conversations.css?body=1" for 127.0.0.1 at 2015-11-02 04:05:24 +0530
+
+
+Started GET "/assets/messages.css?body=1" for 127.0.0.1 at 2015-11-02 04:05:24 +0530
+
+
+Started GET "/assets/rohwn/css/style.css?body=1" for 127.0.0.1 at 2015-11-02 04:05:24 +0530
+
+
+Started GET "/assets/users.css?body=1" for 127.0.0.1 at 2015-11-02 04:05:24 +0530
+
+
+Started GET "/assets/bootstrap.css?body=1" for 127.0.0.1 at 2015-11-02 04:05:24 +0530
+
+
+Started GET "/assets/application.css?body=1" for 127.0.0.1 at 2015-11-02 04:05:24 +0530
+
+
+Started GET "/assets/jquery.js?body=1" for 127.0.0.1 at 2015-11-02 04:05:24 +0530
+
+
+Started GET "/assets/jquery_ujs.js?body=1" for 127.0.0.1 at 2015-11-02 04:05:24 +0530
+
+
+Started GET "/assets/bootstrap.min.js?body=1" for 127.0.0.1 at 2015-11-02 04:05:24 +0530
+
+
+Started GET "/assets/private_pub.js?body=1" for 127.0.0.1 at 2015-11-02 04:05:24 +0530
+
+
+Started GET "/assets/chat.js?body=1" for 127.0.0.1 at 2015-11-02 04:05:24 +0530
+
+
+Started GET "/assets/turbolinks.js?body=1" for 127.0.0.1 at 2015-11-02 04:05:24 +0530
+
+
+Started GET "/assets/conversations.js?body=1" for 127.0.0.1 at 2015-11-02 04:05:24 +0530
+
+
+Started GET "/assets/messages.js?body=1" for 127.0.0.1 at 2015-11-02 04:05:24 +0530
+
+
+Started GET "/assets/users.js?body=1" for 127.0.0.1 at 2015-11-02 04:05:24 +0530
+
+
+Started GET "/assets/application.js?body=1" for 127.0.0.1 at 2015-11-02 04:05:24 +0530
+
+
+Started GET "/" for 127.0.0.1 at 2015-11-02 04:06:35 +0530
+Processing by Devise::SessionsController#new as HTML
+  Rendered devise/shared/_links.erb (0.5ms)
+  Rendered devise/sessions/new.html.erb within layouts/application (6.1ms)
+  Rendered layouts/_nav.html.erb (0.0ms)
+Completed 200 OK in 3226ms (Views: 3224.4ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/assets/chat.css?body=1" for 127.0.0.1 at 2015-11-02 04:06:39 +0530
+
+
+Started GET "/assets/conversations.css?body=1" for 127.0.0.1 at 2015-11-02 04:06:39 +0530
+
+
+Started GET "/assets/messages.css?body=1" for 127.0.0.1 at 2015-11-02 04:06:39 +0530
+
+
+Started GET "/assets/rohwn/css/style.css?body=1" for 127.0.0.1 at 2015-11-02 04:06:39 +0530
+
+
+Started GET "/assets/users.css?body=1" for 127.0.0.1 at 2015-11-02 04:06:39 +0530
+
+
+Started GET "/assets/bootstrap.css?body=1" for 127.0.0.1 at 2015-11-02 04:06:39 +0530
+
+
+Started GET "/assets/application.css?body=1" for 127.0.0.1 at 2015-11-02 04:06:39 +0530
+
+
+Started GET "/assets/jquery.js?body=1" for 127.0.0.1 at 2015-11-02 04:06:39 +0530
+
+
+Started GET "/assets/jquery_ujs.js?body=1" for 127.0.0.1 at 2015-11-02 04:06:39 +0530
+
+
+Started GET "/assets/bootstrap.min.js?body=1" for 127.0.0.1 at 2015-11-02 04:06:39 +0530
+
+
+Started GET "/assets/private_pub.js?body=1" for 127.0.0.1 at 2015-11-02 04:06:39 +0530
+
+
+Started GET "/assets/chat.js?body=1" for 127.0.0.1 at 2015-11-02 04:06:39 +0530
+
+
+Started GET "/assets/turbolinks.js?body=1" for 127.0.0.1 at 2015-11-02 04:06:39 +0530
+
+
+Started GET "/assets/conversations.js?body=1" for 127.0.0.1 at 2015-11-02 04:06:39 +0530
+
+
+Started GET "/assets/messages.js?body=1" for 127.0.0.1 at 2015-11-02 04:06:39 +0530
+
+
+Started GET "/assets/users.js?body=1" for 127.0.0.1 at 2015-11-02 04:06:39 +0530
+
+
+Started GET "/assets/application.js?body=1" for 127.0.0.1 at 2015-11-02 04:06:39 +0530
+
+
+Started GET "/users/sign_up" for 127.0.0.1 at 2015-11-02 04:18:20 +0530
+Processing by Devise::RegistrationsController#new as HTML
+  Rendered devise/shared/_links.erb (0.0ms)
+  Rendered devise/registrations/new.html.erb within layouts/application (15.6ms)
+  Rendered layouts/_nav.html.erb (0.0ms)
+Completed 200 OK in 3589ms (Views: 3589.2ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/users/sign_up" for 127.0.0.1 at 2015-11-02 04:18:24 +0530
+Processing by Devise::RegistrationsController#new as HTML
+  Rendered devise/shared/_links.erb (0.0ms)
+  Rendered devise/registrations/new.html.erb within layouts/application (4.8ms)
+  Rendered layouts/_nav.html.erb (1.0ms)
+Completed 200 OK in 119ms (Views: 115.9ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/assets/chat.css?body=1" for 127.0.0.1 at 2015-11-02 04:18:24 +0530
+
+
+Started GET "/assets/conversations.css?body=1" for 127.0.0.1 at 2015-11-02 04:18:24 +0530
+
+
+Started GET "/assets/messages.css?body=1" for 127.0.0.1 at 2015-11-02 04:18:24 +0530
+
+
+Started GET "/assets/users.css?body=1" for 127.0.0.1 at 2015-11-02 04:18:24 +0530
+
+
+Started GET "/assets/bootstrap.css?body=1" for 127.0.0.1 at 2015-11-02 04:18:24 +0530
+
+
+Started GET "/assets/application.css?body=1" for 127.0.0.1 at 2015-11-02 04:18:24 +0530
+
+
+Started GET "/assets/jquery.js?body=1" for 127.0.0.1 at 2015-11-02 04:18:24 +0530
+
+
+Started GET "/assets/turbolinks.js?body=1" for 127.0.0.1 at 2015-11-02 04:18:24 +0530
+
+
+Started GET "/assets/jquery_ujs.js?body=1" for 127.0.0.1 at 2015-11-02 04:18:24 +0530
+
+
+Started GET "/assets/bootstrap.min.js?body=1" for 127.0.0.1 at 2015-11-02 04:18:24 +0530
+
+
+Started GET "/assets/private_pub.js?body=1" for 127.0.0.1 at 2015-11-02 04:18:24 +0530
+
+
+Started GET "/assets/chat.js?body=1" for 127.0.0.1 at 2015-11-02 04:18:24 +0530
+
+
+Started GET "/assets/conversations.js?body=1" for 127.0.0.1 at 2015-11-02 04:18:24 +0530
+
+
+Started GET "/assets/messages.js?body=1" for 127.0.0.1 at 2015-11-02 04:18:24 +0530
+
+
+Started GET "/assets/users.js?body=1" for 127.0.0.1 at 2015-11-02 04:18:24 +0530
+
+
+Started GET "/assets/application.js?body=1" for 127.0.0.1 at 2015-11-02 04:18:24 +0530
+
+
+Started POST "/users" for 127.0.0.1 at 2015-11-02 04:18:53 +0530
+Processing by Devise::RegistrationsController#create as HTML
+  Parameters: {"utf8"=>"✓", "authenticity_token"=>"fBSJP2aM4Uc+55IN8I8tFXTIJnl7emgAF0AN6dnlZO8=", "user"=>{"name"=>"caps", "email"=>"who@where.com", "password"=>"[FILTERED]", "password_confirmation"=>"[FILTERED]"}, "commit"=>"Sign up"}
+  [1m[35m (0.5ms)[0m  begin transaction
+  [1m[36mUser Exists (38.0ms)[0m  [1mSELECT  1 AS one FROM "users"  WHERE "users"."email" = 'who@where.com' LIMIT 1[0m
+Binary data inserted for `string` type on column `encrypted_password`
+  [1m[35mSQL (2.2ms)[0m  INSERT INTO "users" ("created_at", "email", "encrypted_password", "name", "updated_at") VALUES (?, ?, ?, ?, ?)  [["created_at", "2015-11-01 22:48:53.884679"], ["email", "who@where.com"], ["encrypted_password", "$2a$10$4ZWrSUu7.v0kMDaHWG./ce8TnlOeN5FsLjmHf9c9sbUJJ3HtAvTmO"], ["name", "caps"], ["updated_at", "2015-11-01 22:48:53.884679"]]
+  [1m[36mConversation Exists (0.0ms)[0m  [1mSELECT  1 AS one FROM "conversations"  WHERE ("conversations"."sender_id" = 1 AND "conversations"."recipient_id" = 5) LIMIT 1[0m
+  [1m[35mSQL (0.0ms)[0m  INSERT INTO "conversations" ("created_at", "recipient_id", "sender_id", "updated_at") VALUES (?, ?, ?, ?)  [["created_at", "2015-11-01 22:48:54.037468"], ["recipient_id", 5], ["sender_id", 1], ["updated_at", "2015-11-01 22:48:54.037468"]]
+  [1m[36m (184.8ms)[0m  [1mcommit transaction[0m
+  [1m[35m (1.0ms)[0m  begin transaction
+Binary data inserted for `string` type on column `current_sign_in_ip`
+Binary data inserted for `string` type on column `last_sign_in_ip`
+  [1m[36mSQL (3.0ms)[0m  [1mUPDATE "users" SET "current_sign_in_at" = ?, "current_sign_in_ip" = ?, "last_sign_in_at" = ?, "last_sign_in_ip" = ?, "sign_in_count" = ?, "updated_at" = ? WHERE "users"."id" = 5[0m  [["current_sign_in_at", "2015-11-01 22:48:54.231251"], ["current_sign_in_ip", "127.0.0.1"], ["last_sign_in_at", "2015-11-01 22:48:54.231251"], ["last_sign_in_ip", "127.0.0.1"], ["sign_in_count", 1], ["updated_at", "2015-11-01 22:48:54.237478"]]
+  [1m[35m (135.8ms)[0m  commit transaction
+Redirected to http://127.0.0.1:3000/
+Completed 302 Found in 1059ms (ActiveRecord: 366.4ms)
+
+
+Started GET "/" for 127.0.0.1 at 2015-11-02 04:18:54 +0530
+  [1m[36mUser Load (0.0ms)[0m  [1mSELECT  "users".* FROM "users"  WHERE "users"."id" = 5  ORDER BY "users"."id" ASC LIMIT 1[0m
+Processing by UsersController#index as HTML
+  [1m[35mUser Load (0.0ms)[0m  SELECT "users".* FROM "users"  WHERE (NOT (id = 5))  ORDER BY created_at DESC
+  [1m[36m (1.0ms)[0m  [1mSELECT COUNT(*) FROM "conversations"  WHERE (conversations.sender_id =5 OR conversations.recipient_id =5)[0m
+  [1m[35mConversation Load (1.0ms)[0m  SELECT "conversations".* FROM "conversations"  WHERE (conversations.sender_id =5 OR conversations.recipient_id =5)  ORDER BY created_at DESC
+  [1m[36mUser Load (1.0ms)[0m  [1mSELECT  "users".* FROM "users"  WHERE "users"."id" = ? LIMIT 1[0m  [["id", 5]]
+  [1m[35mUser Load (0.0ms)[0m  SELECT  "users".* FROM "users"  WHERE "users"."id" = ? LIMIT 1  [["id", 1]]
+  [1m[36mMessage Load (1.0ms)[0m  [1mSELECT  "messages".* FROM "messages"  WHERE "messages"."conversation_id" = ?  ORDER BY "messages"."id" DESC LIMIT 1[0m  [["conversation_id", 5]]
+  Rendered users/index.html.erb within layouts/application (191.2ms)
+  Rendered layouts/_nav.html.erb (1.0ms)
+Completed 200 OK in 3401ms (Views: 3395.8ms | ActiveRecord: 4.0ms)
+
+
+Started GET "/assets/chat.css?body=1" for 127.0.0.1 at 2015-11-02 04:18:58 +0530
+
+
+Started GET "/assets/conversations.css?body=1" for 127.0.0.1 at 2015-11-02 04:18:58 +0530
+
+
+Started GET "/assets/messages.css?body=1" for 127.0.0.1 at 2015-11-02 04:18:58 +0530
+
+
+Started GET "/assets/users.css?body=1" for 127.0.0.1 at 2015-11-02 04:18:58 +0530
+
+
+Started GET "/assets/bootstrap.css?body=1" for 127.0.0.1 at 2015-11-02 04:18:58 +0530
+
+
+Started GET "/assets/application.css?body=1" for 127.0.0.1 at 2015-11-02 04:18:58 +0530
+
+
+Started GET "/assets/jquery.js?body=1" for 127.0.0.1 at 2015-11-02 04:18:58 +0530
+
+
+Started GET "/assets/jquery_ujs.js?body=1" for 127.0.0.1 at 2015-11-02 04:18:58 +0530
+
+
+Started GET "/assets/bootstrap.min.js?body=1" for 127.0.0.1 at 2015-11-02 04:18:58 +0530
+
+
+Started GET "/assets/private_pub.js?body=1" for 127.0.0.1 at 2015-11-02 04:18:58 +0530
+
+
+Started GET "/assets/chat.js?body=1" for 127.0.0.1 at 2015-11-02 04:18:58 +0530
+
+
+Started GET "/assets/turbolinks.js?body=1" for 127.0.0.1 at 2015-11-02 04:18:58 +0530
+
+
+Started GET "/assets/conversations.js?body=1" for 127.0.0.1 at 2015-11-02 04:18:58 +0530
+
+
+Started GET "/assets/messages.js?body=1" for 127.0.0.1 at 2015-11-02 04:18:58 +0530
+
+
+Started GET "/assets/users.js?body=1" for 127.0.0.1 at 2015-11-02 04:18:58 +0530
+
+
+Started GET "/assets/application.js?body=1" for 127.0.0.1 at 2015-11-02 04:18:58 +0530
+
+
+Started GET "/" for 127.0.0.1 at 2015-11-02 04:19:30 +0530
+Processing by Devise::SessionsController#new as HTML
+  Rendered devise/shared/_links.erb (0.0ms)
+  Rendered devise/sessions/new.html.erb within layouts/application (0.0ms)
+  Rendered layouts/_nav.html.erb (0.0ms)
+Completed 200 OK in 3126ms (Views: 3126.0ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/assets/chat.css?body=1" for 127.0.0.1 at 2015-11-02 04:19:33 +0530
+
+
+Started GET "/assets/conversations.css?body=1" for 127.0.0.1 at 2015-11-02 04:19:33 +0530
+
+
+Started GET "/assets/messages.css?body=1" for 127.0.0.1 at 2015-11-02 04:19:33 +0530
+
+
+Started GET "/assets/users.css?body=1" for 127.0.0.1 at 2015-11-02 04:19:33 +0530
+
+
+Started GET "/assets/bootstrap.css?body=1" for 127.0.0.1 at 2015-11-02 04:19:33 +0530
+
+
+Started GET "/assets/application.css?body=1" for 127.0.0.1 at 2015-11-02 04:19:33 +0530
+
+
+Started GET "/assets/jquery.js?body=1" for 127.0.0.1 at 2015-11-02 04:19:33 +0530
+
+
+Started GET "/assets/jquery_ujs.js?body=1" for 127.0.0.1 at 2015-11-02 04:19:33 +0530
+
+
+Started GET "/assets/private_pub.js?body=1" for 127.0.0.1 at 2015-11-02 04:19:33 +0530
+
+
+Started GET "/assets/bootstrap.min.js?body=1" for 127.0.0.1 at 2015-11-02 04:19:33 +0530
+
+
+Started GET "/assets/chat.js?body=1" for 127.0.0.1 at 2015-11-02 04:19:33 +0530
+
+
+Started GET "/assets/turbolinks.js?body=1" for 127.0.0.1 at 2015-11-02 04:19:33 +0530
+
+
+Started GET "/assets/conversations.js?body=1" for 127.0.0.1 at 2015-11-02 04:19:33 +0530
+
+
+Started GET "/assets/messages.js?body=1" for 127.0.0.1 at 2015-11-02 04:19:33 +0530
+
+
+Started GET "/assets/users.js?body=1" for 127.0.0.1 at 2015-11-02 04:19:33 +0530
+
+
+Started GET "/assets/application.js?body=1" for 127.0.0.1 at 2015-11-02 04:19:33 +0530
+
+
+Started GET "/users/sign_up" for 127.0.0.1 at 2015-11-02 04:19:43 +0530
+Processing by Devise::RegistrationsController#new as HTML
+  Rendered devise/shared/_links.erb (0.0ms)
+  Rendered devise/registrations/new.html.erb within layouts/application (0.0ms)
+  Rendered layouts/_nav.html.erb (0.0ms)
+Completed 200 OK in 94ms (Views: 93.7ms | ActiveRecord: 0.0ms)
+
+
+Started POST "/users" for 127.0.0.1 at 2015-11-02 04:20:06 +0530
+Processing by Devise::RegistrationsController#create as HTML
+  Parameters: {"utf8"=>"✓", "authenticity_token"=>"42l6owzj5eSfFkOFtaxDiSLfU2LpVK2NuIZlprTmQUQ=", "user"=>{"name"=>"capstwo", "email"=>"where@who.com", "password"=>"[FILTERED]", "password_confirmation"=>"[FILTERED]"}, "commit"=>"Sign up"}
+  [1m[35m (0.0ms)[0m  begin transaction
+  [1m[36mUser Exists (0.0ms)[0m  [1mSELECT  1 AS one FROM "users"  WHERE "users"."email" = 'where@who.com' LIMIT 1[0m
+  [1m[35m (0.0ms)[0m  rollback transaction
+  Rendered devise/shared/_links.erb (0.0ms)
+  Rendered devise/registrations/new.html.erb within layouts/application (0.0ms)
+  Rendered layouts/_nav.html.erb (0.0ms)
+Completed 200 OK in 3250ms (Views: 3156.3ms | ActiveRecord: 0.0ms)
+
+
+Started POST "/users" for 127.0.0.1 at 2015-11-02 04:20:39 +0530
+Processing by Devise::RegistrationsController#create as HTML
+  Parameters: {"utf8"=>"✓", "authenticity_token"=>"42l6owzj5eSfFkOFtaxDiSLfU2LpVK2NuIZlprTmQUQ=", "user"=>{"name"=>"capstwo", "email"=>"where@who.com", "password"=>"[FILTERED]", "password_confirmation"=>"[FILTERED]"}, "commit"=>"Sign up"}
+  [1m[36m (0.0ms)[0m  [1mbegin transaction[0m
+  [1m[35mUser Exists (0.0ms)[0m  SELECT  1 AS one FROM "users"  WHERE "users"."email" = 'where@who.com' LIMIT 1
+Binary data inserted for `string` type on column `encrypted_password`
+  [1m[36mSQL (0.0ms)[0m  [1mINSERT INTO "users" ("created_at", "email", "encrypted_password", "name", "updated_at") VALUES (?, ?, ?, ?, ?)[0m  [["created_at", "2015-11-01 22:50:39.342108"], ["email", "where@who.com"], ["encrypted_password", "$2a$10$mB4LsvAtiK1l2PLOVl5NFeS1cTGqHKW6Nn4FhoRzJWWLZ4kJMLIpW"], ["name", "capstwo"], ["updated_at", "2015-11-01 22:50:39.342108"]]
+  [1m[35mConversation Exists (0.0ms)[0m  SELECT  1 AS one FROM "conversations"  WHERE ("conversations"."sender_id" = 1 AND "conversations"."recipient_id" = 6) LIMIT 1
+  [1m[36mSQL (0.0ms)[0m  [1mINSERT INTO "conversations" ("created_at", "recipient_id", "sender_id", "updated_at") VALUES (?, ?, ?, ?)[0m  [["created_at", "2015-11-01 22:50:39.357724"], ["recipient_id", 6], ["sender_id", 1], ["updated_at", "2015-11-01 22:50:39.357724"]]
+  [1m[35m (125.0ms)[0m  commit transaction
+  [1m[36m (0.0ms)[0m  [1mbegin transaction[0m
+Binary data inserted for `string` type on column `current_sign_in_ip`
+Binary data inserted for `string` type on column `last_sign_in_ip`
+  [1m[35mSQL (0.0ms)[0m  UPDATE "users" SET "current_sign_in_at" = ?, "current_sign_in_ip" = ?, "last_sign_in_at" = ?, "last_sign_in_ip" = ?, "sign_in_count" = ?, "updated_at" = ? WHERE "users"."id" = 6  [["current_sign_in_at", "2015-11-01 22:50:39.482723"], ["current_sign_in_ip", "127.0.0.1"], ["last_sign_in_at", "2015-11-01 22:50:39.482723"], ["last_sign_in_ip", "127.0.0.1"], ["sign_in_count", 1], ["updated_at", "2015-11-01 22:50:39.482723"]]
+  [1m[36m (109.5ms)[0m  [1mcommit transaction[0m
+Redirected to http://127.0.0.1:3000/
+Completed 302 Found in 359ms (ActiveRecord: 234.5ms)
+
+
+Started GET "/" for 127.0.0.1 at 2015-11-02 04:20:39 +0530
+  [1m[35mUser Load (0.0ms)[0m  SELECT  "users".* FROM "users"  WHERE "users"."id" = 6  ORDER BY "users"."id" ASC LIMIT 1
+Processing by UsersController#index as HTML
+  [1m[36mUser Load (0.0ms)[0m  [1mSELECT "users".* FROM "users"  WHERE (NOT (id = 6))  ORDER BY created_at DESC[0m
+  [1m[35m (0.0ms)[0m  SELECT COUNT(*) FROM "conversations"  WHERE (conversations.sender_id =6 OR conversations.recipient_id =6)
+  [1m[36mConversation Load (0.0ms)[0m  [1mSELECT "conversations".* FROM "conversations"  WHERE (conversations.sender_id =6 OR conversations.recipient_id =6)  ORDER BY created_at DESC[0m
+  [1m[35mUser Load (0.0ms)[0m  SELECT  "users".* FROM "users"  WHERE "users"."id" = ? LIMIT 1  [["id", 6]]
+  [1m[36mUser Load (0.0ms)[0m  [1mSELECT  "users".* FROM "users"  WHERE "users"."id" = ? LIMIT 1[0m  [["id", 1]]
+  [1m[35mMessage Load (0.0ms)[0m  SELECT  "messages".* FROM "messages"  WHERE "messages"."conversation_id" = ?  ORDER BY "messages"."id" DESC LIMIT 1  [["conversation_id", 6]]
+  Rendered users/index.html.erb within layouts/application (31.3ms)
+  Rendered layouts/_nav.html.erb (15.6ms)
+Completed 200 OK in 125ms (Views: 125.0ms | ActiveRecord: 0.0ms)
+
+
+Started POST "/conversations" for 127.0.0.1 at 2015-11-02 04:20:44 +0530
+Processing by ConversationsController#create as */*
+  Parameters: {"sender_id"=>"6", "recipient_id"=>"5"}
+  [1m[36mUser Load (0.0ms)[0m  [1mSELECT  "users".* FROM "users"  WHERE "users"."id" = 6  ORDER BY "users"."id" ASC LIMIT 1[0m
+  [1m[35mConversation Load (0.0ms)[0m  SELECT "conversations".* FROM "conversations"  WHERE ((conversations.sender_id = '6' AND conversations.recipient_id ='5') OR (conversations.sender_id = '5' AND conversations.recipient_id ='6'))
+  [1m[36m (0.0ms)[0m  [1mbegin transaction[0m
+  [1m[35mConversation Exists (0.0ms)[0m  SELECT  1 AS one FROM "conversations"  WHERE ("conversations"."sender_id" = 6 AND "conversations"."recipient_id" = 5) LIMIT 1
+  [1m[36mSQL (0.0ms)[0m  [1mINSERT INTO "conversations" ("created_at", "recipient_id", "sender_id", "updated_at") VALUES (?, ?, ?, ?)[0m  [["created_at", "2015-11-01 22:50:44.117404"], ["recipient_id", 5], ["sender_id", 6], ["updated_at", "2015-11-01 22:50:44.117404"]]
+  [1m[35m (109.4ms)[0m  commit transaction
+Completed 200 OK in 125ms (Views: 0.0ms | ActiveRecord: 109.4ms)
+
+
+Started GET "/conversations/7" for 127.0.0.1 at 2015-11-02 04:20:44 +0530
+Processing by ConversationsController#show as HTML
+  Parameters: {"id"=>"7"}
+  [1m[36mUser Load (0.0ms)[0m  [1mSELECT  "users".* FROM "users"  WHERE "users"."id" = 6  ORDER BY "users"."id" ASC LIMIT 1[0m
+  [1m[35mConversation Load (0.0ms)[0m  SELECT  "conversations".* FROM "conversations"  WHERE "conversations"."id" = ? LIMIT 1  [["id", 7]]
+  [1m[36mUser Load (0.0ms)[0m  [1mSELECT  "users".* FROM "users"  WHERE "users"."id" = ? LIMIT 1[0m  [["id", 5]]
+  [1m[35mMessage Exists (0.0ms)[0m  SELECT  1 AS one FROM "messages"  WHERE "messages"."conversation_id" = ? LIMIT 1  [["conversation_id", 7]]
+  Rendered conversations/show.html.erb (31.2ms)
+Completed 200 OK in 94ms (Views: 78.1ms | ActiveRecord: 0.0ms)
+
+
+Started POST "/conversations/7/messages" for 127.0.0.1 at 2015-11-02 04:20:51 +0530
+Processing by MessagesController#create as JS
+  Parameters: {"utf8"=>"✓", "message"=>{"body"=>"hey man"}, "conversation_id"=>"7"}
+  [1m[36mUser Load (0.0ms)[0m  [1mSELECT  "users".* FROM "users"  WHERE "users"."id" = 6  ORDER BY "users"."id" ASC LIMIT 1[0m
+  [1m[35mConversation Load (0.0ms)[0m  SELECT  "conversations".* FROM "conversations"  WHERE "conversations"."id" = ? LIMIT 1  [["id", 7]]
+  [1m[36m (0.0ms)[0m  [1mbegin transaction[0m
+  [1m[35mSQL (0.0ms)[0m  INSERT INTO "messages" ("body", "conversation_id", "created_at", "updated_at", "user_id") VALUES (?, ?, ?, ?, ?)  [["body", "hey man"], ["conversation_id", 7], ["created_at", "2015-11-01 22:50:51.999091"], ["updated_at", "2015-11-01 22:50:51.999091"], ["user_id", 6]]
+  [1m[36m (190.4ms)[0m  [1mcommit transaction[0m
+  [1m[35mUser Load (0.0ms)[0m  SELECT  "users".* FROM "users"  WHERE "users"."id" = ? LIMIT 1  [["id", 6]]
+  [1m[36mCACHE (0.0ms)[0m  [1mSELECT  "users".* FROM "users"  WHERE "users"."id" = ? LIMIT 1[0m  [["id", 6]]
+  Rendered messages/_message.html.erb (0.0ms)
+  Rendered messages/create.js.erb (2079.9ms)
+Completed 500 Internal Server Error in 2317ms
+
+ActionView::Template::Error (No connection could be made because the target machine actively refused it. - connect(2) for "localhost" port 9292):
+    1: <% publish_to @path do %>
+    2:     var id = "<%= @conversation.id %>";
+    3:     var chatbox = $("#chatbox_" + id + " .chatboxcontent");
+    4:     var sender_id = "<%= @message.user.id %>";
+  app/views/messages/create.js.erb:1:in `_app_views_messages_create_js_erb__596298090_49986348'
+
+
+  Rendered C:/RailsInstaller/Ruby2.1.0/lib/ruby/gems/2.1.0/gems/actionpack-4.1.1/lib/action_dispatch/middleware/templates/rescues/_trace.text.erb (0.0ms)
+  Rendered C:/RailsInstaller/Ruby2.1.0/lib/ruby/gems/2.1.0/gems/actionpack-4.1.1/lib/action_dispatch/middleware/templates/rescues/_request_and_response.text.erb (0.0ms)
+  Rendered C:/RailsInstaller/Ruby2.1.0/lib/ruby/gems/2.1.0/gems/actionpack-4.1.1/lib/action_dispatch/middleware/templates/rescues/template_error.text.erb (78.1ms)
+
+
+Started GET "/" for 127.0.0.1 at 2015-11-02 04:22:02 +0530
+  [1m[35mUser Load (0.0ms)[0m  SELECT  "users".* FROM "users"  WHERE "users"."id" = 6  ORDER BY "users"."id" ASC LIMIT 1
+Processing by UsersController#index as HTML
+  [1m[36mUser Load (0.0ms)[0m  [1mSELECT "users".* FROM "users"  WHERE (NOT (id = 6))  ORDER BY created_at DESC[0m
+  [1m[35m (0.0ms)[0m  SELECT COUNT(*) FROM "conversations"  WHERE (conversations.sender_id =6 OR conversations.recipient_id =6)
+  [1m[36mConversation Load (0.0ms)[0m  [1mSELECT "conversations".* FROM "conversations"  WHERE (conversations.sender_id =6 OR conversations.recipient_id =6)  ORDER BY created_at DESC[0m
+  [1m[35mUser Load (10.8ms)[0m  SELECT  "users".* FROM "users"  WHERE "users"."id" = ? LIMIT 1  [["id", 5]]
+  [1m[36mMessage Load (0.5ms)[0m  [1mSELECT  "messages".* FROM "messages"  WHERE "messages"."conversation_id" = ?  ORDER BY "messages"."id" DESC LIMIT 1[0m  [["conversation_id", 7]]
+  [1m[35mCACHE (0.0ms)[0m  SELECT  "messages".* FROM "messages"  WHERE "messages"."conversation_id" = ?  ORDER BY "messages"."id" DESC LIMIT 1  [["conversation_id", 7]]
+  [1m[36mUser Load (0.5ms)[0m  [1mSELECT  "users".* FROM "users"  WHERE "users"."id" = ? LIMIT 1[0m  [["id", 6]]
+  [1m[35mUser Load (0.5ms)[0m  SELECT  "users".* FROM "users"  WHERE "users"."id" = ? LIMIT 1  [["id", 1]]
+  [1m[36mMessage Load (0.5ms)[0m  [1mSELECT  "messages".* FROM "messages"  WHERE "messages"."conversation_id" = ?  ORDER BY "messages"."id" DESC LIMIT 1[0m  [["conversation_id", 6]]
+  Rendered users/index.html.erb within layouts/application (43.8ms)
+  Rendered layouts/_nav.html.erb (0.0ms)
+Completed 200 OK in 3522ms (Views: 3508.9ms | ActiveRecord: 12.8ms)
+
+
+Started GET "/assets/chat.css?body=1" for 127.0.0.1 at 2015-11-02 04:22:05 +0530
+
+
+Started GET "/assets/conversations.css?body=1" for 127.0.0.1 at 2015-11-02 04:22:05 +0530
+
+
+Started GET "/assets/messages.css?body=1" for 127.0.0.1 at 2015-11-02 04:22:05 +0530
+
+
+Started GET "/assets/users.css?body=1" for 127.0.0.1 at 2015-11-02 04:22:05 +0530
+
+
+Started GET "/assets/bootstrap.css?body=1" for 127.0.0.1 at 2015-11-02 04:22:06 +0530
+
+
+Started GET "/assets/application.css?body=1" for 127.0.0.1 at 2015-11-02 04:22:06 +0530
+
+
+Started GET "/assets/jquery.js?body=1" for 127.0.0.1 at 2015-11-02 04:22:06 +0530
+
+
+Started GET "/assets/jquery_ujs.js?body=1" for 127.0.0.1 at 2015-11-02 04:22:06 +0530
+
+
+Started GET "/assets/bootstrap.min.js?body=1" for 127.0.0.1 at 2015-11-02 04:22:06 +0530
+
+
+Started GET "/assets/private_pub.js?body=1" for 127.0.0.1 at 2015-11-02 04:22:06 +0530
+
+
+Started GET "/assets/chat.js?body=1" for 127.0.0.1 at 2015-11-02 04:22:06 +0530
+
+
+Started GET "/assets/turbolinks.js?body=1" for 127.0.0.1 at 2015-11-02 04:22:06 +0530
+
+
+Started GET "/assets/conversations.js?body=1" for 127.0.0.1 at 2015-11-02 04:22:06 +0530
+
+
+Started GET "/assets/messages.js?body=1" for 127.0.0.1 at 2015-11-02 04:22:06 +0530
+
+
+Started GET "/assets/users.js?body=1" for 127.0.0.1 at 2015-11-02 04:22:06 +0530
+
+
+Started GET "/assets/application.js?body=1" for 127.0.0.1 at 2015-11-02 04:22:06 +0530
+
+
+Started POST "/conversations" for 127.0.0.1 at 2015-11-02 04:22:08 +0530
+Processing by ConversationsController#create as */*
+  Parameters: {"sender_id"=>"6", "recipient_id"=>"5"}
+  [1m[35mUser Load (0.0ms)[0m  SELECT  "users".* FROM "users"  WHERE "users"."id" = 6  ORDER BY "users"."id" ASC LIMIT 1
+  [1m[36mConversation Load (0.0ms)[0m  [1mSELECT "conversations".* FROM "conversations"  WHERE ((conversations.sender_id = '6' AND conversations.recipient_id ='5') OR (conversations.sender_id = '5' AND conversations.recipient_id ='6'))[0m
+  [1m[35mConversation Load (9.8ms)[0m  SELECT  "conversations".* FROM "conversations"  WHERE ((conversations.sender_id = '6' AND conversations.recipient_id ='5') OR (conversations.sender_id = '5' AND conversations.recipient_id ='6'))  ORDER BY "conversations"."id" ASC LIMIT 1
+Completed 200 OK in 28ms (Views: 1.0ms | ActiveRecord: 9.8ms)
+
+
+Started GET "/conversations/7" for 127.0.0.1 at 2015-11-02 04:22:08 +0530
+Processing by ConversationsController#show as HTML
+  Parameters: {"id"=>"7"}
+  [1m[36mUser Load (0.5ms)[0m  [1mSELECT  "users".* FROM "users"  WHERE "users"."id" = 6  ORDER BY "users"."id" ASC LIMIT 1[0m
+  [1m[35mConversation Load (0.0ms)[0m  SELECT  "conversations".* FROM "conversations"  WHERE "conversations"."id" = ? LIMIT 1  [["id", 7]]
+  [1m[36mUser Load (0.0ms)[0m  [1mSELECT  "users".* FROM "users"  WHERE "users"."id" = ? LIMIT 1[0m  [["id", 5]]
+  [1m[35mMessage Exists (0.0ms)[0m  SELECT  1 AS one FROM "messages"  WHERE "messages"."conversation_id" = ? LIMIT 1  [["conversation_id", 7]]
+  [1m[36mMessage Load (0.5ms)[0m  [1mSELECT "messages".* FROM "messages"  WHERE "messages"."conversation_id" = ?[0m  [["conversation_id", 7]]
+  [1m[35mUser Load (0.0ms)[0m  SELECT  "users".* FROM "users"  WHERE "users"."id" = ? LIMIT 1  [["id", 6]]
+  [1m[36mCACHE (0.0ms)[0m  [1mSELECT  "users".* FROM "users"  WHERE "users"."id" = ? LIMIT 1[0m  [["id", 6]]
+  Rendered messages/_message.html.erb (16.7ms)
+  Rendered conversations/show.html.erb (32.2ms)
+Completed 200 OK in 50ms (Views: 39.7ms | ActiveRecord: 1.0ms)
+
+
+Started GET "/" for 127.0.0.1 at 2015-11-02 04:29:36 +0530
+  [1m[35mUser Load (0.0ms)[0m  SELECT  "users".* FROM "users"  WHERE "users"."id" = 5  ORDER BY "users"."id" ASC LIMIT 1
+Processing by UsersController#index as HTML
+  [1m[36mUser Load (0.5ms)[0m  [1mSELECT "users".* FROM "users"  WHERE (NOT (id = 5))  ORDER BY created_at DESC[0m
+  [1m[35m (0.0ms)[0m  SELECT COUNT(*) FROM "conversations"  WHERE (conversations.sender_id =5 OR conversations.recipient_id =5)
+  [1m[36mConversation Load (1.0ms)[0m  [1mSELECT "conversations".* FROM "conversations"  WHERE (conversations.sender_id =5 OR conversations.recipient_id =5)  ORDER BY created_at DESC[0m
+  [1m[35mUser Load (0.0ms)[0m  SELECT  "users".* FROM "users"  WHERE "users"."id" = ? LIMIT 1  [["id", 5]]
+  [1m[36mUser Load (0.5ms)[0m  [1mSELECT  "users".* FROM "users"  WHERE "users"."id" = ? LIMIT 1[0m  [["id", 6]]
+  [1m[35mMessage Load (0.5ms)[0m  SELECT  "messages".* FROM "messages"  WHERE "messages"."conversation_id" = ?  ORDER BY "messages"."id" DESC LIMIT 1  [["conversation_id", 7]]
+  [1m[36mCACHE (0.0ms)[0m  [1mSELECT  "messages".* FROM "messages"  WHERE "messages"."conversation_id" = ?  ORDER BY "messages"."id" DESC LIMIT 1[0m  [["conversation_id", 7]]
+  [1m[35mCACHE (0.0ms)[0m  SELECT  "users".* FROM "users"  WHERE "users"."id" = ? LIMIT 1  [["id", 5]]
+  [1m[36mUser Load (0.5ms)[0m  [1mSELECT  "users".* FROM "users"  WHERE "users"."id" = ? LIMIT 1[0m  [["id", 1]]
+  [1m[35mMessage Load (0.0ms)[0m  SELECT  "messages".* FROM "messages"  WHERE "messages"."conversation_id" = ?  ORDER BY "messages"."id" DESC LIMIT 1  [["conversation_id", 5]]
+  Rendered users/index.html.erb within layouts/application (32.5ms)
+  Rendered layouts/_nav.html.erb (1.0ms)
+Completed 200 OK in 3237ms (Views: 3231.5ms | ActiveRecord: 3.0ms)
+
+
+Started GET "/assets/chat.css?body=1" for 127.0.0.1 at 2015-11-02 04:29:39 +0530
+
+
+Started GET "/assets/conversations.css?body=1" for 127.0.0.1 at 2015-11-02 04:29:39 +0530
+
+
+Started GET "/assets/messages.css?body=1" for 127.0.0.1 at 2015-11-02 04:29:39 +0530
+
+
+Started GET "/assets/users.css?body=1" for 127.0.0.1 at 2015-11-02 04:29:39 +0530
+
+
+Started GET "/assets/bootstrap.css?body=1" for 127.0.0.1 at 2015-11-02 04:29:39 +0530
+
+
+Started GET "/assets/application.css?body=1" for 127.0.0.1 at 2015-11-02 04:29:39 +0530
+
+
+Started GET "/assets/jquery.js?body=1" for 127.0.0.1 at 2015-11-02 04:29:39 +0530
+
+
+Started GET "/assets/jquery_ujs.js?body=1" for 127.0.0.1 at 2015-11-02 04:29:39 +0530
+
+
+Started GET "/assets/bootstrap.min.js?body=1" for 127.0.0.1 at 2015-11-02 04:29:39 +0530
+
+
+Started GET "/assets/private_pub.js?body=1" for 127.0.0.1 at 2015-11-02 04:29:39 +0530
+
+
+Started GET "/assets/chat.js?body=1" for 127.0.0.1 at 2015-11-02 04:29:39 +0530
+
+
+Started GET "/assets/turbolinks.js?body=1" for 127.0.0.1 at 2015-11-02 04:29:39 +0530
+
+
+Started GET "/assets/conversations.js?body=1" for 127.0.0.1 at 2015-11-02 04:29:39 +0530
+
+
+Started GET "/assets/messages.js?body=1" for 127.0.0.1 at 2015-11-02 04:29:39 +0530
+
+
+Started GET "/assets/users.js?body=1" for 127.0.0.1 at 2015-11-02 04:29:39 +0530
+
+
+Started GET "/assets/application.js?body=1" for 127.0.0.1 at 2015-11-02 04:29:39 +0530
+
+
+Started GET "/" for 127.0.0.1 at 2015-11-02 04:32:52 +0530
+  [1m[36mUser Load (0.0ms)[0m  [1mSELECT  "users".* FROM "users"  WHERE "users"."id" = 5  ORDER BY "users"."id" ASC LIMIT 1[0m
+Processing by UsersController#index as HTML
+  [1m[35mUser Load (0.0ms)[0m  SELECT "users".* FROM "users"  WHERE (NOT (id = 5))  ORDER BY created_at DESC
+  [1m[36m (0.0ms)[0m  [1mSELECT COUNT(*) FROM "conversations"  WHERE (conversations.sender_id =5 OR conversations.recipient_id =5)[0m
+  [1m[35mConversation Load (1.0ms)[0m  SELECT "conversations".* FROM "conversations"  WHERE (conversations.sender_id =5 OR conversations.recipient_id =5)  ORDER BY created_at DESC
+  [1m[36mUser Load (1.0ms)[0m  [1mSELECT  "users".* FROM "users"  WHERE "users"."id" = ? LIMIT 1[0m  [["id", 5]]
+  [1m[35mUser Load (0.0ms)[0m  SELECT  "users".* FROM "users"  WHERE "users"."id" = ? LIMIT 1  [["id", 6]]
+  [1m[36mMessage Load (1.0ms)[0m  [1mSELECT  "messages".* FROM "messages"  WHERE "messages"."conversation_id" = ?  ORDER BY "messages"."id" DESC LIMIT 1[0m  [["conversation_id", 7]]
+  [1m[35mCACHE (0.0ms)[0m  SELECT  "messages".* FROM "messages"  WHERE "messages"."conversation_id" = ?  ORDER BY "messages"."id" DESC LIMIT 1  [["conversation_id", 7]]
+  [1m[36mCACHE (0.0ms)[0m  [1mSELECT  "users".* FROM "users"  WHERE "users"."id" = ? LIMIT 1[0m  [["id", 5]]
+  [1m[35mUser Load (0.0ms)[0m  SELECT  "users".* FROM "users"  WHERE "users"."id" = ? LIMIT 1  [["id", 1]]
+  [1m[36mMessage Load (0.0ms)[0m  [1mSELECT  "messages".* FROM "messages"  WHERE "messages"."conversation_id" = ?  ORDER BY "messages"."id" DESC LIMIT 1[0m  [["conversation_id", 5]]
+  Rendered users/index.html.erb within layouts/application (33.1ms)
+  Rendered layouts/_nav.html.erb (1.0ms)
+Completed 200 OK in 8020ms (Views: 8016.3ms | ActiveRecord: 3.0ms)
+
+
+Started GET "/assets/chat.css?body=1" for 127.0.0.1 at 2015-11-02 04:33:00 +0530
+
+
+Started GET "/assets/conversations.css?body=1" for 127.0.0.1 at 2015-11-02 04:33:00 +0530
+
+
+Started GET "/assets/messages.css?body=1" for 127.0.0.1 at 2015-11-02 04:33:00 +0530
+
+
+Started GET "/assets/users.css?body=1" for 127.0.0.1 at 2015-11-02 04:33:00 +0530
+
+
+Started GET "/assets/bootstrap.css?body=1" for 127.0.0.1 at 2015-11-02 04:33:00 +0530
+
+
+Started GET "/assets/application.css?body=1" for 127.0.0.1 at 2015-11-02 04:33:00 +0530
+
+
+Started GET "/assets/jquery.js?body=1" for 127.0.0.1 at 2015-11-02 04:33:00 +0530
+
+
+Started GET "/assets/jquery_ujs.js?body=1" for 127.0.0.1 at 2015-11-02 04:33:00 +0530
+
+
+Started GET "/assets/bootstrap.min.js?body=1" for 127.0.0.1 at 2015-11-02 04:33:00 +0530
+
+
+Started GET "/assets/private_pub.js?body=1" for 127.0.0.1 at 2015-11-02 04:33:00 +0530
+
+
+Started GET "/assets/chat.js?body=1" for 127.0.0.1 at 2015-11-02 04:33:00 +0530
+
+
+Started GET "/assets/turbolinks.js?body=1" for 127.0.0.1 at 2015-11-02 04:33:00 +0530
+
+
+Started GET "/assets/conversations.js?body=1" for 127.0.0.1 at 2015-11-02 04:33:00 +0530
+
+
+Started GET "/assets/messages.js?body=1" for 127.0.0.1 at 2015-11-02 04:33:00 +0530
+
+
+Started GET "/assets/users.js?body=1" for 127.0.0.1 at 2015-11-02 04:33:00 +0530
+
+
+Started GET "/assets/application.js?body=1" for 127.0.0.1 at 2015-11-02 04:33:00 +0530
+
+
+Started DELETE "/users/sign_out" for 127.0.0.1 at 2015-11-02 04:33:19 +0530
+Processing by Devise::SessionsController#destroy as HTML
+  Parameters: {"authenticity_token"=>"fBSJP2aM4Uc+55IN8I8tFXTIJnl7emgAF0AN6dnlZO8="}
+  [1m[35mUser Load (1.0ms)[0m  SELECT  "users".* FROM "users"  WHERE "users"."id" = 5  ORDER BY "users"."id" ASC LIMIT 1
+  [1m[36m (0.0ms)[0m  [1mbegin transaction[0m
+  [1m[35m (0.0ms)[0m  commit transaction
+Redirected to http://127.0.0.1:3000/
+Completed 302 Found in 66ms (ActiveRecord: 1.0ms)
+
+
+Started GET "/" for 127.0.0.1 at 2015-11-02 04:33:19 +0530
+Processing by Devise::SessionsController#new as HTML
+  Rendered devise/shared/_links.erb (0.0ms)
+  Rendered devise/sessions/new.html.erb within layouts/application (3.5ms)
+  Rendered layouts/_nav.html.erb (0.0ms)
+Completed 200 OK in 101ms (Views: 100.1ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/assets/chat.css?body=1" for 127.0.0.1 at 2015-11-02 04:33:20 +0530
+
+
+Started GET "/assets/conversations.css?body=1" for 127.0.0.1 at 2015-11-02 04:33:20 +0530
+
+
+Started GET "/assets/messages.css?body=1" for 127.0.0.1 at 2015-11-02 04:33:20 +0530
+
+
+Started GET "/assets/users.css?body=1" for 127.0.0.1 at 2015-11-02 04:33:20 +0530
+
+
+Started GET "/assets/bootstrap.css?body=1" for 127.0.0.1 at 2015-11-02 04:33:20 +0530
+
+
+Started GET "/assets/application.css?body=1" for 127.0.0.1 at 2015-11-02 04:33:20 +0530
+
+
+Started GET "/assets/jquery.js?body=1" for 127.0.0.1 at 2015-11-02 04:33:20 +0530
+
+
+Started GET "/assets/jquery_ujs.js?body=1" for 127.0.0.1 at 2015-11-02 04:33:20 +0530
+
+
+Started GET "/assets/bootstrap.min.js?body=1" for 127.0.0.1 at 2015-11-02 04:33:20 +0530
+
+
+Started GET "/assets/private_pub.js?body=1" for 127.0.0.1 at 2015-11-02 04:33:20 +0530
+
+
+Started GET "/assets/chat.js?body=1" for 127.0.0.1 at 2015-11-02 04:33:20 +0530
+
+
+Started GET "/assets/turbolinks.js?body=1" for 127.0.0.1 at 2015-11-02 04:33:20 +0530
+
+
+Started GET "/assets/conversations.js?body=1" for 127.0.0.1 at 2015-11-02 04:33:20 +0530
+
+
+Started GET "/assets/messages.js?body=1" for 127.0.0.1 at 2015-11-02 04:33:20 +0530
+
+
+Started GET "/assets/users.js?body=1" for 127.0.0.1 at 2015-11-02 04:33:20 +0530
+
+
+Started GET "/assets/application.js?body=1" for 127.0.0.1 at 2015-11-02 04:33:20 +0530
+
+
+Started POST "/users/sign_in" for 127.0.0.1 at 2015-11-02 04:33:37 +0530
+Processing by Devise::SessionsController#create as HTML
+  Parameters: {"utf8"=>"✓", "authenticity_token"=>"7kt+vAnwz+d5ujP1cCA6dKai0ZvwlIm6/pBnesb0gA4=", "user"=>{"email"=>"who@where.com", "password"=>"[FILTERED]", "remember_me"=>"0"}, "commit"=>"Sign in"}
+  [1m[36mUser Load (1.0ms)[0m  [1mSELECT  "users".* FROM "users"  WHERE "users"."email" = 'who@where.com'  ORDER BY "users"."id" ASC LIMIT 1[0m
+  [1m[35m (0.0ms)[0m  begin transaction
+  [1m[36mSQL (2.0ms)[0m  [1mUPDATE "users" SET "current_sign_in_at" = ?, "sign_in_count" = ?, "updated_at" = ? WHERE "users"."id" = 5[0m  [["current_sign_in_at", "2015-11-01 23:03:37.716739"], ["sign_in_count", 2], ["updated_at", "2015-11-01 23:03:37.717741"]]
+  [1m[35m (109.4ms)[0m  commit transaction
+Redirected to http://127.0.0.1:3000/
+Completed 302 Found in 286ms (ActiveRecord: 112.4ms)
+
+
+Started GET "/" for 127.0.0.1 at 2015-11-02 04:33:37 +0530
+  [1m[36mUser Load (0.5ms)[0m  [1mSELECT  "users".* FROM "users"  WHERE "users"."id" = 5  ORDER BY "users"."id" ASC LIMIT 1[0m
+Processing by UsersController#index as HTML
+  [1m[35mUser Load (0.5ms)[0m  SELECT "users".* FROM "users"  WHERE (NOT (id = 5))  ORDER BY created_at DESC
+  [1m[36m (0.5ms)[0m  [1mSELECT COUNT(*) FROM "conversations"  WHERE (conversations.sender_id =5 OR conversations.recipient_id =5)[0m
+  [1m[35mConversation Load (0.5ms)[0m  SELECT "conversations".* FROM "conversations"  WHERE (conversations.sender_id =5 OR conversations.recipient_id =5)  ORDER BY created_at DESC
+  [1m[36mUser Load (0.5ms)[0m  [1mSELECT  "users".* FROM "users"  WHERE "users"."id" = ? LIMIT 1[0m  [["id", 5]]
+  [1m[35mUser Load (0.5ms)[0m  SELECT  "users".* FROM "users"  WHERE "users"."id" = ? LIMIT 1  [["id", 6]]
+  [1m[36mMessage Load (0.0ms)[0m  [1mSELECT  "messages".* FROM "messages"  WHERE "messages"."conversation_id" = ?  ORDER BY "messages"."id" DESC LIMIT 1[0m  [["conversation_id", 7]]
+  [1m[35mCACHE (0.5ms)[0m  SELECT  "messages".* FROM "messages"  WHERE "messages"."conversation_id" = ?  ORDER BY "messages"."id" DESC LIMIT 1  [["conversation_id", 7]]
+  [1m[36mCACHE (0.0ms)[0m  [1mSELECT  "users".* FROM "users"  WHERE "users"."id" = ? LIMIT 1[0m  [["id", 5]]
+  [1m[35mUser Load (0.5ms)[0m  SELECT  "users".* FROM "users"  WHERE "users"."id" = ? LIMIT 1  [["id", 1]]
+  [1m[36mMessage Load (0.5ms)[0m  [1mSELECT  "messages".* FROM "messages"  WHERE "messages"."conversation_id" = ?  ORDER BY "messages"."id" DESC LIMIT 1[0m  [["conversation_id", 5]]
+  Rendered users/index.html.erb within layouts/application (28.7ms)
+  Rendered layouts/_nav.html.erb (0.0ms)
+Completed 200 OK in 3021ms (Views: 3015.4ms | ActiveRecord: 4.0ms)
+
+
+Started GET "/assets/chat.css?body=1" for 127.0.0.1 at 2015-11-02 04:33:40 +0530
+
+
+Started GET "/assets/conversations.css?body=1" for 127.0.0.1 at 2015-11-02 04:33:41 +0530
+
+
+Started GET "/assets/messages.css?body=1" for 127.0.0.1 at 2015-11-02 04:33:41 +0530
+
+
+Started GET "/assets/users.css?body=1" for 127.0.0.1 at 2015-11-02 04:33:41 +0530
+
+
+Started GET "/assets/bootstrap.css?body=1" for 127.0.0.1 at 2015-11-02 04:33:41 +0530
+
+
+Started GET "/assets/application.css?body=1" for 127.0.0.1 at 2015-11-02 04:33:41 +0530
+
+
+Started GET "/assets/jquery.js?body=1" for 127.0.0.1 at 2015-11-02 04:33:41 +0530
+
+
+Started GET "/assets/jquery_ujs.js?body=1" for 127.0.0.1 at 2015-11-02 04:33:41 +0530
+
+
+Started GET "/assets/bootstrap.min.js?body=1" for 127.0.0.1 at 2015-11-02 04:33:41 +0530
+
+
+Started GET "/assets/private_pub.js?body=1" for 127.0.0.1 at 2015-11-02 04:33:41 +0530
+
+
+Started GET "/assets/chat.js?body=1" for 127.0.0.1 at 2015-11-02 04:33:41 +0530
+
+
+Started GET "/assets/turbolinks.js?body=1" for 127.0.0.1 at 2015-11-02 04:33:41 +0530
+
+
+Started GET "/assets/conversations.js?body=1" for 127.0.0.1 at 2015-11-02 04:33:41 +0530
+
+
+Started GET "/assets/messages.js?body=1" for 127.0.0.1 at 2015-11-02 04:33:41 +0530
+
+
+Started GET "/assets/users.js?body=1" for 127.0.0.1 at 2015-11-02 04:33:41 +0530
+
+
+Started GET "/assets/application.js?body=1" for 127.0.0.1 at 2015-11-02 04:33:41 +0530
+
+
+Started POST "/conversations" for 127.0.0.1 at 2015-11-02 04:33:44 +0530
+Processing by ConversationsController#create as */*
+  Parameters: {"sender_id"=>"5", "recipient_id"=>"6"}
+  [1m[35mUser Load (1.0ms)[0m  SELECT  "users".* FROM "users"  WHERE "users"."id" = 5  ORDER BY "users"."id" ASC LIMIT 1
+  [1m[36mConversation Load (1.0ms)[0m  [1mSELECT "conversations".* FROM "conversations"  WHERE ((conversations.sender_id = '5' AND conversations.recipient_id ='6') OR (conversations.sender_id = '6' AND conversations.recipient_id ='5'))[0m
+  [1m[35mConversation Load (1.0ms)[0m  SELECT  "conversations".* FROM "conversations"  WHERE ((conversations.sender_id = '5' AND conversations.recipient_id ='6') OR (conversations.sender_id = '6' AND conversations.recipient_id ='5'))  ORDER BY "conversations"."id" ASC LIMIT 1
+Completed 200 OK in 12ms (Views: 0.0ms | ActiveRecord: 3.0ms)
+
+
+Started GET "/conversations/7" for 127.0.0.1 at 2015-11-02 04:33:44 +0530
+Processing by ConversationsController#show as HTML
+  Parameters: {"id"=>"7"}
+  [1m[36mUser Load (0.0ms)[0m  [1mSELECT  "users".* FROM "users"  WHERE "users"."id" = 5  ORDER BY "users"."id" ASC LIMIT 1[0m
+  [1m[35mConversation Load (1.0ms)[0m  SELECT  "conversations".* FROM "conversations"  WHERE "conversations"."id" = ? LIMIT 1  [["id", 7]]
+  [1m[36mUser Load (1.0ms)[0m  [1mSELECT  "users".* FROM "users"  WHERE "users"."id" = ? LIMIT 1[0m  [["id", 5]]
+  [1m[35mUser Load (1.0ms)[0m  SELECT  "users".* FROM "users"  WHERE "users"."id" = ? LIMIT 1  [["id", 6]]
+  [1m[36mMessage Exists (0.0ms)[0m  [1mSELECT  1 AS one FROM "messages"  WHERE "messages"."conversation_id" = ? LIMIT 1[0m  [["conversation_id", 7]]
+  [1m[35mMessage Load (1.0ms)[0m  SELECT "messages".* FROM "messages"  WHERE "messages"."conversation_id" = ?  [["conversation_id", 7]]
+  [1m[36mCACHE (0.0ms)[0m  [1mSELECT  "users".* FROM "users"  WHERE "users"."id" = ? LIMIT 1[0m  [["id", 6]]
+  Rendered messages/_message.html.erb (2.7ms)
+  Rendered conversations/show.html.erb (15.3ms)
+Completed 200 OK in 38ms (Views: 23.3ms | ActiveRecord: 4.0ms)
+
+
+Started POST "/conversations/7/messages" for 127.0.0.1 at 2015-11-02 04:33:49 +0530
+Processing by MessagesController#create as JS
+  Parameters: {"utf8"=>"✓", "message"=>{"body"=>"yup"}, "conversation_id"=>"7"}
+  [1m[35mUser Load (1.0ms)[0m  SELECT  "users".* FROM "users"  WHERE "users"."id" = 5  ORDER BY "users"."id" ASC LIMIT 1
+  [1m[36mConversation Load (0.0ms)[0m  [1mSELECT  "conversations".* FROM "conversations"  WHERE "conversations"."id" = ? LIMIT 1[0m  [["id", 7]]
+  [1m[35m (0.0ms)[0m  begin transaction
+  [1m[36mSQL (1.0ms)[0m  [1mINSERT INTO "messages" ("body", "conversation_id", "created_at", "updated_at", "user_id") VALUES (?, ?, ?, ?, ?)[0m  [["body", "yup"], ["conversation_id", 7], ["created_at", "2015-11-01 23:03:49.515825"], ["updated_at", "2015-11-01 23:03:49.515825"], ["user_id", 5]]
+  [1m[35m (171.1ms)[0m  commit transaction
+  [1m[36mUser Load (0.0ms)[0m  [1mSELECT  "users".* FROM "users"  WHERE "users"."id" = ? LIMIT 1[0m  [["id", 5]]
+  [1m[35mUser Load (0.0ms)[0m  SELECT  "users".* FROM "users"  WHERE "users"."id" = ? LIMIT 1  [["id", 6]]
+  [1m[36mCACHE (0.0ms)[0m  [1mSELECT  "users".* FROM "users"  WHERE "users"."id" = ? LIMIT 1[0m  [["id", 5]]
+  Rendered messages/_message.html.erb (9.9ms)
+  Rendered messages/create.js.erb (2065.8ms)
+Completed 500 Internal Server Error in 2298ms
+
+ActionView::Template::Error (No connection could be made because the target machine actively refused it. - connect(2) for "localhost" port 9292):
+    1: <% publish_to @path do %>
+    2:     var id = "<%= @conversation.id %>";
+    3:     var chatbox = $("#chatbox_" + id + " .chatboxcontent");
+    4:     var sender_id = "<%= @message.user.id %>";
+  app/views/messages/create.js.erb:1:in `_app_views_messages_create_js_erb__596298090_49986348'
+
+
+  Rendered C:/RailsInstaller/Ruby2.1.0/lib/ruby/gems/2.1.0/gems/actionpack-4.1.1/lib/action_dispatch/middleware/templates/rescues/_trace.text.erb (0.0ms)
+  Rendered C:/RailsInstaller/Ruby2.1.0/lib/ruby/gems/2.1.0/gems/actionpack-4.1.1/lib/action_dispatch/middleware/templates/rescues/_request_and_response.text.erb (0.0ms)
+  Rendered C:/RailsInstaller/Ruby2.1.0/lib/ruby/gems/2.1.0/gems/actionpack-4.1.1/lib/action_dispatch/middleware/templates/rescues/template_error.text.erb (31.2ms)
+
+
+Started GET "/" for 127.0.0.1 at 2015-11-02 04:33:53 +0530
+  [1m[35mUser Load (0.0ms)[0m  SELECT  "users".* FROM "users"  WHERE "users"."id" = 5  ORDER BY "users"."id" ASC LIMIT 1
+Processing by UsersController#index as HTML
+  [1m[36mUser Load (0.5ms)[0m  [1mSELECT "users".* FROM "users"  WHERE (NOT (id = 5))  ORDER BY created_at DESC[0m
+  [1m[35m (0.5ms)[0m  SELECT COUNT(*) FROM "conversations"  WHERE (conversations.sender_id =5 OR conversations.recipient_id =5)
+  [1m[36mConversation Load (1.0ms)[0m  [1mSELECT "conversations".* FROM "conversations"  WHERE (conversations.sender_id =5 OR conversations.recipient_id =5)  ORDER BY created_at DESC[0m
+  [1m[35mUser Load (0.5ms)[0m  SELECT  "users".* FROM "users"  WHERE "users"."id" = ? LIMIT 1  [["id", 5]]
+  [1m[36mUser Load (0.5ms)[0m  [1mSELECT  "users".* FROM "users"  WHERE "users"."id" = ? LIMIT 1[0m  [["id", 6]]
+  [1m[35mMessage Load (0.5ms)[0m  SELECT  "messages".* FROM "messages"  WHERE "messages"."conversation_id" = ?  ORDER BY "messages"."id" DESC LIMIT 1  [["conversation_id", 7]]
+  [1m[36mCACHE (0.0ms)[0m  [1mSELECT  "messages".* FROM "messages"  WHERE "messages"."conversation_id" = ?  ORDER BY "messages"."id" DESC LIMIT 1[0m  [["conversation_id", 7]]
+  [1m[35mCACHE (0.0ms)[0m  SELECT  "users".* FROM "users"  WHERE "users"."id" = ? LIMIT 1  [["id", 5]]
+  [1m[36mUser Load (1.0ms)[0m  [1mSELECT  "users".* FROM "users"  WHERE "users"."id" = ? LIMIT 1[0m  [["id", 1]]
+  [1m[35mMessage Load (0.5ms)[0m  SELECT  "messages".* FROM "messages"  WHERE "messages"."conversation_id" = ?  ORDER BY "messages"."id" DESC LIMIT 1  [["conversation_id", 5]]
+  Rendered users/index.html.erb within layouts/application (34.6ms)
+  Rendered layouts/_nav.html.erb (0.5ms)
+Completed 200 OK in 136ms (Views: 127.4ms | ActiveRecord: 5.1ms)
+
+
+Started GET "/assets/chat.css?body=1" for 127.0.0.1 at 2015-11-02 04:33:53 +0530
+
+
+Started GET "/assets/conversations.css?body=1" for 127.0.0.1 at 2015-11-02 04:33:53 +0530
+
+
+Started GET "/assets/messages.css?body=1" for 127.0.0.1 at 2015-11-02 04:33:53 +0530
+
+
+Started GET "/assets/users.css?body=1" for 127.0.0.1 at 2015-11-02 04:33:53 +0530
+
+
+Started GET "/assets/bootstrap.css?body=1" for 127.0.0.1 at 2015-11-02 04:33:53 +0530
+
+
+Started GET "/assets/application.css?body=1" for 127.0.0.1 at 2015-11-02 04:33:53 +0530
+
+
+Started GET "/assets/jquery.js?body=1" for 127.0.0.1 at 2015-11-02 04:33:53 +0530
+
+
+Started GET "/assets/jquery_ujs.js?body=1" for 127.0.0.1 at 2015-11-02 04:33:53 +0530
+
+
+Started GET "/assets/bootstrap.min.js?body=1" for 127.0.0.1 at 2015-11-02 04:33:53 +0530
+
+
+Started GET "/assets/private_pub.js?body=1" for 127.0.0.1 at 2015-11-02 04:33:53 +0530
+
+
+Started GET "/assets/chat.js?body=1" for 127.0.0.1 at 2015-11-02 04:33:53 +0530
+
+
+Started GET "/assets/turbolinks.js?body=1" for 127.0.0.1 at 2015-11-02 04:33:53 +0530
+
+
+Started GET "/assets/conversations.js?body=1" for 127.0.0.1 at 2015-11-02 04:33:53 +0530
+
+
+Started GET "/assets/messages.js?body=1" for 127.0.0.1 at 2015-11-02 04:33:53 +0530
+
+
+Started GET "/assets/users.js?body=1" for 127.0.0.1 at 2015-11-02 04:33:53 +0530
+
+
+Started GET "/assets/application.js?body=1" for 127.0.0.1 at 2015-11-02 04:33:53 +0530
+
+
+Started GET "/conversations/7" for 127.0.0.1 at 2015-11-02 04:33:57 +0530
+Processing by ConversationsController#show as HTML
+  Parameters: {"id"=>"7"}
+  [1m[36mUser Load (0.0ms)[0m  [1mSELECT  "users".* FROM "users"  WHERE "users"."id" = 5  ORDER BY "users"."id" ASC LIMIT 1[0m
+  [1m[35mConversation Load (1.0ms)[0m  SELECT  "conversations".* FROM "conversations"  WHERE "conversations"."id" = ? LIMIT 1  [["id", 7]]
+  [1m[36mUser Load (0.0ms)[0m  [1mSELECT  "users".* FROM "users"  WHERE "users"."id" = ? LIMIT 1[0m  [["id", 5]]
+  [1m[35mUser Load (0.0ms)[0m  SELECT  "users".* FROM "users"  WHERE "users"."id" = ? LIMIT 1  [["id", 6]]
+  [1m[36mMessage Exists (0.0ms)[0m  [1mSELECT  1 AS one FROM "messages"  WHERE "messages"."conversation_id" = ? LIMIT 1[0m  [["conversation_id", 7]]
+  [1m[35mMessage Load (0.0ms)[0m  SELECT "messages".* FROM "messages"  WHERE "messages"."conversation_id" = ?  [["conversation_id", 7]]
+  [1m[36mCACHE (0.0ms)[0m  [1mSELECT  "users".* FROM "users"  WHERE "users"."id" = ? LIMIT 1[0m  [["id", 6]]
+  [1m[35mCACHE (0.0ms)[0m  SELECT  "users".* FROM "users"  WHERE "users"."id" = ? LIMIT 1  [["id", 5]]
+  Rendered messages/_message.html.erb (15.6ms)
+  Rendered conversations/show.html.erb (15.6ms)
+Completed 200 OK in 36ms (Views: 21.8ms | ActiveRecord: 1.0ms)
+
+
+Started GET "/" for 127.0.0.1 at 2015-11-02 04:34:03 +0530
+  [1m[36mUser Load (0.0ms)[0m  [1mSELECT  "users".* FROM "users"  WHERE "users"."id" = 6  ORDER BY "users"."id" ASC LIMIT 1[0m
+Processing by UsersController#index as HTML
+  [1m[35mUser Load (0.0ms)[0m  SELECT "users".* FROM "users"  WHERE (NOT (id = 6))  ORDER BY created_at DESC
+  [1m[36m (15.6ms)[0m  [1mSELECT COUNT(*) FROM "conversations"  WHERE (conversations.sender_id =6 OR conversations.recipient_id =6)[0m
+  [1m[35mConversation Load (0.0ms)[0m  SELECT "conversations".* FROM "conversations"  WHERE (conversations.sender_id =6 OR conversations.recipient_id =6)  ORDER BY created_at DESC
+  [1m[36mUser Load (0.0ms)[0m  [1mSELECT  "users".* FROM "users"  WHERE "users"."id" = ? LIMIT 1[0m  [["id", 5]]
+  [1m[35mMessage Load (0.0ms)[0m  SELECT  "messages".* FROM "messages"  WHERE "messages"."conversation_id" = ?  ORDER BY "messages"."id" DESC LIMIT 1  [["conversation_id", 7]]
+  [1m[36mCACHE (0.0ms)[0m  [1mSELECT  "messages".* FROM "messages"  WHERE "messages"."conversation_id" = ?  ORDER BY "messages"."id" DESC LIMIT 1[0m  [["conversation_id", 7]]
+  [1m[35mUser Load (15.6ms)[0m  SELECT  "users".* FROM "users"  WHERE "users"."id" = ? LIMIT 1  [["id", 6]]
+  [1m[36mUser Load (0.0ms)[0m  [1mSELECT  "users".* FROM "users"  WHERE "users"."id" = ? LIMIT 1[0m  [["id", 1]]
+  [1m[35mMessage Load (0.0ms)[0m  SELECT  "messages".* FROM "messages"  WHERE "messages"."conversation_id" = ?  ORDER BY "messages"."id" DESC LIMIT 1  [["conversation_id", 6]]
+  Rendered users/index.html.erb within layouts/application (31.3ms)
+  Rendered layouts/_nav.html.erb (0.5ms)
+Completed 200 OK in 135ms (Views: 103.7ms | ActiveRecord: 31.3ms)
+
+
+Started GET "/assets/chat.css?body=1" for 127.0.0.1 at 2015-11-02 04:34:03 +0530
+
+
+Started GET "/assets/conversations.css?body=1" for 127.0.0.1 at 2015-11-02 04:34:03 +0530
+
+
+Started GET "/assets/messages.css?body=1" for 127.0.0.1 at 2015-11-02 04:34:03 +0530
+
+
+Started GET "/assets/users.css?body=1" for 127.0.0.1 at 2015-11-02 04:34:03 +0530
+
+
+Started GET "/assets/bootstrap.css?body=1" for 127.0.0.1 at 2015-11-02 04:34:03 +0530
+
+
+Started GET "/assets/application.css?body=1" for 127.0.0.1 at 2015-11-02 04:34:03 +0530
+
+
+Started GET "/assets/jquery.js?body=1" for 127.0.0.1 at 2015-11-02 04:34:03 +0530
+
+
+Started GET "/assets/jquery_ujs.js?body=1" for 127.0.0.1 at 2015-11-02 04:34:03 +0530
+
+
+Started GET "/assets/bootstrap.min.js?body=1" for 127.0.0.1 at 2015-11-02 04:34:03 +0530
+
+
+Started GET "/assets/private_pub.js?body=1" for 127.0.0.1 at 2015-11-02 04:34:03 +0530
+
+
+Started GET "/assets/chat.js?body=1" for 127.0.0.1 at 2015-11-02 04:34:03 +0530
+
+
+Started GET "/assets/turbolinks.js?body=1" for 127.0.0.1 at 2015-11-02 04:34:03 +0530
+
+
+Started GET "/assets/conversations.js?body=1" for 127.0.0.1 at 2015-11-02 04:34:03 +0530
+
+
+Started GET "/assets/messages.js?body=1" for 127.0.0.1 at 2015-11-02 04:34:03 +0530
+
+
+Started GET "/assets/users.js?body=1" for 127.0.0.1 at 2015-11-02 04:34:03 +0530
+
+
+Started GET "/assets/application.js?body=1" for 127.0.0.1 at 2015-11-02 04:34:03 +0530

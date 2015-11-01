@@ -1,0 +1,6 @@
+== CHATTY
+
+Chat! is a Gmail like chat application implemented in rails using private_pub gem..
+
+=== Contributing
+Its free to use, clone the app or whatever you what.
